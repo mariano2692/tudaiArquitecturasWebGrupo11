@@ -15,7 +15,7 @@ public class MySqlFactory extends DBFactory {
     private final String DB_PASSWORD = "yes";
 
     private static MySqlFactory unicaInstancia = null;
-    private static Connection conn;
+    private Connection conn;
 
     private MySqlFactory() {
         try {

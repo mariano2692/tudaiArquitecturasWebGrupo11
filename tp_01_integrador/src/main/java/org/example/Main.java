@@ -1,17 +1,32 @@
 package org.example;
 
+import daos.ClienteDAO;
+import daos.ProductoDAO;
+import helpers.CSVreader;
+import helpers.DatabaseLoader;
+
+import java.sql.SQLException;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        CSVreader reader = new CSVreader();
+
+        try {
+            // Cargar todos los datos desde los archivos CSV a la base de datos
+            DatabaseLoader.cargarDatos(reader);
+
+            // Obtener instancias de DAOs para las consultas
+            ClienteDAO clienteDAO = ClienteDAO.getInstance();
+            ProductoDAO productoDAO = ProductoDAO.getInstance();
+
+            // Obtiene y muestra el producto con mayor recaudación
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
     }
 }
