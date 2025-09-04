@@ -1,7 +1,10 @@
 package daos;
 
 import entities.Cliente;
+import factories.MySqlFactory;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -24,11 +27,43 @@ public class ClienteDAO implements DAO<Cliente> {
 
     @Override
     public void dropTable() throws SQLException {
+        Connection conn = MySqlFactory.getInstance().getConnection();
+
+        String drop_table = "DROP TABLE IF EXISTS Cliente";
+
+        // try-with-resources asegura que PreparedStatement y ResultSet se cierren automáticamente
+        try (PreparedStatement ps = conn.prepareStatement(drop_table)) {
+            ps.executeUpdate();
+
+            conn.commit();
+            conn.close();
+        } catch (SQLException e) {
+            conn.rollback(); // Rollback en caso de error
+            throw new SQLException("Error al eliminar la tabla Cliente.", e);
+        }
 
     }
 
     @Override
     public void createTable() throws SQLException {
+        Connection conn = MySqlFactory.getInstance().getConnection();
+
+        String table = "CREATE TABLE IF NOT EXISTS Cliente(" +
+                "idCliente INT," +
+                "nombre VARCHAR(500)," +
+                "email VARCHAR(150)," +
+                "PRIMARY KEY(idCliente))";
+
+        // try-with-resources asegura que PreparedStatement y ResultSet se cierren automáticamente
+        try (PreparedStatement ps = conn.prepareStatement(table)) {
+            ps.executeUpdate();
+
+            conn.commit();
+            conn.close();
+        } catch (SQLException e) {
+            conn.rollback(); // Rollback en caso de error
+            throw new SQLException("Error al crear la tabla Cliente.", e);
+        }
 
     }
 

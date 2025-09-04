@@ -13,7 +13,7 @@ public class MySqlFactory extends DBFactory {
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private final String DB_URI = "jdbc:mysql://localhost:3306/Entregable1";
     private final String DB_USER = "root";
-    private final String DB_PASSWORD = "yes";
+    private final String DB_PASSWORD = "password";
 
     private static MySqlFactory unicaInstancia = null;
     private Connection conn;
