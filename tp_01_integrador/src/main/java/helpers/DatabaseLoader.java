@@ -49,7 +49,7 @@ public class DatabaseLoader {
     }
 
     // Método genérico para cargar entidades en la base de datos usando cualquier DAO que implemente la interfaz DAO
-    public <T> void cargarListaEnBaseDeDatos(List<T> lista, DAO<T> dao) throws SQLException {
+    public static <T> void cargarListaEnBaseDeDatos(List<T> lista, DAO<T> dao) throws SQLException {
         for (T entidad : lista) {
             dao.insert(entidad);
         }

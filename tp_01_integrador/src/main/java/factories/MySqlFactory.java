@@ -6,6 +6,7 @@ import daos.FacturaProductoDAO;
 import daos.ProductoDAO;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySqlFactory extends DBFactory {
@@ -34,31 +35,46 @@ public class MySqlFactory extends DBFactory {
 
     @Override
     public Connection getConnection() throws SQLException {
-        return null;
+        try {
+            if (conn == null || conn.isClosed()) {
+                conn = DriverManager.getConnection(DB_URI, DB_USER, DB_PASSWORD);
+                conn.setAutoCommit(false);
+            }
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+
+        return conn;
     }
 
     @Override
     public void closeConnection() throws SQLException {
-
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
     }
 
     @Override
     public ClienteDAO getClienteDAO() throws SQLException {
-        return null;
+        return ClienteDAO.getInstance();
     }
 
     @Override
     public FacturaDAO getFacturaDAO() throws SQLException {
-        return null;
+        return FacturaDAO.getInstance();
     }
 
     @Override
     public FacturaProductoDAO getFacturaProductoDAO() throws SQLException {
-        return null;
+        return FacturaProductoDAO.getInstance();
     }
 
     @Override
     public ProductoDAO getProductoDAO() throws SQLException {
-        return null;
+        return ProductoDAO.getInstance();
     }
 }

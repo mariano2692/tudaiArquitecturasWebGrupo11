@@ -7,6 +7,20 @@ import java.util.List;
 
 public class FacturaProductoDAO implements DAO<FacturaProducto> {
 
+    private static FacturaProductoDAO unicaInstancia;
+
+    private FacturaProductoDAO() throws SQLException {
+
+    }
+
+    public static FacturaProductoDAO getInstance() throws SQLException {
+        if (unicaInstancia == null) {
+            unicaInstancia = new FacturaProductoDAO();
+        }
+
+        return unicaInstancia;
+    }
+
     @Override
     public void dropTable() throws SQLException {
 

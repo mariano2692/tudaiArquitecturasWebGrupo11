@@ -22,7 +22,6 @@ public class Main {
             ClienteDAO clienteDAO = ClienteDAO.getInstance();
             ProductoDAO productoDAO = ProductoDAO.getInstance();
 
-            // Obtiene y muestra el producto con mayor recaudación
 
         } catch (SQLException e) {
             e.printStackTrace();
