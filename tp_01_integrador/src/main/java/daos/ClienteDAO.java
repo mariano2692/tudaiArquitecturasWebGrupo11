@@ -77,9 +77,9 @@ public class ClienteDAO implements DAO<Cliente> {
 
         // try-with-resources asegura que PreparedStatement y ResultSet se cierren automáticamente
         try (PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, c.getIdCliente());
-            ps.setString(2, c.getNombre());
-            ps.setString(3, c.getEmail());
+            ps.setInt(1, cliente.getIdCliente());
+            ps.setString(2, cliente.getNombre());
+            ps.setString(3, cliente.getEmail());
             ps.executeUpdate();
 
             conn.commit();
@@ -141,9 +141,9 @@ public class ClienteDAO implements DAO<Cliente> {
 
         // try-with-resources asegura que PreparedStatement y ResultSet se cierren automáticamente
         try (PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setString(1, c.getNombre());
-            ps.setString(2, c.getEmail());
-            ps.setInt(3, c.getIdCliente());
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getEmail());
+            ps.setInt(3, cliente.getIdCliente());
 
             int affectedRows = ps.executeUpdate(); // Devuelve el número de filas afectadas
 

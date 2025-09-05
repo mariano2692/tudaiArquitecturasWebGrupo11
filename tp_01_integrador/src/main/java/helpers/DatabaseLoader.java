@@ -28,24 +28,21 @@ public class DatabaseLoader {
         DAO<Factura> facturaDAO = dbF.getFacturaDAO();
 
         // Eliminar las tablas si existen y luego recrearlas
-        clienteDAO.dropTable();
-        clienteDAO.createTable();
-
-        facturaProductoDAO.dropTable(); // Eliminar primero por las FK referenciadas!
-
+        facturaProductoDAO.dropTable();
         facturaDAO.dropTable();
-        facturaDAO.createTable();
-
         productoDAO.dropTable();
-        productoDAO.createTable();
+        clienteDAO.dropTable();
 
+        clienteDAO.createTable();
+        productoDAO.createTable();
+        facturaDAO.createTable();
         facturaProductoDAO.createTable();
 
         // Cargar datos en las tablas correspondientes
         cargarListaEnBaseDeDatos(clientes, clienteDAO);
         cargarListaEnBaseDeDatos(facturas, facturaDAO);
         cargarListaEnBaseDeDatos(productos, productoDAO);
-        cargarListaEnBaseDeDatos(facturasProductos, facturaProductoDAO);
+        //cargarListaEnBaseDeDatos(facturasProductos, facturaProductoDAO);
     }
 
     // Método genérico para cargar entidades en la base de datos usando cualquier DAO que implemente la interfaz DAO
