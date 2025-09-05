@@ -42,7 +42,7 @@ public class DatabaseLoader {
         cargarListaEnBaseDeDatos(clientes, clienteDAO);
         cargarListaEnBaseDeDatos(facturas, facturaDAO);
         cargarListaEnBaseDeDatos(productos, productoDAO);
-        //cargarListaEnBaseDeDatos(facturasProductos, facturaProductoDAO);
+        cargarListaEnBaseDeDatos(facturasProductos, facturaProductoDAO);
     }
 
     // Método genérico para cargar entidades en la base de datos usando cualquier DAO que implemente la interfaz DAO
