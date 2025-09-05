@@ -2,6 +2,7 @@ package org.example;
 
 import daos.ClienteDAO;
 import daos.ProductoDAO;
+import dtos.ProductoMayorRecaudacionDTO;
 import helpers.CSVreader;
 import helpers.DatabaseLoader;
 
@@ -21,6 +22,10 @@ public class Main {
             // Obtener instancias de DAOs para las consultas
             ClienteDAO clienteDAO = ClienteDAO.getInstance();
             ProductoDAO productoDAO = ProductoDAO.getInstance();
+
+            ProductoMayorRecaudacionDTO productoMayorRecaudacion =  productoDAO.selectMayorRecaudacion();
+
+            System.out.println(productoMayorRecaudacion);
 
 
         } catch (SQLException e) {

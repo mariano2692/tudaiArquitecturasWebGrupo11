@@ -178,4 +178,6 @@ public class ClienteDAO implements DAO<Cliente> {
             throw new SQLException("Error al eliminar Cliente con id=" + id, e);
         }
     }
+
+
 }

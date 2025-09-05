@@ -1,5 +1,6 @@
 package daos;
 
+import dtos.ProductoMayorRecaudacionDTO;
 import entities.Producto;
 import factories.MySqlFactory;
 
@@ -174,5 +175,26 @@ public class ProductoDAO implements DAO<Producto> {
             throw new SQLException("Error al eliminar Producto con id=" + id, e);
         }
     }
+
+    public ProductoMayorRecaudacionDTO selectMayorRecaudacion() throws SQLException {
+        Connection conn = MySqlFactory.getInstance().getConnection();
+
+        ProductoMayorRecaudacionDTO productoMayorRecaudacionDTO = null;
+        String query = "SELECT p.idProducto, p.nombre, SUM(fp.cantidad * p.valor) AS Recaudacion ,p.valor FROM Producto p "
+                + "JOIN Factura_Producto fp ON p.idProducto = fp.idProducto "
+                + "GROUP BY p.idProducto, p.nombre, p.valor ORDER BY Recaudacion DESC LIMIT 1";
+
+        try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                productoMayorRecaudacionDTO = new ProductoMayorRecaudacionDTO(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4));
+            }
+            conn.close();
+        } catch (SQLException e) {
+            throw new SQLException("Error al obtener ProductoMayorRecaudacion!", e);
+        }
+        return productoMayorRecaudacionDTO;
+    }
+
+
 
 }
