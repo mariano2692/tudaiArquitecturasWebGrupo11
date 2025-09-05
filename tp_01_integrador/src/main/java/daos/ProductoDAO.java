@@ -5,7 +5,9 @@ import factories.MySqlFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductoDAO implements DAO<Producto> {
@@ -66,26 +68,111 @@ public class ProductoDAO implements DAO<Producto> {
 
     @Override
     public void insert(Producto producto) throws SQLException {
+        Connection conn = MySqlFactory.getInstance().getConnection();
 
+        String query = "INSERT INTO Producto(idProducto, nombre, valor) VALUES (?, ?, ?)";
+
+        // try-with-resources asegura que PreparedStatement y ResultSet se cierren automáticamente
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, producto.getIdProducto());
+            ps.setString(2, producto.getNombre());
+            ps.setFloat(3, producto.getValor());
+            ps.executeUpdate();
+
+            conn.commit();
+            conn.close();
+        } catch (SQLException e) {
+            conn.rollback(); // Rollback en caso de error
+            throw new SQLException("Error al insertar Producto!", e);
+        }
     }
 
     @Override
     public Producto select(int id) throws SQLException {
-        return null;
+        Connection conn = MySqlFactory.getInstance().getConnection();
+
+        Producto p = null;
+        String query = "SELECT * FROM Producto WHERE idProducto=?";
+
+        // try-with-resources asegura que PreparedStatement y ResultSet se cierren automáticamente
+        try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            ps.setInt(1, id);
+
+            p = new Producto(rs.getInt(1), rs.getString(2), rs.getFloat(3));
+
+            conn.close();
+        } catch (SQLException e) {
+            throw new SQLException("Error al seleccionar Producto con id=" + id + "!", e);
+        }
+
+        return p;
     }
 
     @Override
     public List<Producto> selectAll() throws SQLException {
-        return List.of();
+        Connection conn = MySqlFactory.getInstance().getConnection();
+
+        List<Producto> productos = new ArrayList<>();
+        String query = "SELECT * FROM Producto";
+
+        // try-with-resources asegura que PreparedStatement y ResultSet se cierren automáticamente
+        try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                productos.add(new Producto(rs.getInt(1), rs.getString(2), rs.getFloat(3)));
+            }
+
+            conn.close();
+        } catch (SQLException e) {
+            throw new SQLException("Error al obtener Productos!", e);
+        }
+
+        return productos;
     }
 
     @Override
     public boolean update(Producto producto) throws SQLException {
-        return false;
+        Connection conn = MySqlFactory.getInstance().getConnection();
+
+        String query = "UPDATE Producto SET nombre = ?, valor = ? WHERE idProducto = ?";
+
+        // try-with-resources asegura que PreparedStatement y ResultSet se cierren automáticamente
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, producto.getNombre());
+            ps.setDouble(2, producto.getValor());
+            ps.setInt(3, producto.getIdProducto());
+
+            int affectedRows = ps.executeUpdate(); // Devuelve el número de filas afectadas
+
+            conn.commit();
+            conn.close();
+
+            return affectedRows > 0; // Retorna true si se actualizó al menos una fila
+        } catch (SQLException e) {
+            conn.rollback(); // Rollback en caso de error
+            throw new SQLException("Error al actualizar Producto!", e);
+        }
     }
 
     @Override
     public boolean delete(int id) throws SQLException {
-        return false;
+        Connection conn = MySqlFactory.getInstance().getConnection();
+
+        String query = "DELETE FROM Producto WHERE idProducto = ?";
+
+        // try-with-resources asegura que PreparedStatement y ResultSet se cierren automáticamente
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, id);
+
+            int affectedRows = ps.executeUpdate(); // Devuelve el número de filas afectadas
+
+            conn.commit();
+            conn.close();
+
+            return affectedRows > 0; // Retorna true si se eliminó al menos una fila
+        } catch (SQLException e) {
+            conn.rollback(); // Rollback en caso de error
+            throw new SQLException("Error al eliminar Producto con id=" + id, e);
+        }
     }
+
 }
