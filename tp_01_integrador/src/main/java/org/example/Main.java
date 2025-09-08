@@ -2,11 +2,13 @@ package org.example;
 
 import daos.ClienteDAO;
 import daos.ProductoDAO;
+import dtos.ClienteConFacturacionDTO;
 import dtos.ProductoMayorRecaudacionDTO;
 import helpers.CSVreader;
 import helpers.DatabaseLoader;
 
 import java.sql.SQLException;
+import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -27,6 +29,13 @@ public class Main {
 
             System.out.println(productoMayorRecaudacion);
 
+
+
+            //lista de clientes con mayor facturacion
+
+
+            List<ClienteConFacturacionDTO> clientesConMayorFacturacion = clienteDAO.clientesConMayorFacturacion();
+            System.out.println(clientesConMayorFacturacion);
 
         } catch (SQLException e) {
             e.printStackTrace();
