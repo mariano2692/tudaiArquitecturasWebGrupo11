@@ -32,8 +32,6 @@ public class Main {
 
 
             //lista de clientes con mayor facturacion
-
-
             List<ClienteConFacturacionDTO> clientesConMayorFacturacion = clienteDAO.clientesConMayorFacturacion();
             System.out.println(clientesConMayorFacturacion);
 

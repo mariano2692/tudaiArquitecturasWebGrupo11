@@ -211,7 +211,7 @@ public class ClienteDAO implements DAO<Cliente> {
     public List<ClienteConFacturacionDTO> clientesConMayorFacturacion() throws SQLException {
         Connection conn = MySqlFactory.getInstance().getConnection();
 
-        List<ClienteConFacturacionDTO> clientesConMayorFacturacion = new ArrayList<>(); // Cambio 1: Lista en lugar de objeto único
+        List<ClienteConFacturacionDTO> clientesConMayorFacturacion = new ArrayList<>();
         String query = "SELECT c.idCliente, c.nombre, c.email, SUM(fp.cantidad * p.valor) as total_facturado " +
                 "FROM Cliente c " +
                 "INNER JOIN Factura f ON c.idCliente = f.idCliente " +
