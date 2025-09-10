@@ -1,5 +1,7 @@
 package daos;
 
+import dtos.ClienteConFacturacionDTO;
+import dtos.ProductoMayorRecaudacionDTO;
 import entities.Cliente;
 import factories.MySqlFactory;
 
@@ -177,6 +179,61 @@ public class ClienteDAO implements DAO<Cliente> {
             conn.rollback(); // Rollback en caso de error
             throw new SQLException("Error al eliminar Cliente con id=" + id, e);
         }
+    }
+
+
+  /*  public List<ClienteConFacturacionDTO> clientesConMayorFacturacion() throws SQLException {
+        Connection conn = MySqlFactory.getInstance().getConnection();
+
+        ClienteConFacturacionDTO clientesConMayorFacturacion = null;
+        String query = "SELECT c.idCliente, c.nombre, c.email, SUM(fp.cantidad * p.valor) as total_facturado " +
+                "FROM Cliente c " +
+                "INNER JOIN Factura f ON c.idCliente = f.idCliente " +
+                "INNER JOIN Factura_Producto fp ON f.idFactura = fp.idFactura " +
+                "INNER JOIN Producto p ON fp.idProducto = p.idProducto " +
+                "GROUP BY c.idCliente, c.nombre, c.email " +
+                "ORDER BY total_facturado DESC";
+
+        try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                clientesConMayorFacturacion = new ClienteConFacturacionDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+            }
+            conn.close();
+        } catch (SQLException e) {
+            throw new SQLException("Error al obtener ProductoMayorRecaudacion!", e);
+        }
+        return clientesConMayorFacturacion;
+    }*/
+
+
+
+
+    public List<ClienteConFacturacionDTO> clientesConMayorFacturacion() throws SQLException {
+        Connection conn = MySqlFactory.getInstance().getConnection();
+
+        List<ClienteConFacturacionDTO> clientesConMayorFacturacion = new ArrayList<>();
+        String query = "SELECT c.idCliente, c.nombre, c.email, SUM(fp.cantidad * p.valor) as total_facturado " +
+                "FROM Cliente c " +
+                "INNER JOIN Factura f ON c.idCliente = f.idCliente " +
+                "INNER JOIN Factura_Producto fp ON f.idFactura = fp.idFactura " +
+                "INNER JOIN Producto p ON fp.idProducto = p.idProducto " +
+                "GROUP BY c.idCliente, c.nombre, c.email " +
+                "ORDER BY total_facturado DESC";
+
+        try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                ClienteConFacturacionDTO cliente = new ClienteConFacturacionDTO(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getFloat(4)
+                );
+                clientesConMayorFacturacion.add(cliente);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error al obtener clientes con mayor facturación!", e);
+        }
+        return clientesConMayorFacturacion;
     }
 
 
