@@ -12,8 +12,8 @@ import java.sql.SQLException;
 public class MySqlFactory extends DBFactory {
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private final String DB_URI = "jdbc:mysql://localhost:3306/entregable1";
-    private final String DB_USER = "root";
-    private final String DB_PASSWORD = "password";
+    private final String DB_USER = "appuser";
+    private final String DB_PASSWORD = "tu_contraseña_segura";
 
     private static MySqlFactory unicaInstancia = null;
     private Connection conn;
