@@ -22,7 +22,7 @@ public class InscripcionDTO {
         this.anioEgreso = anioEgreso;
         this.graduado = graduado;
         this.nombreCarrera = nombreCarrera;
-        this.setEstudiante(luEstudiante);
+
     }
 
     public int getAntiguedad() {
@@ -65,13 +65,6 @@ public class InscripcionDTO {
 
     public EstudianteDTO getEstudiante() { return estudiante; }
 
-    public void setEstudiante(Long luEstudiante) {
-        RepositoryFactory mySqlFactory = JpaMySqlRepositoryFactory.getDAOFactory(1);
-        RepositoryEstudiante jpaEstudianteRepository = mySqlFactory.getEstudianteRepository();
-        JpaEstudianteRepository repoEstudiante = (JpaEstudianteRepository) jpaEstudianteRepository;
-
-        this.estudiante = repoEstudiante.obtenerEstudiantePorLu(luEstudiante);
-    }
 
     @Override
     public String toString() {

@@ -3,13 +3,13 @@
              xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
-    <persistence-unit name="Example">
+    <persistence-unit name="Integrador 2">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <properties>
             <!-- Propiedades de configuración de JDBC para MySQL -->
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/example_db"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/entregable2"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
             <property name="jakarta.persistence.jdbc.password" value="password"/>
 

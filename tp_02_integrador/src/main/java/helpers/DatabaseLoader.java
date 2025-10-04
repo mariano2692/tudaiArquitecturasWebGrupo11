@@ -3,23 +3,23 @@ package helpers;
 import entities.Carrera;
 import entities.Estudiante;
 import entities.Inscripcion;
-import factories.JpaMySqlRepositoryFactory;
 import factories.RepositoryFactory;
 import repositories.interfaces.RepositoryCarrera;
 import repositories.interfaces.RepositoryEstudiante;
 import repositories.interfaces.RepositoryInscripcion;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
 public class DatabaseLoader {
 
     // Método para cargar todos los datos de los CSVs a la base de datos
-    public static void cargarDatos(CSVreader reader) throws SQLException {
+    public static void cargarDatos(CSVreader reader) throws SQLException, IOException {
         // Obtener listas desde los CSVs
         List<Carrera> carreras = reader.leerArchivoCarreras();
         List<Estudiante> estudiantes = reader.leerArchivoEstudiantes();
-        List<Inscripcion> inscripciones = reader.leerArchivoInscripciones(carreras, estudiantes);
+        List<Inscripcion> inscripciones = reader.leerArchivoEstudianteCarrera(carreras, estudiantes);
 
         // Obtener los Respositoriess de las entidades
 
