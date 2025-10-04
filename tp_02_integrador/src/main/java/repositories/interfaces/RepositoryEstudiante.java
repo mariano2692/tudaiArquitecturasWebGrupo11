@@ -1,4 +1,4 @@
 package repositories.interfaces;
 
-public interface RepositoryEstudiante {
+public interface RepositoryEstudiante{
 }
