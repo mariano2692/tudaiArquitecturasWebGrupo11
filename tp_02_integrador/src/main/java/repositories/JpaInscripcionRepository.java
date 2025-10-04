@@ -1,7 +1,11 @@
 package repositories;
 
+import dtos.InscripcionDTO;
+import entities.Inscripcion;
 import jakarta.persistence.EntityManager;
 import repositories.interfaces.RepositoryInscripcion;
+
+import java.util.List;
 
 public class JpaInscripcionRepository implements RepositoryInscripcion {
     private EntityManager em;
@@ -24,4 +28,23 @@ public class JpaInscripcionRepository implements RepositoryInscripcion {
         }
     }
 
+    @Override
+    public void save(Inscripcion t) {
+
+    }
+
+    @Override
+    public InscripcionDTO selectById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<InscripcionDTO> selectAll() {
+        return List.of();
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
+    }
 }

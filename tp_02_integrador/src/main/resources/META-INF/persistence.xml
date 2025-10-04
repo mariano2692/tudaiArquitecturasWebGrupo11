@@ -6,8 +6,6 @@
     <persistence-unit name="Example">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-
-
         <properties>
             <!-- Propiedades de configuración de JDBC para MySQL -->
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
@@ -21,10 +19,7 @@
             <!-- <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/> -->
             <property name="show_sql" value="true" />
 
-            <!-- Propiedades de configuración de JDBC para Derby
-            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:derby:MyDerbyDb;create=true" />
-            -->
+
             <!-- Propiedad para la generación automática del esquema de base de datos
             <property name="hibernate.hbm2ddl.auto" value="update" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect" />

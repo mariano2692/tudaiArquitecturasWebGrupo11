@@ -3,6 +3,11 @@ package helpers;
 import entities.Carrera;
 import entities.Estudiante;
 import entities.Inscripcion;
+import factories.JpaMySqlRepositoryFactory;
+import factories.RepositoryFactory;
+import repositories.interfaces.RepositoryCarrera;
+import repositories.interfaces.RepositoryEstudiante;
+import repositories.interfaces.RepositoryInscripcion;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,32 +21,39 @@ public class DatabaseLoader {
         List<Estudiante> estudiantes = reader.leerArchivoEstudiantes();
         List<Inscripcion> inscripciones = reader.leerArchivoInscripciones(carreras, estudiantes);
 
-        // Obtener los DAOs de las entidades
-        DBFactory dbF = DBFactory.getFactory(1); // 1: Derby, 2: MySQL, etc.
-        DAO<Carrera> carreraDAO = dbF.getCarreraDAO();
-        DAO<Estudiante> estudianteDAO = dbF.getEstudianteDAO();
-        DAO<Inscripcion> inscripcionDAO = dbF.getInscripcionDAO();
+        // Obtener los Respositoriess de las entidades
 
-        // Eliminar tablas si existen (importante seguir el orden por claves foráneas)
-        inscripcionDAO.dropTable();
-        estudianteDAO.dropTable();
-        carreraDAO.dropTable();
 
-        // Crear tablas en orden correcto
-        carreraDAO.createTable();
-        estudianteDAO.createTable();
-        inscripcionDAO.createTable();
+        RepositoryFactory mySqlFactory = RepositoryFactory.getDAOFactory(1);
+        RepositoryEstudiante jpaEstudianteRepository = mySqlFactory.getEstudianteRepository();
+        RepositoryCarrera jpaCarreraRepository = mySqlFactory.getCarreraRepository();
+        RepositoryInscripcion jpaInscripcionRepository = mySqlFactory.getInscripcionRepository();
+
+
 
         // Insertar datos (también respetando dependencias)
-        cargarListaEnBaseDeDatos(carreras, carreraDAO);
-        cargarListaEnBaseDeDatos(estudiantes, estudianteDAO);
-        cargarListaEnBaseDeDatos(inscripciones, inscripcionDAO);
+        cargarListaEnBaseDeDatosCarreras(carreras, jpaCarreraRepository);
+        cargarListaEnBaseDeDatosEstudiantes(estudiantes, jpaEstudianteRepository);
+        cargarListaEnBaseDeDatosInscripciones(inscripciones, jpaInscripcionRepository);
     }
 
     // Método genérico para cargar entidades con cualquier DAO
-    public static <T> void cargarListaEnBaseDeDatos(List<T> lista, DAO<T> dao) throws SQLException {
-        for (T entidad : lista) {
-            dao.insert(entidad);
+    public static void cargarListaEnBaseDeDatosCarreras(List<Carrera> lista, RepositoryCarrera repo) {
+        for (Carrera entidad : lista) {
+            repo.save(entidad);
         }
     }
+
+    public static void cargarListaEnBaseDeDatosEstudiantes(List<Estudiante> lista, RepositoryEstudiante repo) {
+        for (Estudiante entidad : lista) {
+            repo.save(entidad);
+        }
+    }
+
+    public static void cargarListaEnBaseDeDatosInscripciones(List<Inscripcion> lista, RepositoryInscripcion repo) {
+        for (Inscripcion entidad : lista) {
+            repo.save(entidad);
+        }
+    }
+
 }
