@@ -3,6 +3,8 @@ package repositories;
 import dtos.CarreraDTO;
 import entities.Carrera;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.PersistenceException;
 import repositories.interfaces.RepositoryCarrera;
 import repositories.interfaces.RepositoryInscripcion;
 
@@ -30,8 +32,29 @@ public class JpaCarreraRepository implements RepositoryCarrera {
     }
 
     @Override
-    public void save(Carrera t) {
+    public void save(Carrera carrera) {
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
 
+        if(carrera.getId() == 0){
+            try {
+                em.persist(carrera);
+                transaction.commit();
+            } catch (PersistenceException e) {
+                transaction.rollback();
+                System.out.println("Error al insertar carrera! " + e.getMessage());
+                throw e;
+            }
+        } else { // Si la carrera ya existe, hace update
+            try {
+                em.merge(carrera);
+                transaction.commit();
+            } catch (PersistenceException e) {
+                transaction.rollback();
+                System.out.println("Error al actualizar carrera! " + e.getMessage());
+                throw e;
+            }
+        }
     }
 
     @Override

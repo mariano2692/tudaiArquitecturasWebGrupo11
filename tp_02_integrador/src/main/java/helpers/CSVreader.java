@@ -63,18 +63,27 @@ public class CSVreader {
 
     public List<Inscripcion> leerArchivoEstudianteCarrera(List<Carrera> carreras, List<Estudiante> estudiantes) throws IOException {
         List<Inscripcion> inscripciones = new ArrayList<>();
-        try (Reader in = new FileReader("src/main/resources/estudianteCarrera.csv")) {
+
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("csv_files/estudianteCarrera.csv");
+             Reader reader = new InputStreamReader(in)) {
+
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
                     .withFirstRecordAsHeader()
-                    .parse(in);
+                    .parse(reader);
 
             for (CSVRecord row : records) {
                 Long id = Long.parseLong(row.get("id"));
                 Long idEstudiante = Long.parseLong(row.get("id_estudiante"));
-                Long idCarrera = Long.parseLong(row.get("id_carrera"));
-                LocalDate inscripcion = LocalDate.ofEpochDay(Integer.parseInt(row.get("inscripcion")));
-                LocalDate graduacion = LocalDate.ofEpochDay(Integer.parseInt(row.get("graduacion")));
+                int idCarrera = Integer.parseInt(row.get("id_carrera"));
+
+                int anioInscripcion = Integer.parseInt(row.get("inscripcion"));
+                int anioGraduacion = Integer.parseInt(row.get("graduacion"));
                 int antiguedad = Integer.parseInt(row.get("antiguedad"));
+
+                LocalDate inscripcion = LocalDate.of(anioInscripcion, 1, 1);
+                LocalDate graduacion = LocalDate.of(anioGraduacion, 1, 1);
+
+
 
                 Estudiante estudiante = estudiantes.stream()
                         .filter(e -> e.getLu().equals(idEstudiante))
@@ -91,5 +100,6 @@ public class CSVreader {
         }
         return inscripciones;
     }
+
 
 }

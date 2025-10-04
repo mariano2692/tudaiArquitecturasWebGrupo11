@@ -3,6 +3,8 @@ package repositories;
 import dtos.EstudianteDTO;
 import entities.Estudiante;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.PersistenceException;
 import repositories.interfaces.RepositoryCarrera;
 import repositories.interfaces.RepositoryEstudiante;
 
@@ -30,9 +32,21 @@ public class JpaEstudianteRepository implements RepositoryEstudiante {
     }
 
     @Override
-    public void save(Estudiante t) {
+    public void save(Estudiante estudiante) {
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
 
-    }
+
+            try {
+                em.persist(estudiante);
+                transaction.commit();
+            } catch (PersistenceException e) {
+                transaction.rollback();
+                System.out.println("Error al insertar estudiante! " + e.getMessage());
+                throw e;
+            }
+
+        }
 
     @Override
     public EstudianteDTO selectById(int id) {

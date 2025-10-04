@@ -52,6 +52,9 @@ public class DatabaseLoader {
 
     public static void cargarListaEnBaseDeDatosInscripciones(List<Inscripcion> lista, RepositoryInscripcion repo) {
         for (Inscripcion entidad : lista) {
+            if (entidad.getCarrera() == null || entidad.getEstudiante() == null) {
+                continue; // la salteo
+            }
             repo.save(entidad);
         }
     }

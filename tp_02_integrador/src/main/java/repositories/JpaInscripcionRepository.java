@@ -3,6 +3,8 @@ package repositories;
 import dtos.InscripcionDTO;
 import entities.Inscripcion;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.PersistenceException;
 import repositories.interfaces.RepositoryInscripcion;
 
 import java.util.List;
@@ -29,8 +31,29 @@ public class JpaInscripcionRepository implements RepositoryInscripcion {
     }
 
     @Override
-    public void save(Inscripcion t) {
+    public void save(Inscripcion inscripcion) {
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
 
+        if (inscripcion.getId() == 0){
+            try {
+                em.persist(inscripcion);
+                transaction.commit();
+            } catch (PersistenceException e) {
+                transaction.rollback();
+                System.out.println("Error al insertar inscripcion! " + e.getMessage());
+                throw e;
+            }
+        } else { // Si la inscripción ya existe, hace update
+            try {
+                em.merge(inscripcion);
+                transaction.commit();
+            } catch (PersistenceException e) {
+                transaction.rollback();
+                System.out.println("Error al actualizar inscripcion! " + e.getMessage());
+                throw e;
+            }
+        }
     }
 
     @Override
