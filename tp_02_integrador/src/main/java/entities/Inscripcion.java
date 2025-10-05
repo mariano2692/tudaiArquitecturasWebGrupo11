@@ -6,7 +6,7 @@ import java.time.LocalDate;
 @Entity
 public class Inscripcion {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column
