@@ -34,6 +34,15 @@ public class Inscripcion {
 
     }
 
+    public Inscripcion(Carrera carrera, Estudiante estudiante) {
+        this.carrera = carrera;
+        this.estudiante = estudiante;
+        this.anioInscripcion = LocalDate.now();
+        this.antiguedad = 0;
+        this.graduado = false;
+        this.anioEgreso = null;
+    }
+
     public Inscripcion(int antiguedad, LocalDate anioInscripcion, LocalDate anioEgreso, boolean graduado, Carrera carrera, Estudiante estudiante) {
         this.antiguedad = antiguedad;
         this.anioInscripcion = anioInscripcion;
