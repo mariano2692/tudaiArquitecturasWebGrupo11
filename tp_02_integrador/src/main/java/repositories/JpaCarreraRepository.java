@@ -92,6 +92,7 @@ public class JpaCarreraRepository implements RepositoryCarrera {
 
         Inscripcion inscripcion = new Inscripcion(carrera, estudiante);
         em.persist(inscripcion);
+        transaction.commit();
     }
 
 }
