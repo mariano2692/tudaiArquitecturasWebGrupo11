@@ -1,5 +1,6 @@
 package org.example;
 
+import dtos.CarreraDTO;
 import dtos.EstudianteDTO;
 import dtos.InscripcionDTO;
 import entities.Estudiante;
@@ -10,6 +11,7 @@ import helpers.DatabaseLoader;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import repositories.JpaInscripcionRepository;
+import repositories.interfaces.RepositoryCarrera;
 import repositories.interfaces.RepositoryInscripcion;
 
 import java.io.IOException;
@@ -58,6 +60,17 @@ public class Main {
             System.out.println("Estudiantes inscriptos en " + carrera + " desde " + ciudad + ":");
             resultados.forEach(System.out::println);
         }
+
+        RepositoryCarrera repositoryCarrera = factory.getCarreraRepository(emConsulta);
+        List<CarreraDTO> reporte = repositoryCarrera.generarReporteCarreras();
+
+        System.out.println("=== Reporte de Carreras ===");
+        for (CarreraDTO c : reporte) {
+            System.out.println("Carrera: " + c.getNombre());
+            c.getResumenPorAnio().forEach(System.out::println); // solo resumen por año
+            System.out.println("----------------------------");
+        }
+
 
         // --- CERRAR EM Y EMF ---
         emConsulta.close();

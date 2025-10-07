@@ -12,24 +12,12 @@ import repositories.interfaces.RepositoryInscripcion;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class JpaCarreraRepository implements RepositoryCarrera {
     private EntityManager em;
-    //private static JpaCarreraRepository instance;
-
-    /*
-    private JpaCarreraRepository(EntityManager em) {this.em = em;}
-     */
 
     public JpaCarreraRepository(EntityManager em) {this.em = em;}
-    /*
-    public static JpaCarreraRepository getInstance(EntityManager em) {
-        if(instance == null)
-            instance = new JpaCarreraRepository(em);
-        return instance;
-    }
-
-     */
 
     // Método para cerrar el EntityManager
     public void close() {
@@ -85,6 +73,25 @@ public class JpaCarreraRepository implements RepositoryCarrera {
         Inscripcion inscripcion = new Inscripcion(carrera, estudiante);
         em.persist(inscripcion);
         transaction.commit();
+    }
+
+    /**
+     * Genera un reporte de las carreras con cantidad de inscriptos y egresados por año.
+     * Ordena las carreras alfabéticamente y los años cronológicamente.
+     */
+    public List<CarreraDTO> generarReporteCarreras() {
+        List<Carrera> carreras = em.createQuery(
+                "SELECT DISTINCT c FROM Carrera c LEFT JOIN FETCH c.inscripciones i ORDER BY c.nombre ASC",
+                Carrera.class
+        ).getResultList();
+
+        return carreras.stream()
+                .map(carrera -> {
+                    CarreraDTO dto = new CarreraDTO(carrera.getNombre());
+                    carrera.getInscripciones().forEach(dto::addInscripcion);
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
 }

@@ -1,5 +1,6 @@
 package repositories;
 
+import dtos.EstudianteDTO;
 import dtos.InscripcionDTO;
 import entities.Carrera;
 import entities.Estudiante;
@@ -66,7 +67,20 @@ public class JpaInscripcionRepository implements RepositoryInscripcion {
         return false;
     }
 
-    // Punto 2)G)
+    /**
+     * Obtiene una lista de estudiantes matriculados en una carrera específica
+     * y que residen en una ciudad determinada.
+     *
+     * <p>El método construye un JPQL que selecciona inscripciones junto con
+     * información del estudiante y de la carrera, y lo transforma en objetos
+     * {@link InscripcionDTO} y {@link EstudianteDTO}.
+     *
+     * <p>Los resultados se ordenan alfabéticamente por apellido y nombre del estudiante.
+     *
+     * @param carrera El nombre de la carrera.
+     * @param ciudad  La ciudad de residencia de los estudiantes.
+     * @return Lista de {@link InscripcionDTO} que cumplen con los criterios.
+     */
     public List<InscripcionDTO> studentsByCareerAndCity(String carrera, String ciudad) {
         String jpql = """
         SELECT new dtos.InscripcionDTO(
@@ -99,6 +113,19 @@ public class JpaInscripcionRepository implements RepositoryInscripcion {
                 .getResultList();
     }
 
+    /**
+     * Verifica si un estudiante ya está inscrito en una carrera para un año específico.
+     *
+     * <p>El método consulta la base de datos usando JPQL contando cuántas
+     * inscripciones existen que coincidan con el estudiante, la carrera y
+     * el año de inscripción proporcionados.
+     *
+     * @param estudiante      El estudiante a verificar.
+     * @param carrera         La carrera en la que se quiere verificar la inscripción.
+     * @param anioInscripcion El año de inscripción a verificar.
+     * @return {@code true} si existe al menos una inscripción que coincida,
+     *         {@code false} en caso contrario.
+     */
     public boolean existeInscripcion(Estudiante estudiante, Carrera carrera, LocalDate anioInscripcion) {
         String jpql = "SELECT COUNT(i) FROM Inscripcion i " +
                 "WHERE i.estudiante = :estudiante AND i.carrera = :carrera AND i.anioInscripcion = :anio";

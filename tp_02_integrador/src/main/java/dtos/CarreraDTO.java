@@ -4,6 +4,8 @@ import entities.Inscripcion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CarreraDTO {
     private String nombre;
@@ -36,6 +38,26 @@ public class CarreraDTO {
 
     public void removeInscripcion(Inscripcion inscripcion) {
         inscripciones.remove(inscripcion);
+    }
+
+    /**
+     * Devuelve una lista de resúmenes (inscriptos / egresados) por año, ordenados cronológicamente.
+     */
+    public List<ResumenAnualDTO> getResumenPorAnio() {
+        return inscripciones.stream()
+                .collect(Collectors.groupingBy(i -> i.getAnioInscripcion().getYear()))
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByKey()) // ordena los años
+                .map(entry -> {
+                    int anio = entry.getKey();
+                    List<Inscripcion> delAnio = entry.getValue();
+
+                    long inscriptos = delAnio.size();
+                    long egresados = delAnio.stream().filter(Inscripcion::isGraduado).count();
+
+                    return new ResumenAnualDTO(anio, inscriptos, egresados);
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
