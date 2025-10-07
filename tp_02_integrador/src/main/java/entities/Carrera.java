@@ -7,11 +7,13 @@ import java.util.List;
 @Entity
 public class Carrera {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false)
     private String nombre;
+
+    @Column(nullable = false)
+    private int duracion;
 
     // Relación uno a muchos con la entidad Inscripcion
     @OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -23,8 +25,10 @@ public class Carrera {
         this.inscripciones = new ArrayList<Inscripcion>();
     }
 
-    public Carrera(String nombre) {
+    public Carrera(int id, String nombre, int duracion) {
+        this.id = id;
         this.nombre = nombre;
+        this.duracion = duracion;
         this.inscripciones = new ArrayList<Inscripcion>();
     }
 
@@ -36,6 +40,10 @@ public class Carrera {
     public String getNombre() {
         return nombre;
     }
+
+    public int getDuracion() {return duracion;}
+
+    public void setDuracion(int duracion) {this.duracion = duracion;}
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

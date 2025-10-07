@@ -2,12 +2,10 @@ package helpers;
 
 import entities.Carrera;
 import entities.Estudiante;
-
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import entities.Inscripcion;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -15,54 +13,99 @@ import org.apache.commons.csv.CSVRecord;
 
 public class CSVreader {
 
-    public List<Carrera> leerArchivoCarreras() {
-        List<Carrera> carreras = new ArrayList<>();
+        public List<Carrera> leerArchivoCarreras() {
+            List<Carrera> carreras = new ArrayList<>();
 
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream("csv_files/carreras.csv");
-             Reader reader = new InputStreamReader(in);
-             CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader)) {
+            try (InputStream in = getClass().getClassLoader().getResourceAsStream("csv_files/carreras.csv");
+                 Reader reader = new InputStreamReader(in);
+                 CSVParser parser = CSVFormat.DEFAULT
+                         .withFirstRecordAsHeader()
+                         .withIgnoreHeaderCase()
+                         .withTrim()
+                         .parse(reader)) {
 
-            for (CSVRecord row : parser) {
-                Carrera c = new Carrera(row.get("carrera"));
-                carreras.add(c);
+                for (CSVRecord row : parser) {
+                    try {
+                        String idStr = row.get("id_carrera");
+                        String nombre = row.get("carrera");
+                        String duracionStr = row.get("duracion");
+
+                        if (idStr == null || idStr.isEmpty() ||
+                                nombre == null || nombre.isEmpty() ||
+                                duracionStr == null || duracionStr.isEmpty()) {
+                            System.out.println("Fila inválida o incompleta: " + row);
+                            continue;
+                        }
+
+                        int id = Integer.parseInt(idStr.trim());
+                        int duracion = Integer.parseInt(duracionStr.trim());
+
+                        Carrera c = new Carrera(id, nombre, duracion);
+                        carreras.add(c);
+
+                    } catch (Exception e) {
+                        System.out.println("Error al procesar fila: " + row + " → " + e.getMessage());
+                    }
+                }
+
+            } catch (IOException e) {
+                System.out.println("Error al leer el archivo carreras.csv: " + e.getMessage());
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                System.out.println("Archivo carreras.csv no encontrado en classpath.");
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            return carreras;
         }
 
-        return carreras;
-    }
+        public List<Estudiante> leerArchivoEstudiantes() {
+            List<Estudiante> estudiantes = new ArrayList<>();
 
-    public List<Estudiante> leerArchivoEstudiantes() {
-        List<Estudiante> estudiantes = new ArrayList<>();
+            try (InputStream in = getClass().getClassLoader().getResourceAsStream("csv_files/estudiantes.csv")) {
 
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream("csv_files/estudiantes.csv");
-             Reader reader = new InputStreamReader(in);
-             CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader)) {
+                if (in == null) {
+                    System.err.println("No se encontró el archivo estudiantes.csv en el classpath.");
+                    return estudiantes;
+                }
 
-            for (CSVRecord row : parser) {
-                Estudiante e = new Estudiante(
-                        row.get("nombre"),
-                        row.get("apellido"),
-                        Integer.parseInt(row.get("edad")),
-                        row.get("genero"),
-                        Integer.parseInt(row.get("DNI")),
-                        row.get("ciudad"),
-                        Long.parseLong(row.get("LU"))
-                );
-                estudiantes.add(e);
+                try (Reader reader = new InputStreamReader(in);
+                     CSVParser parser = CSVFormat.DEFAULT
+                             .withFirstRecordAsHeader()
+                             .withIgnoreHeaderCase()
+                             .withTrim()
+                             .parse(reader)) {
+
+                    for (CSVRecord row : parser) {
+                        try {
+                            int dni = Integer.parseInt(row.get("DNI").trim());
+                            String nombres = row.get("nombre").trim();
+                            String apellido = row.get("apellido").trim();
+                            int edad = Integer.parseInt(row.get("edad").trim());
+                            String genero = row.get("genero").trim();
+                            String ciudad = row.get("ciudad").trim();
+                            Long lu = Long.parseLong(row.get("LU").trim());
+
+                            Estudiante e = new Estudiante(dni, nombres, apellido, edad, genero, ciudad, lu);
+                            estudiantes.add(e);
+
+                        } catch (Exception ex) {
+                            System.err.println("Error al procesar fila: " + row.toString() + " → " + ex.getMessage());
+                        }
+                    }
+
+                }
+
+            } catch (IOException e) {
+                System.err.println("Error al leer el archivo estudiantes.csv: " + e.getMessage());
+                e.printStackTrace();
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            return estudiantes;
         }
-
-        return estudiantes;
-    }
 
     public List<Inscripcion> leerArchivoEstudianteCarrera(List<Carrera> carreras, List<Estudiante> estudiantes) throws IOException {
         List<Inscripcion> inscripciones = new ArrayList<>();
+        System.out.println("Iniciando lectura de inscripciones...");
 
         try (InputStream in = getClass().getClassLoader().getResourceAsStream("csv_files/estudianteCarrera.csv");
              Reader reader = new InputStreamReader(in)) {
@@ -72,34 +115,53 @@ public class CSVreader {
                     .parse(reader);
 
             for (CSVRecord row : records) {
-                Long id = Long.parseLong(row.get("id"));
-                Long idEstudiante = Long.parseLong(row.get("id_estudiante"));
-                int idCarrera = Integer.parseInt(row.get("id_carrera"));
+                try {
+                    int idEstudiante = Integer.parseInt(row.get("id_estudiante"));
+                    int idCarrera = Integer.parseInt(row.get("id_carrera"));
+                    int anioInscripcion = Integer.parseInt(row.get("inscripcion"));
+                    int anioGraduacion = Integer.parseInt(row.get("graduacion"));
+                    int antiguedad = Integer.parseInt(row.get("antiguedad"));
 
-                int anioInscripcion = Integer.parseInt(row.get("inscripcion"));
-                int anioGraduacion = Integer.parseInt(row.get("graduacion"));
-                int antiguedad = Integer.parseInt(row.get("antiguedad"));
+                    LocalDate fechaInscripcion = LocalDate.of(anioInscripcion, 1, 1);
+                    LocalDate fechaGraduacion = (anioGraduacion > 0) ? LocalDate.of(anioGraduacion, 1, 1) : null;
+                    boolean graduado = anioGraduacion > 0;
 
-                LocalDate inscripcion = LocalDate.of(anioInscripcion, 1, 1);
-                LocalDate graduacion = LocalDate.of(anioGraduacion, 1, 1);
+                    // Buscar estudiante en la lista por DNI
+                    Estudiante estudiante = estudiantes.stream()
+                            .filter(e -> e.getId() == idEstudiante)
+                            .findFirst()
+                            .orElse(null);
 
+                    // Buscar carrera en la lista por ID
+                    Carrera carrera = carreras.stream()
+                            .filter(c -> c.getId() == idCarrera)
+                            .findFirst()
+                            .orElse(null);
 
+                    if (estudiante != null && carrera != null) {
+                        // Crear inscripción sin asignar ID
+                        Inscripcion inscripcion = new Inscripcion(carrera, estudiante, fechaInscripcion, fechaGraduacion, graduado, antiguedad);
+                        inscripciones.add(inscripcion);
 
-                Estudiante estudiante = estudiantes.stream()
-                        .filter(e -> e.getLu().equals(idEstudiante))
-                        .findFirst()
-                        .orElse(null);
+                        // Mantener relación bidireccional
+                        estudiante.addInscripcion(inscripcion);
+                        carrera.addInscripcion(inscripcion);
+                    }
 
-                Carrera carrera = carreras.stream()
-                        .filter(c -> c.getId() == idCarrera)
-                        .findFirst()
-                        .orElse(null);
-
-                inscripciones.add(new Inscripcion(antiguedad, inscripcion, graduacion, false, carrera, estudiante));
+                } catch (Exception e) {
+                    System.out.println("⚠ Error procesando fila: " + row);
+                    e.printStackTrace();
+                }
             }
         }
+
+        System.out.println("Total inscripciones cargadas: " + inscripciones.size());
         return inscripciones;
     }
+
+
+
+
 
 
 }

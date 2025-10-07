@@ -12,8 +12,25 @@ import repositories.interfaces.RepositoryInscripcion;
 
 public class JpaMySqlRepositoryFactory extends RepositoryFactory {
     private static final String PERSISTENCE_UNIT_NAME = "Integrador 2";
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 
+    //EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+    public RepositoryInscripcion getInscripcionRepository(EntityManager em) {
+        return new JpaInscripcionRepository(em);
+    }
+
+    public RepositoryCarrera getCarreraRepository(EntityManager em) {
+        return new JpaCarreraRepository(em);
+    }
+
+    public RepositoryEstudiante getEstudianteRepository(EntityManager em) {
+        return new JpaEstudianteRepository(em);
+    }
+    // --- NUEVO MÉTODO ESTÁTICO ---
+    public static EntityManagerFactory getEntityManagerFactory() {
+        return emf;
+    }
+    /*
     @Override
     public RepositoryCarrera getCarreraRepository() {
         EntityManager em = emf.createEntityManager();
@@ -31,4 +48,6 @@ public class JpaMySqlRepositoryFactory extends RepositoryFactory {
         EntityManager em = emf.createEntityManager();
         return JpaInscripcionRepository.getInstance(em);
     }
+
+     */
 }

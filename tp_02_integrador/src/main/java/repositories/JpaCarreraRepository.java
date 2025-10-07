@@ -15,17 +15,21 @@ import java.util.List;
 
 public class JpaCarreraRepository implements RepositoryCarrera {
     private EntityManager em;
-    private static JpaCarreraRepository instance;
+    //private static JpaCarreraRepository instance;
 
-    private JpaCarreraRepository(EntityManager em) {
-        this.em = em;
-    }
+    /*
+    private JpaCarreraRepository(EntityManager em) {this.em = em;}
+     */
 
+    public JpaCarreraRepository(EntityManager em) {this.em = em;}
+    /*
     public static JpaCarreraRepository getInstance(EntityManager em) {
         if(instance == null)
             instance = new JpaCarreraRepository(em);
         return instance;
     }
+
+     */
 
     // Método para cerrar el EntityManager
     public void close() {
@@ -37,26 +41,14 @@ public class JpaCarreraRepository implements RepositoryCarrera {
     @Override
     public void save(Carrera carrera) {
         EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
-
-        if(carrera.getId() == 0){
-            try {
-                em.persist(carrera);
-                transaction.commit();
-            } catch (PersistenceException e) {
-                transaction.rollback();
-                System.out.println("Error al insertar carrera! " + e.getMessage());
-                throw e;
-            }
-        } else { // Si la carrera ya existe, hace update
-            try {
-                em.merge(carrera);
-                transaction.commit();
-            } catch (PersistenceException e) {
-                transaction.rollback();
-                System.out.println("Error al actualizar carrera! " + e.getMessage());
-                throw e;
-            }
+        try {
+            transaction.begin();
+            em.merge(carrera); // merge inserta o actualiza
+            transaction.commit();
+        } catch (PersistenceException e) {
+            if (transaction.isActive()) transaction.rollback();
+            System.out.println("Error al insertar/actualizar carrera! " + e.getMessage());
+            throw e;
         }
     }
 

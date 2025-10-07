@@ -4,6 +4,7 @@ import entities.Carrera;
 import entities.Estudiante;
 import entities.Inscripcion;
 import factories.RepositoryFactory;
+import jakarta.persistence.EntityManager;
 import repositories.interfaces.RepositoryCarrera;
 import repositories.interfaces.RepositoryEstudiante;
 import repositories.interfaces.RepositoryInscripcion;
@@ -13,28 +14,24 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class DatabaseLoader {
-
-    // Método para cargar todos los datos de los CSVs a la base de datos
-    public static void cargarDatos(CSVreader reader) throws SQLException, IOException {
+    public static void cargarDatos(CSVreader reader, EntityManager em) throws SQLException, IOException {
         // Obtener listas desde los CSVs
-        List<Carrera> carreras = reader.leerArchivoCarreras();
         List<Estudiante> estudiantes = reader.leerArchivoEstudiantes();
+        List<Carrera> carreras = reader.leerArchivoCarreras();
+
+        RepositoryFactory factory = RepositoryFactory.getDAOFactory(RepositoryFactory.MYSQL_JDBC);
+
+        // Usar el mismo EM para todos los repositorios
+        RepositoryEstudiante repoEstudiante = factory.getEstudianteRepository(em);
+        RepositoryCarrera repoCarrera = factory.getCarreraRepository(em);
+        RepositoryInscripcion repoInscripcion = factory.getInscripcionRepository(em);
+
+        // Guardar entidades
+        cargarListaEnBaseDeDatosEstudiantes(estudiantes, repoEstudiante);
+        cargarListaEnBaseDeDatosCarreras(carreras, repoCarrera);
+
         List<Inscripcion> inscripciones = reader.leerArchivoEstudianteCarrera(carreras, estudiantes);
-
-        // Obtener los Respositoriess de las entidades
-
-
-        RepositoryFactory mySqlFactory = RepositoryFactory.getDAOFactory(1);
-        RepositoryEstudiante jpaEstudianteRepository = mySqlFactory.getEstudianteRepository();
-        RepositoryCarrera jpaCarreraRepository = mySqlFactory.getCarreraRepository();
-        RepositoryInscripcion jpaInscripcionRepository = mySqlFactory.getInscripcionRepository();
-
-
-
-        // Insertar datos (también respetando dependencias)
-        cargarListaEnBaseDeDatosCarreras(carreras, jpaCarreraRepository);
-        cargarListaEnBaseDeDatosEstudiantes(estudiantes, jpaEstudianteRepository);
-        cargarListaEnBaseDeDatosInscripciones(inscripciones, jpaInscripcionRepository);
+        cargarListaEnBaseDeDatosInscripciones(inscripciones, repoInscripcion);
     }
 
     // Método genérico para cargar entidades con cualquier DAO
@@ -52,10 +49,18 @@ public class DatabaseLoader {
 
     public static void cargarListaEnBaseDeDatosInscripciones(List<Inscripcion> lista, RepositoryInscripcion repo) {
         for (Inscripcion entidad : lista) {
+            System.out.println(entidad);
+
             if (entidad.getCarrera() == null || entidad.getEstudiante() == null) {
                 continue; // la salteo
             }
-            repo.save(entidad);
+
+            // Verifico si ya existe por estudiante + carrera + añoInscripcion
+            if (!repo.existeInscripcion(entidad.getEstudiante(), entidad.getCarrera(), entidad.getAnioInscripcion())) {
+                repo.save(entidad);
+            } else {
+                System.out.println("Inscripción ya existente, se omite: " + entidad);
+            }
         }
     }
 
