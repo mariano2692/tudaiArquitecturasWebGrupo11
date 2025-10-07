@@ -15,26 +15,27 @@ import java.util.List;
 public class DatabaseLoader {
 
     // Método para cargar todos los datos de los CSVs a la base de datos
-    public static void cargarDatos(CSVreader reader) throws SQLException, IOException {
+    public static void cargarDatos(CSVreader reader, RepositoryFactory factory) throws SQLException, IOException {
         // Obtener listas desde los CSVs
         List<Carrera> carreras = reader.leerArchivoCarreras();
         List<Estudiante> estudiantes = reader.leerArchivoEstudiantes();
         List<Inscripcion> inscripciones = reader.leerArchivoEstudianteCarrera(carreras, estudiantes);
 
-        // Obtener los Respositoriess de las entidades
-
-
-        RepositoryFactory mySqlFactory = RepositoryFactory.getDAOFactory(1);
-        RepositoryEstudiante jpaEstudianteRepository = mySqlFactory.getEstudianteRepository();
-        RepositoryCarrera jpaCarreraRepository = mySqlFactory.getCarreraRepository();
-        RepositoryInscripcion jpaInscripcionRepository = mySqlFactory.getInscripcionRepository();
-
-
+        // Obtener los Repositorios de las entidades usando el factory pasado como parámetro
+        RepositoryEstudiante jpaEstudianteRepository = factory.getEstudianteRepository();
+        RepositoryCarrera jpaCarreraRepository = factory.getCarreraRepository();
+        RepositoryInscripcion jpaInscripcionRepository = factory.getInscripcionRepository();
 
         // Insertar datos (también respetando dependencias)
         cargarListaEnBaseDeDatosCarreras(carreras, jpaCarreraRepository);
         cargarListaEnBaseDeDatosEstudiantes(estudiantes, jpaEstudianteRepository);
         cargarListaEnBaseDeDatosInscripciones(inscripciones, jpaInscripcionRepository);
+    }
+    
+    // Método original para mantener compatibilidad
+    public static void cargarDatos(CSVreader reader) throws SQLException, IOException {
+        RepositoryFactory mySqlFactory = RepositoryFactory.getDAOFactory(1);
+        cargarDatos(reader, mySqlFactory);
     }
 
     // Método genérico para cargar entidades con cualquier DAO

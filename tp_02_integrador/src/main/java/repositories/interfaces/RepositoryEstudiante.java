@@ -13,4 +13,9 @@ public interface RepositoryEstudiante{
     List<EstudianteDTO> selectAll();
 
     boolean delete(int id);
+    
+    // Nuevos métodos requeridos
+    EstudianteDTO selectByLu(Long lu);
+    
+    List<EstudianteDTO> selectByGenero(String genero);
 }

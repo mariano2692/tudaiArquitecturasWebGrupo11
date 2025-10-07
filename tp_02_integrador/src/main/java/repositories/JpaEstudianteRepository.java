@@ -55,11 +55,61 @@ public class JpaEstudianteRepository implements RepositoryEstudiante {
 
     @Override
     public List<EstudianteDTO> selectAll() {
-        return List.of();
+        try {
+            List<Estudiante> estudiantes = em.createQuery("SELECT e FROM Estudiante e", Estudiante.class)
+                    .getResultList();
+            return estudiantes.stream()
+                    .map(this::convertirAEstudianteDTO)
+                    .toList();
+        } catch (Exception e) {
+            System.out.println("Error al obtener todos los estudiantes: " + e.getMessage());
+            return List.of();
+        }
     }
 
     @Override
     public boolean delete(int id) {
         return false;
+    }
+
+    @Override
+    public EstudianteDTO selectByLu(Long lu) {
+        try {
+            Estudiante estudiante = em.createQuery("SELECT e FROM Estudiante e WHERE e.lu = :lu", Estudiante.class)
+                    .setParameter("lu", lu)
+                    .getSingleResult();
+            return convertirAEstudianteDTO(estudiante);
+        } catch (Exception e) {
+            System.out.println("No se encontró estudiante con LU: " + lu);
+            return null;
+        }
+    }
+
+    @Override
+    public List<EstudianteDTO> selectByGenero(String genero) {
+        try {
+            List<Estudiante> estudiantes = em.createQuery("SELECT e FROM Estudiante e WHERE e.genero = :genero", Estudiante.class)
+                    .setParameter("genero", genero)
+                    .getResultList();
+            return estudiantes.stream()
+                    .map(this::convertirAEstudianteDTO)
+                    .toList();
+        } catch (Exception e) {
+            System.out.println("Error al buscar estudiantes por género: " + e.getMessage());
+            return List.of();
+        }
+    }
+
+    // Método helper para convertir Estudiante a EstudianteDTO
+    private EstudianteDTO convertirAEstudianteDTO(Estudiante estudiante) {
+        return new EstudianteDTO(
+                estudiante.getNombres(),
+                estudiante.getApellido(),
+                estudiante.getEdad(),
+                estudiante.getGenero(),
+                estudiante.getDni(),
+                estudiante.getCiudadResidencia(),
+                estudiante.getLu()
+        );
     }
 }

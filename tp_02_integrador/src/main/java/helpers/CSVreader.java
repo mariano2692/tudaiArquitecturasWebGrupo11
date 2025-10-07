@@ -22,12 +22,20 @@ public class CSVreader {
              Reader reader = new InputStreamReader(in);
              CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader)) {
 
+            if (in == null) {
+                System.err.println("ERROR: No se pudo encontrar el archivo carreras.csv en el classpath");
+                return carreras;
+            }
+
+            System.out.println("Leyendo archivo carreras.csv...");
             for (CSVRecord row : parser) {
                 Carrera c = new Carrera(row.get("carrera"));
                 carreras.add(c);
             }
+            System.out.println("Carreras leídas: " + carreras.size());
 
         } catch (IOException e) {
+            System.err.println("Error al leer carreras.csv: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -41,6 +49,12 @@ public class CSVreader {
              Reader reader = new InputStreamReader(in);
              CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader)) {
 
+            if (in == null) {
+                System.err.println("ERROR: No se pudo encontrar el archivo estudiantes.csv en el classpath");
+                return estudiantes;
+            }
+
+            System.out.println("Leyendo archivo estudiantes.csv...");
             for (CSVRecord row : parser) {
                 Estudiante e = new Estudiante(
                         row.get("nombre"),
@@ -53,8 +67,10 @@ public class CSVreader {
                 );
                 estudiantes.add(e);
             }
+            System.out.println("Estudiantes leídos: " + estudiantes.size());
 
         } catch (IOException e) {
+            System.err.println("Error al leer estudiantes.csv: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -67,6 +83,12 @@ public class CSVreader {
         try (InputStream in = getClass().getClassLoader().getResourceAsStream("csv_files/estudianteCarrera.csv");
              Reader reader = new InputStreamReader(in)) {
 
+            if (in == null) {
+                System.err.println("ERROR: No se pudo encontrar el archivo estudianteCarrera.csv en el classpath");
+                return inscripciones;
+            }
+
+            System.out.println("Leyendo archivo estudianteCarrera.csv...");
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
                     .withFirstRecordAsHeader()
                     .parse(reader);
@@ -97,6 +119,7 @@ public class CSVreader {
 
                 inscripciones.add(new Inscripcion(antiguedad, inscripcion, graduacion, false, carrera, estudiante));
             }
+            System.out.println("Inscripciones leídas: " + inscripciones.size());
         }
         return inscripciones;
     }
