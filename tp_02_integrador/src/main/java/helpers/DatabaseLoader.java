@@ -19,16 +19,18 @@ public class DatabaseLoader {
         // Obtener listas desde los CSVs
         List<Carrera> carreras = reader.leerArchivoCarreras();
         List<Estudiante> estudiantes = reader.leerArchivoEstudiantes();
-        List<Inscripcion> inscripciones = reader.leerArchivoEstudianteCarrera(carreras, estudiantes);
 
         // Obtener los Repositorios de las entidades usando el factory pasado como parámetro
         RepositoryEstudiante jpaEstudianteRepository = factory.getEstudianteRepository();
         RepositoryCarrera jpaCarreraRepository = factory.getCarreraRepository();
         RepositoryInscripcion jpaInscripcionRepository = factory.getInscripcionRepository();
 
-        // Insertar datos (también respetando dependencias)
+        // PRIMERO: Insertar carreras y estudiantes para que tengan IDs
         cargarListaEnBaseDeDatosCarreras(carreras, jpaCarreraRepository);
         cargarListaEnBaseDeDatosEstudiantes(estudiantes, jpaEstudianteRepository);
+        
+        // SEGUNDO: Ahora leer las inscripciones (las carreras y estudiantes ya tienen IDs)
+        List<Inscripcion> inscripciones = reader.leerArchivoEstudianteCarrera(carreras, estudiantes);
         cargarListaEnBaseDeDatosInscripciones(inscripciones, jpaInscripcionRepository);
     }
     
@@ -43,6 +45,7 @@ public class DatabaseLoader {
         for (Carrera entidad : lista) {
             repo.save(entidad);
         }
+        System.out.println("Carreras guardadas: " + lista.size());
     }
 
     public static void cargarListaEnBaseDeDatosEstudiantes(List<Estudiante> lista, RepositoryEstudiante repo) {
@@ -52,12 +55,17 @@ public class DatabaseLoader {
     }
 
     public static void cargarListaEnBaseDeDatosInscripciones(List<Inscripcion> lista, RepositoryInscripcion repo) {
+        int guardadas = 0;
+        int saltadas = 0;
         for (Inscripcion entidad : lista) {
             if (entidad.getCarrera() == null || entidad.getEstudiante() == null) {
+                saltadas++;
                 continue; // la salteo
             }
             repo.save(entidad);
+            guardadas++;
         }
+        System.out.println("Inscripciones guardadas: " + guardadas + ", Saltadas: " + saltadas);
     }
 
 }

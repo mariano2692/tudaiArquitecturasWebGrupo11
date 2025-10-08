@@ -89,11 +89,27 @@ public class CSVreader {
             }
 
             System.out.println("Leyendo archivo estudianteCarrera.csv...");
+            System.out.println("Carreras disponibles: " + carreras.size());
+            System.out.println("Estudiantes disponibles: " + estudiantes.size());
+            
+            // Debug: mostrar IDs de las primeras 3 carreras
+            for (int i = 0; i < Math.min(3, carreras.size()); i++) {
+                System.out.println("Carrera " + i + ": ID=" + carreras.get(i).getId() + ", Nombre=" + carreras.get(i).getNombre());
+            }
+            
+            // Debug: mostrar DNIs de los primeros 3 estudiantes
+            for (int i = 0; i < Math.min(3, estudiantes.size()); i++) {
+                System.out.println("Estudiante " + i + ": DNI=" + estudiantes.get(i).getDni() + ", LU=" + estudiantes.get(i).getLu());
+            }
+            
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
                     .withFirstRecordAsHeader()
                     .parse(reader);
 
+            int contador = 0;
+            int encontrados = 0;
             for (CSVRecord row : records) {
+                contador++;
                 Long id = Long.parseLong(row.get("id"));
                 Long idEstudiante = Long.parseLong(row.get("id_estudiante"));
                 int idCarrera = Integer.parseInt(row.get("id_carrera"));
@@ -108,7 +124,7 @@ public class CSVreader {
 
 
                 Estudiante estudiante = estudiantes.stream()
-                        .filter(e -> e.getLu().equals(idEstudiante))
+                        .filter(e -> e.getDni() == idEstudiante.intValue())
                         .findFirst()
                         .orElse(null);
 
@@ -117,7 +133,28 @@ public class CSVreader {
                         .findFirst()
                         .orElse(null);
 
+                if (estudiante == null) {
+                    System.out.println("No se encontró estudiante con DNI: " + idEstudiante);
+                } else {
+                    encontrados++;
+                }
+                if (carrera == null) {
+                    System.out.println("No se encontró carrera con ID: " + idCarrera);
+                }
+                
+                // Debug para los primeros 3 registros
+                if (contador <= 3) {
+                    System.out.println("Registro " + contador + ": DNI=" + idEstudiante + ", ID_Carrera=" + idCarrera + 
+                                     ", Estudiante=" + (estudiante != null ? "ENCONTRADO" : "NULL") + 
+                                     ", Carrera=" + (carrera != null ? "ENCONTRADA" : "NULL"));
+                }
+
                 inscripciones.add(new Inscripcion(antiguedad, inscripcion, graduacion, false, carrera, estudiante));
+                
+                // Debug cada 10 registros
+                if (contador % 10 == 0) {
+                    System.out.println("Procesados: " + contador + ", Encontrados: " + encontrados);
+                }
             }
             System.out.println("Inscripciones leídas: " + inscripciones.size());
         }
