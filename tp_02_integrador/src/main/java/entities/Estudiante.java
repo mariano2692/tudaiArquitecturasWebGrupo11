@@ -81,6 +81,12 @@ public class Estudiante {
         this.edad = edad;
     }
 
+    public int getDni() {
+        return this.dni;
+    }
+
+    public void setDni(int dni) {}
+
     public String getGenero() {
         return genero;
     }
