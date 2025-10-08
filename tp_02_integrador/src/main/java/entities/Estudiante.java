@@ -6,9 +6,9 @@ import java.util.List;
 
 @Entity
 public class Estudiante {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int dni;
 
     @Column
     private String nombres;
@@ -21,9 +21,6 @@ public class Estudiante {
 
     @Column
     private String genero;
-
-    @Column
-    private int dni;
 
     @Column
     private String ciudadResidencia;
@@ -40,12 +37,12 @@ public class Estudiante {
         this.inscripciones = new ArrayList<Inscripcion>();
     }
 
-    public Estudiante(String nombres, String apellido, int edad, String genero, int dni, String ciudadResidencia, Long lu) {
+    public Estudiante(int dni, String nombres, String apellido, int edad, String genero, String ciudadResidencia, Long lu) {
+        this.dni = dni;
         this.nombres = nombres;
         this.apellido = apellido;
         this.edad = edad;
         this.genero = genero;
-        this.dni = dni;
         this.ciudadResidencia = ciudadResidencia;
         this.lu = lu;
         this.inscripciones = new ArrayList<Inscripcion>();
@@ -53,7 +50,11 @@ public class Estudiante {
 
     // Getters y Setters
     public int getId() {
-        return id;
+        return this.dni;
+    }
+
+    public void setId(int id) {
+        this.dni = id;
     }
 
     public String getNombres() {
@@ -86,14 +87,6 @@ public class Estudiante {
 
     public void setGenero(String genero) {
         this.genero = genero;
-    }
-
-    public int getDni() {
-        return dni;
-    }
-
-    public void setDni(int dni) {
-        this.dni = dni;
     }
 
     public String getCiudadResidencia() {
@@ -133,7 +126,6 @@ public class Estudiante {
     @Override
     public String toString() {
         return "Estudiante{" +
-                "id=" + id +
                 ", nombres='" + nombres + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", edad=" + edad +

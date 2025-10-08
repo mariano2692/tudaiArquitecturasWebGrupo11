@@ -5,24 +5,15 @@ import entities.Estudiante;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
-import repositories.interfaces.RepositoryCarrera;
 import repositories.interfaces.RepositoryEstudiante;
 
 import java.util.List;
 
+
 public class JpaEstudianteRepository implements RepositoryEstudiante {
     private EntityManager em;
-    private static JpaEstudianteRepository instance;
 
-    private JpaEstudianteRepository(EntityManager em) {
-        this.em = em;
-    }
-
-    public static JpaEstudianteRepository getInstance(EntityManager em) {
-        if(instance == null)
-            instance = new JpaEstudianteRepository(em);
-        return instance;
-    }
+    public JpaEstudianteRepository(EntityManager em) {this.em = em;}
 
     // Método para cerrar el EntityManager
     public void close() {
@@ -34,19 +25,16 @@ public class JpaEstudianteRepository implements RepositoryEstudiante {
     @Override
     public void save(Estudiante estudiante) {
         EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
-
-
-            try {
-                em.persist(estudiante);
-                transaction.commit();
-            } catch (PersistenceException e) {
-                transaction.rollback();
-                System.out.println("Error al insertar estudiante! " + e.getMessage());
-                throw e;
-            }
-
+        try {
+            transaction.begin();
+            em.merge(estudiante);
+            transaction.commit();
+        } catch (PersistenceException e) {
+            if (transaction.isActive()) transaction.rollback();
+            System.out.println("Error al insertar/actualizar estudiante! " + e.getMessage());
+            throw e;
         }
+    }
 
     @Override
     public EstudianteDTO selectById(int id) {

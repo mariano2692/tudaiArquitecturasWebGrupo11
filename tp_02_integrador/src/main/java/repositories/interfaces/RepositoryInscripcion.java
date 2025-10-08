@@ -2,8 +2,11 @@ package repositories.interfaces;
 
 import dtos.CarreraConCantInscriptosDTO;
 import dtos.InscripcionDTO;
+import entities.Carrera;
+import entities.Estudiante;
 import entities.Inscripcion;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface RepositoryInscripcion {
@@ -16,4 +19,8 @@ public interface RepositoryInscripcion {
     boolean delete(int id);
 
     List<CarreraConCantInscriptosDTO> recuperarCarrerasOrdenadasPorCantidadInscriptos();
+
+    public List<InscripcionDTO> studentsByCareerAndCity(String career, String city);
+
+    public boolean existeInscripcion(Estudiante estudiante, Carrera carrera, LocalDate anioInscripcion);
 }

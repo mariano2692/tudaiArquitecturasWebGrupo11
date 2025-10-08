@@ -12,20 +12,12 @@ import repositories.interfaces.RepositoryInscripcion;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class JpaCarreraRepository implements RepositoryCarrera {
     private EntityManager em;
-    private static JpaCarreraRepository instance;
 
-    private JpaCarreraRepository(EntityManager em) {
-        this.em = em;
-    }
-
-    public static JpaCarreraRepository getInstance(EntityManager em) {
-        if(instance == null)
-            instance = new JpaCarreraRepository(em);
-        return instance;
-    }
+    public JpaCarreraRepository(EntityManager em) {this.em = em;}
 
     // Método para cerrar el EntityManager
     public void close() {
@@ -37,26 +29,14 @@ public class JpaCarreraRepository implements RepositoryCarrera {
     @Override
     public void save(Carrera carrera) {
         EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
-
-        if(carrera.getId() == 0){
-            try {
-                em.persist(carrera);
-                transaction.commit();
-            } catch (PersistenceException e) {
-                transaction.rollback();
-                System.out.println("Error al insertar carrera! " + e.getMessage());
-                throw e;
-            }
-        } else { // Si la carrera ya existe, hace update
-            try {
-                em.merge(carrera);
-                transaction.commit();
-            } catch (PersistenceException e) {
-                transaction.rollback();
-                System.out.println("Error al actualizar carrera! " + e.getMessage());
-                throw e;
-            }
+        try {
+            transaction.begin();
+            em.merge(carrera); // merge inserta o actualiza
+            transaction.commit();
+        } catch (PersistenceException e) {
+            if (transaction.isActive()) transaction.rollback();
+            System.out.println("Error al insertar/actualizar carrera! " + e.getMessage());
+            throw e;
         }
     }
 
@@ -93,6 +73,25 @@ public class JpaCarreraRepository implements RepositoryCarrera {
         Inscripcion inscripcion = new Inscripcion(carrera, estudiante);
         em.persist(inscripcion);
         transaction.commit();
+    }
+
+    /**
+     * Genera un reporte de las carreras con cantidad de inscriptos y egresados por año.
+     * Ordena las carreras alfabéticamente y los años cronológicamente.
+     */
+    public List<CarreraDTO> generarReporteCarreras() {
+        List<Carrera> carreras = em.createQuery(
+                "SELECT DISTINCT c FROM Carrera c LEFT JOIN FETCH c.inscripciones i ORDER BY c.nombre ASC",
+                Carrera.class
+        ).getResultList();
+
+        return carreras.stream()
+                .map(carrera -> {
+                    CarreraDTO dto = new CarreraDTO(carrera.getNombre());
+                    carrera.getInscripciones().forEach(dto::addInscripcion);
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
 }

@@ -16,6 +16,17 @@ public class InscripcionDTO {
 
     public InscripcionDTO() {}
 
+    // Constructor para recibir EstudianteDTO
+    public InscripcionDTO(int antiguedad, LocalDate anioInscripcion, LocalDate anioEgreso,
+                          boolean graduado, String nombreCarrera, EstudianteDTO estudiante) {
+        this.antiguedad = antiguedad;
+        this.anioInscripcion = anioInscripcion;
+        this.anioEgreso = anioEgreso;
+        this.graduado = graduado;
+        this.nombreCarrera = nombreCarrera;
+        this.estudiante = estudiante;
+    }
+
     public InscripcionDTO(int antiguedad, LocalDate anioInscripcion, LocalDate anioEgreso, boolean graduado, String nombreCarrera, Long luEstudiante) {
         this.antiguedad = antiguedad;
         this.anioInscripcion = anioInscripcion;

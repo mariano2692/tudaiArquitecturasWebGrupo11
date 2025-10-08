@@ -16,4 +16,6 @@ public interface RepositoryCarrera {
     boolean delete(int id);
 
     abstract void matricularEstudianteEnCarrera(String nombreCarrera, String nombreEstudiante, String apellidoEstudiante);
+
+    public List<CarreraDTO> generarReporteCarreras();
 }
