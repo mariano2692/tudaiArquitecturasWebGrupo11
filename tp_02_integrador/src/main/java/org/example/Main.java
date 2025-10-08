@@ -1,10 +1,13 @@
 package org.example;
 
+import dtos.CarreraConCantInscriptosDTO;
+import dtos.InscripcionDTO;
 import helpers.CSVreader;
 import helpers.DatabaseLoader;
 import dtos.EstudianteDTO;
 import factories.RepositoryFactory;
 import repositories.interfaces.RepositoryEstudiante;
+import repositories.interfaces.RepositoryInscripcion;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -51,7 +54,41 @@ public class Main {
             for (EstudianteDTO estudiante : estudiantesPolygender) {
                 System.out.println("- " + estudiante);
             }
-            
+
+
+            //2c recupera los estudiantes ordenados por nombre
+
+            List<EstudianteDTO> estudiantesOrdenadosPorNombre = estudianteRepository.obtenerEstudiantesOrdenadosPorNombre();
+
+            System.out.println("===============================================================================================================================" +
+                    " Estudiantes ordenados por nombre " +
+                    "===============================================================================================================================");
+
+            for(EstudianteDTO estudianteDTO : estudiantesOrdenadosPorNombre) {
+                System.out.println(estudianteDTO);
+            }
+
+            System.out.println();
+
+            // 2f) Recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos
+
+            RepositoryInscripcion repositoryInscripcion = mySqlFactory.getInscripcionRepository();
+
+            List<CarreraConCantInscriptosDTO> listaCarrerasConCantInscriptos = repositoryInscripcion.recuperarCarrerasOrdenadasPorCantidadInscriptos();
+
+
+            System.out.println("=================================================================");
+            System.out.println("Carreras ordenadas por cantidad de inscriptos:");
+            System.out.println("=================================================================");
+
+            for (CarreraConCantInscriptosDTO c : listaCarrerasConCantInscriptos) {
+                System.out.println(c);
+            }
+
+            System.out.println("=================================================================");
+            System.out.println("Total de carreras: " + listaCarrerasConCantInscriptos.size());
+            System.out.println("=================================================================");
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
