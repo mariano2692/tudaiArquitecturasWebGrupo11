@@ -1,5 +1,6 @@
 package repositories.interfaces;
 
+import dtos.CarreraConCantInscriptosDTO;
 import dtos.InscripcionDTO;
 import entities.Inscripcion;
 
@@ -13,4 +14,6 @@ public interface RepositoryInscripcion {
     List<InscripcionDTO> selectAll();
 
     boolean delete(int id);
+
+    List<CarreraConCantInscriptosDTO> recuperarCarrerasOrdenadasPorCantidadInscriptos();
 }

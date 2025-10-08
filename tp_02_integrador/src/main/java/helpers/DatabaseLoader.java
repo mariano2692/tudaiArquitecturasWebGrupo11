@@ -15,7 +15,7 @@ import java.util.List;
 public class DatabaseLoader {
 
     // Método para cargar todos los datos de los CSVs a la base de datos
-    public static void cargarDatos(CSVreader reader) throws SQLException, IOException {
+    public static void cargarDatos(CSVreader reader, RepositoryFactory mySqlFactory) throws SQLException, IOException {
         // Obtener listas desde los CSVs
         List<Carrera> carreras = reader.leerArchivoCarreras();
         List<Estudiante> estudiantes = reader.leerArchivoEstudiantes();
@@ -23,8 +23,6 @@ public class DatabaseLoader {
 
         // Obtener los Respositoriess de las entidades
 
-
-        RepositoryFactory mySqlFactory = RepositoryFactory.getDAOFactory(1);
         RepositoryEstudiante jpaEstudianteRepository = mySqlFactory.getEstudianteRepository();
         RepositoryCarrera jpaCarreraRepository = mySqlFactory.getCarreraRepository();
         RepositoryInscripcion jpaInscripcionRepository = mySqlFactory.getInscripcionRepository();

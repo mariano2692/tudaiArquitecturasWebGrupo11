@@ -1,5 +1,6 @@
 package repositories;
 
+import dtos.CarreraConCantInscriptosDTO;
 import dtos.InscripcionDTO;
 import entities.Inscripcion;
 import jakarta.persistence.EntityManager;
@@ -63,11 +64,47 @@ public class JpaInscripcionRepository implements RepositoryInscripcion {
 
     @Override
     public List<InscripcionDTO> selectAll() {
-        return List.of();
+        try {
+            return em.createQuery(
+                    "SELECT new dtos.InscripcionDTO(" +
+                            "i.antiguedad, " +
+                            "i.anioInscripcion, " +
+                            "i.anioEgreso, " +
+                            "i.graduado, " +
+                            "c.nombre, " +
+                            "e.lu) " +
+                            "FROM Inscripcion i " +
+                            "JOIN i.carrera c " +
+                            "JOIN i.estudiante e",
+                    InscripcionDTO.class
+            ).getResultList();
+        } catch (PersistenceException e) {
+            System.out.println("Error al obtener inscripciones! " + e.getMessage());
+            throw e;
+        }
     }
+
+
 
     @Override
     public boolean delete(int id) {
         return false;
     }
+
+    // 2f) Recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos
+    public List<CarreraConCantInscriptosDTO> recuperarCarrerasOrdenadasPorCantidadInscriptos() {
+        try {
+            return em.createQuery(
+                            "SELECT new dtos.CarreraConCantInscriptosDTO(i.carrera.nombre, COUNT(i)) " +
+                                    "FROM Inscripcion i " +
+                                    "GROUP BY i.carrera.nombre " +
+                                    "HAVING COUNT(i) > 0 " + // Solo incluir carreras con al menos un inscripto
+                                    "ORDER BY COUNT(i) DESC", CarreraConCantInscriptosDTO.class)
+                    .getResultList();
+        } catch (PersistenceException e) {
+            System.out.println("Error al obtener carreras con inscriptos! " + e.getMessage());
+            throw e;
+        }
+    }
+
 }

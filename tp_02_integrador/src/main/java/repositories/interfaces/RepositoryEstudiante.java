@@ -13,4 +13,6 @@ public interface RepositoryEstudiante{
     List<EstudianteDTO> selectAll();
 
     boolean delete(int id);
+
+    List<EstudianteDTO> obtenerEstudiantesOrdenadosPorNombre();
 }
