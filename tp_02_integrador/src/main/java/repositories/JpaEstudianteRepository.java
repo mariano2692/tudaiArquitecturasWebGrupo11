@@ -114,4 +114,28 @@ public class JpaEstudianteRepository implements RepositoryEstudiante {
             throw e;
         }
     }
+
+    @Override
+    public EstudianteDTO darDeAltaEstudiante(int dni, String nombres, String apellido, int edad, String genero, String ciudadResidencia, Long lu) {
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+            Estudiante estudianteExistente = em.find(Estudiante.class, dni);
+            if (estudianteExistente != null) {
+                System.out.println("Ya existe un estudiante con DNI: " + dni);
+                transaction.rollback();
+                return null;
+            }
+            Estudiante nuevoEstudiante = new Estudiante(dni, nombres, apellido, edad, genero, ciudadResidencia, lu);
+            em.persist(nuevoEstudiante);
+            transaction.commit();
+            
+            return convertirAEstudianteDTO(nuevoEstudiante);
+            
+        } catch (PersistenceException e) {
+            if (transaction.isActive()) transaction.rollback();
+            System.out.println("Error al dar de alta estudiante: " + e.getMessage());
+            throw e;
+        }
+    }
 }

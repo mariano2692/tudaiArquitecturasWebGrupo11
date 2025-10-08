@@ -23,4 +23,6 @@ public interface RepositoryInscripcion {
     public List<InscripcionDTO> studentsByCareerAndCity(String career, String city);
 
     public boolean existeInscripcion(Estudiante estudiante, Carrera carrera, LocalDate anioInscripcion);
+    
+    InscripcionDTO matricularEstudianteEnCarrera(int dniEstudiante, int idCarrera);
 }

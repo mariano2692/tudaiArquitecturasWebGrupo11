@@ -139,6 +139,54 @@ public class Main {
 
 
 
+        // --- NUEVAS FUNCIONALIDADES ---
+        
+        // a) Dar de alta un estudiante
+        System.out.println("\n=== DAR DE ALTA UN ESTUDIANTE ===");
+        EstudianteDTO nuevoEstudiante = repositoryEstudiante.darDeAltaEstudiante(
+                12345678,  // DNI
+                "Juan",     // Nombres
+                "Pérez",    // Apellido
+                20,         // Edad
+                "Male",     // Género
+                "Tandil",   // Ciudad de residencia
+                50000L      // LU (Libreta Universitaria)
+        );
+        
+        if (nuevoEstudiante != null) {
+            System.out.println("Estudiante dado de alta exitosamente: " + nuevoEstudiante);
+        } else {
+            System.out.println("No se pudo dar de alta el estudiante (posiblemente ya existe)");
+        }
+        
+        // b) Matricular un estudiante en una carrera
+        System.out.println("\n=== MATRICULAR ESTUDIANTE EN CARRERA ===");
+        
+        // Primero intentamos matricular al estudiante que acabamos de crear
+        InscripcionDTO nuevaInscripcion = repositoryInscripcion.matricularEstudianteEnCarrera(
+                12345678,  // DNI del estudiante
+                1          // ID de la carrera TUDAI
+        );
+        
+        if (nuevaInscripcion != null) {
+            System.out.println("Estudiante matriculado exitosamente: " + nuevaInscripcion);
+        } else {
+            System.out.println("No se pudo matricular el estudiante");
+        }
+        
+        // Intentamos matricular a un estudiante existente en otra carrera
+        System.out.println("\n--- Matriculando estudiante existente en otra carrera ---");
+        InscripcionDTO inscripcionExistente = repositoryInscripcion.matricularEstudianteEnCarrera(
+                34978,     // DNI de un estudiante que sabemos que existe
+                2          // ID de la carrera Abogacía
+        );
+        
+        if (inscripcionExistente != null) {
+            System.out.println("Estudiante existente matriculado exitosamente: " + inscripcionExistente);
+        } else {
+            System.out.println("No se pudo matricular el estudiante existente");
+        }
+
         // --- CERRAR EM Y EMF ---
         emConsulta.close();
         emf.close();

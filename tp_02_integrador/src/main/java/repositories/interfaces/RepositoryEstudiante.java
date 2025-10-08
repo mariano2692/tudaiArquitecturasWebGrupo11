@@ -20,4 +20,6 @@ public interface RepositoryEstudiante{
     List<EstudianteDTO> selectByGenero(String genero);
 
     List<EstudianteDTO> obtenerEstudiantesOrdenadosPorNombre();
+    
+    EstudianteDTO darDeAltaEstudiante(int dni, String nombres, String apellido, int edad, String genero, String ciudadResidencia, Long lu);
 }

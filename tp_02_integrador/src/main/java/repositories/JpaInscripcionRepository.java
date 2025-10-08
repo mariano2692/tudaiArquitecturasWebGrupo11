@@ -143,4 +143,70 @@ public class JpaInscripcionRepository implements RepositoryInscripcion {
                 .getSingleResult();
         return count > 0;
     }
+
+    @Override
+    public InscripcionDTO matricularEstudianteEnCarrera(int dniEstudiante, int idCarrera) {
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+            Estudiante estudiante = em.find(Estudiante.class, dniEstudiante);
+            if (estudiante == null) {
+                System.out.println("No se encontró estudiante con DNI: " + dniEstudiante);
+                transaction.rollback();
+                return null;
+            }
+            // Buscar la carrera por ID
+            Carrera carrera = em.find(Carrera.class, idCarrera);
+            if (carrera == null) {
+                System.out.println("No se encontró carrera con ID: " + idCarrera);
+                transaction.rollback();
+                return null;
+            }
+            // Verificar si ya está inscrito en esta carrera para el año actual
+            LocalDate anioActual = LocalDate.now();
+            if (existeInscripcion(estudiante, carrera, anioActual)) {
+                System.out.println("El estudiante ya está inscrito en esta carrera para el año actual");
+                transaction.rollback();
+                return null;
+            }
+            
+            // Crear nueva inscripción
+            Inscripcion nuevaInscripcion = new Inscripcion(carrera, estudiante);
+            em.persist(nuevaInscripcion);
+            
+            // Actualizar las relaciones bidireccionales
+            estudiante.addInscripcion(nuevaInscripcion);
+            carrera.addInscripcion(nuevaInscripcion);
+            
+            transaction.commit();
+            
+            System.out.println("Estudiante matriculado exitosamente en la carrera: " + nuevaInscripcion);
+            return convertirAInscripcionDTO(nuevaInscripcion);
+            
+        } catch (PersistenceException e) {
+            if (transaction.isActive()) transaction.rollback();
+            System.out.println("Error al matricular estudiante: " + e.getMessage());
+            throw e;
+        }
+    }
+    
+    // Método helper para convertir Inscripcion a InscripcionDTO
+    private InscripcionDTO convertirAInscripcionDTO(Inscripcion inscripcion) {
+        return new InscripcionDTO(
+                inscripcion.getAntiguedad(),
+                inscripcion.getAnioInscripcion(),
+                inscripcion.getAnioEgreso(),
+                inscripcion.isGraduado(),
+                inscripcion.getCarrera().getNombre(),
+                new EstudianteDTO(
+                        inscripcion.getEstudiante().getNombres(),
+                        inscripcion.getEstudiante().getApellido(),
+                        inscripcion.getEstudiante().getEdad(),
+                        inscripcion.getEstudiante().getGenero(),
+                        inscripcion.getEstudiante().getDni(),
+                        inscripcion.getEstudiante().getCiudadResidencia(),
+                        inscripcion.getEstudiante().getLu()
+                )
+        );
+    }
 }
