@@ -30,20 +30,20 @@ public class Main {
             DatabaseLoader.cargarDatos(reader, mySqlFactory);
 
             // Usar el mismo factory para obtener el repositorio
+            //2c recupera los estudiantes ordenados por nombre
             RepositoryEstudiante estudianteRepository = mySqlFactory.getEstudianteRepository();
 
-//
-//            List<EstudianteDTO> estudiantesOrdenadosPorNombre = estudianteRepository.obtenerEstudiantesOrdenadosPorNombre();
-//
-//            System.out.println("===============================================================================================================================" +
-//                    " Estudiantes ordenados por nombre " +
-//                    "===============================================================================================================================");
-//
-//            for(EstudianteDTO estudianteDTO : estudiantesOrdenadosPorNombre) {
-//                System.out.println(estudianteDTO);
-//            }
-//
-//            System.out.println();
+            List<EstudianteDTO> estudiantesOrdenadosPorNombre = estudianteRepository.obtenerEstudiantesOrdenadosPorNombre();
+
+            System.out.println("===============================================================================================================================" +
+                    " Estudiantes ordenados por nombre " +
+                    "===============================================================================================================================");
+
+            for(EstudianteDTO estudianteDTO : estudiantesOrdenadosPorNombre) {
+                System.out.println(estudianteDTO);
+            }
+
+            System.out.println();
 
             // 2f) Recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos
 
@@ -66,18 +66,6 @@ public class Main {
             System.out.println("=================================================================");
             System.out.println("Total de inscripciones: " + inscripciones.size());
             System.out.println("=================================================================");
-
-
-//            System.out.println("===============================================================================================================================" +
-//                    " Carreras obtenidas con estudiantes inscriptos y ordenadas por la cantidad de ellos " +
-//                    "===============================================================================================================================");
-//
-//            for (CarreraConCantInscriptosDTO carrera : listaCarrerasConCantInscriptos) {
-//                System.out.println(carrera);
-//            }
-//
-//            System.out.println();
-
 
 
         } catch (SQLException e) {

@@ -15,24 +15,29 @@ import java.util.List;
 public class DatabaseLoader {
 
     // Método para cargar todos los datos de los CSVs a la base de datos
-    public static void cargarDatos(CSVreader reader, RepositoryFactory mySqlFactory) throws SQLException, IOException {
+    public static void cargarDatos(CSVreader reader, RepositoryFactory factory) throws SQLException, IOException {
         // Obtener listas desde los CSVs
         List<Carrera> carreras = reader.leerArchivoCarreras();
         List<Estudiante> estudiantes = reader.leerArchivoEstudiantes();
-        List<Inscripcion> inscripciones = reader.leerArchivoEstudianteCarrera(carreras, estudiantes);
 
-        // Obtener los Respositoriess de las entidades
+        // Obtener los Repositorios de las entidades usando el factory pasado como parámetro
+        RepositoryEstudiante jpaEstudianteRepository = factory.getEstudianteRepository();
+        RepositoryCarrera jpaCarreraRepository = factory.getCarreraRepository();
+        RepositoryInscripcion jpaInscripcionRepository = factory.getInscripcionRepository();
 
-        RepositoryEstudiante jpaEstudianteRepository = mySqlFactory.getEstudianteRepository();
-        RepositoryCarrera jpaCarreraRepository = mySqlFactory.getCarreraRepository();
-        RepositoryInscripcion jpaInscripcionRepository = mySqlFactory.getInscripcionRepository();
-
-
-
-        // Insertar datos (también respetando dependencias)
+        // PRIMERO: Insertar carreras y estudiantes para que tengan IDs
         cargarListaEnBaseDeDatosCarreras(carreras, jpaCarreraRepository);
         cargarListaEnBaseDeDatosEstudiantes(estudiantes, jpaEstudianteRepository);
+
+        // SEGUNDO: Ahora leer las inscripciones (las carreras y estudiantes ya tienen IDs)
+        List<Inscripcion> inscripciones = reader.leerArchivoEstudianteCarrera(carreras, estudiantes);
         cargarListaEnBaseDeDatosInscripciones(inscripciones, jpaInscripcionRepository);
+    }
+
+    // Método original para mantener compatibilidad
+    public static void cargarDatos(CSVreader reader) throws SQLException, IOException {
+        RepositoryFactory mySqlFactory = RepositoryFactory.getDAOFactory(1);
+        cargarDatos(reader, mySqlFactory);
     }
 
     // Método genérico para cargar entidades con cualquier DAO
@@ -40,6 +45,7 @@ public class DatabaseLoader {
         for (Carrera entidad : lista) {
             repo.save(entidad);
         }
+        System.out.println("Carreras guardadas: " + lista.size());
     }
 
     public static void cargarListaEnBaseDeDatosEstudiantes(List<Estudiante> lista, RepositoryEstudiante repo) {
@@ -49,12 +55,17 @@ public class DatabaseLoader {
     }
 
     public static void cargarListaEnBaseDeDatosInscripciones(List<Inscripcion> lista, RepositoryInscripcion repo) {
+        int guardadas = 0;
+        int saltadas = 0;
         for (Inscripcion entidad : lista) {
             if (entidad.getCarrera() == null || entidad.getEstudiante() == null) {
+                saltadas++;
                 continue; // la salteo
             }
             repo.save(entidad);
+            guardadas++;
         }
+        System.out.println("Inscripciones guardadas: " + guardadas + ", Saltadas: " + saltadas);
     }
 
 }
