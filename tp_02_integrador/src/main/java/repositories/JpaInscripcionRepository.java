@@ -1,6 +1,7 @@
 package repositories;
 
 import dtos.EstudianteDTO;
+import dtos.CarreraConCantInscriptosDTO;
 import dtos.InscripcionDTO;
 import entities.Carrera;
 import entities.Estudiante;
@@ -15,20 +16,17 @@ import java.util.List;
 
 public class JpaInscripcionRepository implements RepositoryInscripcion {
     private EntityManager em;
-    //private static JpaInscripcionRepository instance;
-    public JpaInscripcionRepository(EntityManager em) {this.em = em;}
-/*
-    private JpaInscripcionRepository(EntityManager em) {this.em = em;}
+    private static JpaInscripcionRepository instance;
 
- */
-/*
+    private JpaInscripcionRepository(EntityManager em) {
+        this.em = em;
+    }
+
     public static JpaInscripcionRepository getInstance(EntityManager em) {
         if(instance == null)
             instance = new JpaInscripcionRepository(em);
         return instance;
     }
-
- */
 
     // Método para cerrar el EntityManager
     public void close() {
@@ -39,7 +37,6 @@ public class JpaInscripcionRepository implements RepositoryInscripcion {
 
     @Override
     public void save(Inscripcion inscripcion) {
-
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
@@ -66,6 +63,23 @@ public class JpaInscripcionRepository implements RepositoryInscripcion {
     public boolean delete(int id) {
         return false;
     }
+
+    // 2f) Recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos
+    public List<CarreraConCantInscriptosDTO> recuperarCarrerasOrdenadasPorCantidadInscriptos() {
+        try {
+            return em.createQuery(
+                            "SELECT new dtos.CarreraConCantInscriptosDTO(i.carrera.nombre, COUNT(i)) " +
+                                    "FROM Inscripcion i " +
+                                    "GROUP BY i.carrera.nombre " +
+                                    "HAVING COUNT(i) > 0 " + // Solo incluir carreras con al menos un inscripto
+                                    "ORDER BY COUNT(i) DESC", CarreraConCantInscriptosDTO.class)
+                    .getResultList();
+        } catch (PersistenceException e) {
+            System.out.println("Error al obtener carreras con inscriptos! " + e.getMessage());
+            throw e;
+        }
+    }
+
 
     /**
      * Obtiene una lista de estudiantes matriculados en una carrera específica

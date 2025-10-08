@@ -39,6 +39,7 @@ public class DatabaseLoader {
         for (Carrera entidad : lista) {
             repo.save(entidad);
         }
+        System.out.println("Carreras guardadas: " + lista.size());
     }
 
     public static void cargarListaEnBaseDeDatosEstudiantes(List<Estudiante> lista, RepositoryEstudiante repo) {
@@ -48,10 +49,13 @@ public class DatabaseLoader {
     }
 
     public static void cargarListaEnBaseDeDatosInscripciones(List<Inscripcion> lista, RepositoryInscripcion repo) {
+        int guardadas = 0;
+        int saltadas = 0;
         for (Inscripcion entidad : lista) {
             System.out.println(entidad);
 
             if (entidad.getCarrera() == null || entidad.getEstudiante() == null) {
+                saltadas++;
                 continue; // la salteo
             }
 
@@ -61,7 +65,10 @@ public class DatabaseLoader {
             } else {
                 System.out.println("Inscripción ya existente, se omite: " + entidad);
             }
+            repo.save(entidad);
+            guardadas++;
         }
+        System.out.println("Inscripciones guardadas: " + guardadas + ", Saltadas: " + saltadas);
     }
 
 }

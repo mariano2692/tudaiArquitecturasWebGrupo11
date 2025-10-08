@@ -6,6 +6,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import entities.Inscripcion;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -23,7 +24,11 @@ public class CSVreader {
                          .withIgnoreHeaderCase()
                          .withTrim()
                          .parse(reader)) {
-
+                if (in == null) {
+                    System.err.println("ERROR: No se pudo encontrar el archivo carreras.csv en el classpath");
+                    return carreras;
+                }
+                System.out.println("Leyendo archivo carreras.csv...");
                 for (CSVRecord row : parser) {
                     try {
                         String idStr = row.get("id_carrera");
@@ -58,50 +63,44 @@ public class CSVreader {
             return carreras;
         }
 
-        public List<Estudiante> leerArchivoEstudiantes() {
-            List<Estudiante> estudiantes = new ArrayList<>();
+    public List<Estudiante> leerArchivoEstudiantes() {
+        List<Estudiante> estudiantes = new ArrayList<>();
 
-            try (InputStream in = getClass().getClassLoader().getResourceAsStream("csv_files/estudiantes.csv")) {
-
-                if (in == null) {
-                    System.err.println("No se encontró el archivo estudiantes.csv en el classpath.");
-                    return estudiantes;
-                }
-
-                try (Reader reader = new InputStreamReader(in);
-                     CSVParser parser = CSVFormat.DEFAULT
-                             .withFirstRecordAsHeader()
-                             .withIgnoreHeaderCase()
-                             .withTrim()
-                             .parse(reader)) {
-
-                    for (CSVRecord row : parser) {
-                        try {
-                            int dni = Integer.parseInt(row.get("DNI").trim());
-                            String nombres = row.get("nombre").trim();
-                            String apellido = row.get("apellido").trim();
-                            int edad = Integer.parseInt(row.get("edad").trim());
-                            String genero = row.get("genero").trim();
-                            String ciudad = row.get("ciudad").trim();
-                            Long lu = Long.parseLong(row.get("LU").trim());
-
-                            Estudiante e = new Estudiante(dni, nombres, apellido, edad, genero, ciudad, lu);
-                            estudiantes.add(e);
-
-                        } catch (Exception ex) {
-                            System.err.println("Error al procesar fila: " + row.toString() + " → " + ex.getMessage());
-                        }
-                    }
-
-                }
-
-            } catch (IOException e) {
-                System.err.println("Error al leer el archivo estudiantes.csv: " + e.getMessage());
-                e.printStackTrace();
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("csv_files/estudiantes.csv");
+             Reader reader = new InputStreamReader(in);
+             CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader)) {
+            if (in == null) {
+                System.err.println("ERROR: No se pudo encontrar el archivo estudiantes.csv en el classpath");
+                return estudiantes;
             }
 
+            System.out.println("Leyendo archivo estudiantes.csv...");
+
+            for (CSVRecord row : parser) {
+                try {
+                    int dni = Integer.parseInt(row.get("DNI").trim());
+                    String nombres = row.get("nombre").trim();
+                    String apellido = row.get("apellido").trim();
+                    int edad = Integer.parseInt(row.get("edad").trim());
+                    String genero = row.get("genero").trim();
+                    String ciudad = row.get("ciudad").trim();
+                    Long lu = Long.parseLong(row.get("LU").trim());
+
+                    Estudiante e = new Estudiante(dni, nombres, apellido, edad, genero, ciudad, lu);
+                    estudiantes.add(e);
+
+                } catch (Exception ex) {
+                    System.err.println("Error al procesar fila: " + row.toString() + " → " + ex.getMessage());
+                }
+            }
+
+    } catch (IOException e) {
+        System.err.println("Error al leer el archivo estudiantes.csv: " + e.getMessage());
+        e.printStackTrace();
+    }
+
             return estudiantes;
-        }
+    }
 
     public List<Inscripcion> leerArchivoEstudianteCarrera(List<Carrera> carreras, List<Estudiante> estudiantes) throws IOException {
         List<Inscripcion> inscripciones = new ArrayList<>();
@@ -109,6 +108,25 @@ public class CSVreader {
 
         try (InputStream in = getClass().getClassLoader().getResourceAsStream("csv_files/estudianteCarrera.csv");
              Reader reader = new InputStreamReader(in)) {
+
+            if (in == null) {
+                System.err.println("ERROR: No se pudo encontrar el archivo estudianteCarrera.csv en el classpath");
+                return inscripciones;
+            }
+
+            System.out.println("Leyendo archivo estudianteCarrera.csv...");
+            System.out.println("Carreras disponibles: " + carreras.size());
+            System.out.println("Estudiantes disponibles: " + estudiantes.size());
+
+            // Debug: mostrar IDs de las primeras 3 carreras
+            for (int i = 0; i < Math.min(3, carreras.size()); i++) {
+                System.out.println("Carrera " + i + ": ID=" + carreras.get(i).getId() + ", Nombre=" + carreras.get(i).getNombre());
+            }
+
+            // Debug: mostrar DNIs de los primeros 3 estudiantes
+            for (int i = 0; i < Math.min(3, estudiantes.size()); i++) {
+                System.out.println("Estudiante " + i + ": DNI=" + estudiantes.get(i).getDni() + ", LU=" + estudiantes.get(i).getLu());
+            }
 
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
                     .withFirstRecordAsHeader()
@@ -153,15 +171,12 @@ public class CSVreader {
                     e.printStackTrace();
                 }
             }
+            System.out.println("Inscripciones leídas: " + inscripciones.size());
         }
 
         System.out.println("Total inscripciones cargadas: " + inscripciones.size());
         return inscripciones;
     }
-
-
-
-
 
 
 }
