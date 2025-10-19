@@ -40,8 +40,59 @@ public class EstudianteCarrera {
         this.graduado = graduado;
     }
     public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
     }
 
     public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
+    }
+
+    // Getters y Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public int getAnioInscripcion() {
+        return anioInscripcion;
+    }
+
+    public void setAnioInscripcion(int anioInscripcion) {
+        this.anioInscripcion = anioInscripcion;
+    }
+
+    public int getAnioEgreso() {
+        return anioEgreso;
+    }
+
+    public void setAnioEgreso(int anioEgreso) {
+        this.anioEgreso = anioEgreso;
+    }
+
+    public int getAntiguedad() {
+        return antiguedad;
+    }
+
+    public void setAntiguedad(int antiguedad) {
+        this.antiguedad = antiguedad;
+    }
+
+    public boolean isGraduado() {
+        return graduado;
+    }
+
+    public void setGraduado(boolean graduado) {
+        this.graduado = graduado;
     }
 }
