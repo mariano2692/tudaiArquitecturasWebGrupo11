@@ -1,7 +1,7 @@
 package org.example.tp_03_integrador.models;
 
 import jakarta.persistence.*;
-
+@Entity
 public class EstudianteCarrera {
     @Id
     private int id;
