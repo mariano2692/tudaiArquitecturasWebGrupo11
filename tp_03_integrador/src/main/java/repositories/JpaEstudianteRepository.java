@@ -1,143 +1,17 @@
 package repositories;
 
-import dtos.EstudianteDTO;
 import entities.Estudiante;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.PersistenceException;
-import repositories.interfaces.RepositoryEstudiante;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
+public interface JpaEstudianteRepository extends JpaRepository<Estudiante, Integer> {
+    List<Estudiante> findByGenero(String genero);
 
-public class JpaEstudianteRepository implements RepositoryEstudiante {
-    private EntityManager em;
+    Estudiante findByLu(Long lu);
 
-    public JpaEstudianteRepository(EntityManager em) {this.em = em;}
+    List<Estudiante> findAllByOrderByNombresAsc();
 
-    // Método para cerrar el EntityManager
-    public void close() {
-        if (em != null && em.isOpen()) {
-            em.close();
-        }
-    }
-
-    @Override
-    public void save(Estudiante estudiante) {
-        EntityTransaction transaction = em.getTransaction();
-        try {
-            transaction.begin();
-            em.merge(estudiante);
-            transaction.commit();
-        } catch (PersistenceException e) {
-            if (transaction.isActive()) transaction.rollback();
-            System.out.println("Error al insertar/actualizar estudiante! " + e.getMessage());
-            throw e;
-        }
-    }
-
-    @Override
-    public EstudianteDTO selectById(int id) {
-        return null;
-    }
-
-    @Override
-    public List<EstudianteDTO> selectAll() {
-        try {
-            List<Estudiante> estudiantes = em.createQuery("SELECT e FROM Estudiante e", Estudiante.class)
-                    .getResultList();
-            return estudiantes.stream()
-                    .map(this::convertirAEstudianteDTO)
-                    .toList();
-        } catch (Exception e) {
-            System.out.println("Error al obtener todos los estudiantes: " + e.getMessage());
-            return List.of();
-        }
-    }
-
-    @Override
-    public boolean delete(int id) {
-        return false;
-    }
-
-    @Override
-    public EstudianteDTO selectByLu(Long lu) {
-        try {
-            Estudiante estudiante = em.createQuery("SELECT e FROM Estudiante e WHERE e.lu = :lu", Estudiante.class)
-                    .setParameter("lu", lu)
-                    .getSingleResult();
-            return convertirAEstudianteDTO(estudiante);
-        } catch (Exception e) {
-            System.out.println("No se encontró estudiante con LU: " + lu);
-            return null;
-        }
-    }
-
-    @Override
-    public List<EstudianteDTO> selectByGenero(String genero) {
-        try {
-            List<Estudiante> estudiantes = em.createQuery("SELECT e FROM Estudiante e WHERE e.genero = :genero", Estudiante.class)
-                    .setParameter("genero", genero)
-                    .getResultList();
-            return estudiantes.stream()
-                    .map(this::convertirAEstudianteDTO)
-                    .toList();
-        } catch (Exception e) {
-            System.out.println("Error al buscar estudiantes por género: " + e.getMessage());
-            return List.of();
-        }
-    }
-
-        // 2c) Recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple -> Por nombre
-    @Override
-    public List<EstudianteDTO> obtenerEstudiantesOrdenadosPorNombre() {
-            try {
-                return em.createQuery(
-                        "SELECT new dtos.EstudianteDTO(e.nombres, e.apellido, e.edad, e.genero, e.dni, e.ciudadResidencia, e.lu) " +
-                                "FROM Estudiante e " +
-                                "ORDER BY e.nombres"
-                        , EstudianteDTO.class).getResultList();
-            } catch (PersistenceException e) {
-                System.out.println("Error al obtener estudiantes ordenados por nombre! " + e.getMessage());
-                throw e;
-            }
-        }
-
-
-    // Método helper para convertir Estudiante a EstudianteDTO
-    private EstudianteDTO convertirAEstudianteDTO(Estudiante estudiante) {
-        return new EstudianteDTO(
-                estudiante.getNombres(),
-                estudiante.getApellido(),
-                estudiante.getEdad(),
-                estudiante.getGenero(),
-                estudiante.getDni(),
-                estudiante.getCiudadResidencia(),
-                estudiante.getLu()
-        );
-    }
-
-    @Override
-    public EstudianteDTO darDeAltaEstudiante(int dni, String nombres, String apellido, int edad, String genero, String ciudadResidencia, Long lu) {
-        EntityTransaction transaction = em.getTransaction();
-        try {
-            transaction.begin();
-            Estudiante estudianteExistente = em.find(Estudiante.class, dni);
-            if (estudianteExistente != null) {
-                System.out.println("Ya existe un estudiante con DNI: " + dni);
-                transaction.rollback();
-                return null;
-            }
-            Estudiante nuevoEstudiante = new Estudiante(dni, nombres, apellido, edad, genero, ciudadResidencia, lu);
-            em.persist(nuevoEstudiante);
-            transaction.commit();
-            
-            return convertirAEstudianteDTO(nuevoEstudiante);
-            
-        } catch (PersistenceException e) {
-            if (transaction.isActive()) transaction.rollback();
-            System.out.println("Error al dar de alta estudiante: " + e.getMessage());
-            throw e;
-        }
-    }
 }
