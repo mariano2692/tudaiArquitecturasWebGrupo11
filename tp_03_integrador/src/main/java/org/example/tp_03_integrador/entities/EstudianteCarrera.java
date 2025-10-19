@@ -1,4 +1,4 @@
-package org.example.tp_03_integrador.models;
+package org.example.tp_03_integrador.entities;
 
 import jakarta.persistence.*;
 @Entity
