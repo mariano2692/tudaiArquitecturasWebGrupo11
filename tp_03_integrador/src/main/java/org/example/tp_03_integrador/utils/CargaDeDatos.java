@@ -68,27 +68,44 @@ public class CargaDeDatos {
              CSVParser csvParser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(readerEstudianteCarrera)) {
 
             for (CSVRecord csvRecord : csvParser) {
-                // Manejo del Optional para el estudiante
-                Estudiante estudiante = re.findByDni(Integer.parseInt(csvRecord.get("id_estudiante")))
-                        .orElseThrow(() -> new RuntimeException("Estudiante no encontrado con id=" + csvRecord.get("id_estudiante") + "!"));
+                try {
+                    // Manejo del Optional para el estudiante
+                    Estudiante estudiante = re.findByDni(Integer.parseInt(csvRecord.get("id_estudiante")))
+                            .orElse(null);
 
-                // Manejo del Optional para la carrera
-                Carrera carrera = rc.findById(Integer.parseInt(csvRecord.get("id_carrera")))
-                        .orElseThrow(() -> new RuntimeException("Carrera no encontrada con id=" + csvRecord.get("id_carrera") + "!"));
+                    // Si el estudiante no existe, saltamos este registro
+                    if (estudiante == null) {
+                        System.out.println("Saltando registro - Estudiante no encontrado con id=" + csvRecord.get("id_estudiante"));
+                        continue;
+                    }
 
-                // Creación de la entidad EstudianteCarrera
-                EstudianteCarrera estudianteCarrera = new EstudianteCarrera(
-                        Integer.parseInt(csvRecord.get("id")),
-                        estudiante,
-                        carrera,
-                        Integer.parseInt(csvRecord.get("inscripcion")),
-                        Integer.parseInt(csvRecord.get("graduacion")),
-                        Integer.parseInt(csvRecord.get("antiguedad")),
-                        csvRecord.get("graduacion").equals("0") ? false : true
-                );
+                    // Manejo del Optional para la carrera
+                    Carrera carrera = rc.findById(Integer.parseInt(csvRecord.get("id_carrera")))
+                            .orElse(null);
 
-                // Guardar la inscripción en la base de datos
-                rec.save(estudianteCarrera);
+                    // Si la carrera no existe, saltamos este registro
+                    if (carrera == null) {
+                        System.out.println("Saltando registro - Carrera no encontrada con id=" + csvRecord.get("id_carrera"));
+                        continue;
+                    }
+
+                    // Creación de la entidad EstudianteCarrera
+                    EstudianteCarrera estudianteCarrera = new EstudianteCarrera(
+                            Integer.parseInt(csvRecord.get("id")),
+                            estudiante,
+                            carrera,
+                            Integer.parseInt(csvRecord.get("inscripcion")),
+                            Integer.parseInt(csvRecord.get("graduacion")),
+                            Integer.parseInt(csvRecord.get("antiguedad")),
+                            csvRecord.get("graduacion").equals("0") ? false : true
+                    );
+
+                    // Guardar la inscripción en la base de datos
+                    rec.save(estudianteCarrera);
+                } catch (Exception e) {
+                    System.out.println("Error procesando registro: " + e.getMessage());
+                    continue;
+                }
             }
         }
     }
