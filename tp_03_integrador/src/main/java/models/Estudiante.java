@@ -1,18 +1,14 @@
 package models;
 
 import jakarta.persistence.*;
-import lombok.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@ToString
 public class Estudiante {
     @Id
-    @Setter(AccessLevel.NONE)
     private int dni;
 
     @Column
@@ -35,8 +31,6 @@ public class Estudiante {
 
     // Relación uno a muchos con la entidad Inscripcion
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // CascadeType.ALL significa que todas las operaciones de cascada se aplicarán a las entidades relacionadas
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     private List<EstudianteCarrera> inscripciones;
 
     public Estudiante() {

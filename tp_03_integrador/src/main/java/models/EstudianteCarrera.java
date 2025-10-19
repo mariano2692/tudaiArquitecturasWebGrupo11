@@ -1,15 +1,11 @@
 package models;
 
 import jakarta.persistence.*;
-import lombok.*;
+
 
 @Entity
-@Getter
-@Setter
-@ToString
 public class EstudianteCarrera {
     @Id
-    @Setter(AccessLevel.NONE)
     private int id;
 
     // Relación muchos a uno con Estudiante
@@ -44,5 +40,11 @@ public class EstudianteCarrera {
         this.anioEgreso = anioEgreso;
         this.antiguedad = antiguedad;
         this.graduado = graduado;
+    }
+
+    public void setEstudiante(Object o) {
+    }
+
+    public void setCarrera(Carrera carrera) {
     }
 }
