@@ -38,7 +38,7 @@ public class CargaDeDatos {
                 // Creación de la entidad Carrera
                 Carrera carrera = new Carrera(
                         Integer.parseInt(csvRecord.get("id_carrera")),
-                        csvRecord.get("nombre")
+                        csvRecord.get("carrera")
                 );
                 // Guardar carrera en la base de datos
                 this.rc.saveAndFlush(carrera);
@@ -69,7 +69,7 @@ public class CargaDeDatos {
 
             for (CSVRecord csvRecord : csvParser) {
                 // Manejo del Optional para el estudiante
-                Estudiante estudiante = re.findById(Integer.parseInt(csvRecord.get("id_estudiante")))
+                Estudiante estudiante = re.findByDni(Integer.parseInt(csvRecord.get("id_estudiante")))
                         .orElseThrow(() -> new RuntimeException("Estudiante no encontrado con id=" + csvRecord.get("id_estudiante") + "!"));
 
                 // Manejo del Optional para la carrera
@@ -81,10 +81,10 @@ public class CargaDeDatos {
                         Integer.parseInt(csvRecord.get("id")),
                         estudiante,
                         carrera,
-                        Integer.parseInt(csvRecord.get("anioInscripcion")),
-                        Integer.parseInt(csvRecord.get("anioEgreso")),
+                        Integer.parseInt(csvRecord.get("inscripcion")),
+                        Integer.parseInt(csvRecord.get("graduacion")),
                         Integer.parseInt(csvRecord.get("antiguedad")),
-                        Boolean.parseBoolean(csvRecord.get("graduado"))
+                        csvRecord.get("graduacion").equals("0") ? false : true
                 );
 
                 // Guardar la inscripción en la base de datos
