@@ -1,0 +1,57 @@
+{
+	"info": {
+		"_postman_id": "86b05d73-0da3-4302-898e-a08a57dbf259",
+		"name": "TPintegrador3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26358052"
+	},
+	"item": [
+		{
+			"name": "GetEstudianteByLu",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/estudiante/getEstudianteByLu/24861",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"estudiante",
+						"getEstudianteByLu",
+						"24861"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllEstudiantesByGenre",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/estudiante/getAllEstudiantesByGenero/Polygender",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"estudiante",
+						"getAllEstudiantesByGenero",
+						"Polygender"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
