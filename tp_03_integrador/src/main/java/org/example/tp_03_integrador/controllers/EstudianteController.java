@@ -45,17 +45,20 @@ private EstudianteService estudianteService;
         return ResponseEntity.ok(estudiantes);
     }
 
-
-   /* @GetMapping("/getAllEstudiantesByCarreraAndCiudad/{carrera}/{ciudad}")
-    public List<EstudianteDTO> obtenerPorGenero(@PathVariable Integer carrera,
+    //g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
+    @GetMapping("/getEstudiantesByCarreraAndCiudad/{carrera}/{ciudad}")
+    public List<EstudianteDTO> obtenerPorGenero(@PathVariable String carrera,
                                                 @PathVariable String ciudad) {
         return estudianteService.getAllEstudiantesByCarreraAndCiudad(carrera,ciudad);
-    }*/
+    }
 
     //a) dar de alta un estudiante
     @PostMapping("/addEstudiante")
     public EstudianteDTO saveEstudiante(@RequestBody EstudianteDTO estudianteDTO){
         return estudianteService.saveEstudiante(estudianteDTO);
     }
+
+
+
 
 }

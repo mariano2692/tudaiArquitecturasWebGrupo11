@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
+@Table(name = "estudiante")
 public class Estudiante {
     @Id
     private int dni;

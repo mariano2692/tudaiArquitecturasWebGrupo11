@@ -54,6 +54,29 @@
 			"response": []
 		},
 		{
+			"name": "GetEstudiantesByCarreraAndCiudad",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/estudiante/getEstudiantesByCarreraAndCiudad/TUDAI/Rauch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"estudiante",
+						"getEstudiantesByCarreraAndCiudad",
+						"TUDAI",
+						"Rauch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GetCarrerasOrderInscriptos",
 			"request": {
 				"method": "GET",
