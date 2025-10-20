@@ -4,30 +4,29 @@ import java.time.LocalDate;
 
 public class InscripcionDTO {
     private int antiguedad;
-    private LocalDate anioInscripcion;
-    private LocalDate anioEgreso;
-    private boolean graduado;
+    private int anioInscripcion;
+    private int anioEgreso;
+    boolean isGraduado;
     private String nombreCarrera;
     private EstudianteDTO estudiante;
 
     public InscripcionDTO() {}
 
     // Constructor para recibir EstudianteDTO
-    public InscripcionDTO(int antiguedad, LocalDate anioInscripcion, LocalDate anioEgreso,
-                          boolean graduado, String nombreCarrera, EstudianteDTO estudiante) {
+    public InscripcionDTO(int antiguedad, int anioInscripcion, int anioEgreso, boolean graduado,
+                          String nombreCarrera, EstudianteDTO estudiante) {
         this.antiguedad = antiguedad;
         this.anioInscripcion = anioInscripcion;
         this.anioEgreso = anioEgreso;
-        this.graduado = graduado;
+        this.isGraduado = graduado;
         this.nombreCarrera = nombreCarrera;
         this.estudiante = estudiante;
     }
 
-    public InscripcionDTO(int antiguedad, LocalDate anioInscripcion, LocalDate anioEgreso, boolean graduado, String nombreCarrera, Long luEstudiante) {
+    public InscripcionDTO(int antiguedad, int anioInscripcion, int anioEgreso, String nombreCarrera, Long luEstudiante) {
         this.antiguedad = antiguedad;
         this.anioInscripcion = anioInscripcion;
         this.anioEgreso = anioEgreso;
-        this.graduado = graduado;
         this.nombreCarrera = nombreCarrera;
     }
 
@@ -39,28 +38,28 @@ public class InscripcionDTO {
         this.antiguedad = antiguedad;
     }
 
-    public LocalDate getAnioInscripcion() {
+    public int getAnioInscripcion() {
         return anioInscripcion;
     }
 
-    public void setAnioInscripcion(LocalDate anioInscripcion) {
+    public void setAnioInscripcion(int anioInscripcion) {
         this.anioInscripcion = anioInscripcion;
     }
 
-    public LocalDate getAnioEgreso() {
+    public int getAnioEgreso() {
         return anioEgreso;
     }
 
-    public void setAnioEgreso(LocalDate anioEgreso) {
+    public void setAnioEgreso(int anioEgreso) {
         this.anioEgreso = anioEgreso;
     }
 
-    public boolean isGraduado() {
-        return graduado;
+    public boolean getIsGraduado() {
+        return isGraduado;
     }
 
-    public void setGraduado(boolean graduado) {
-        this.graduado = graduado;
+    public void setIsGraduado(boolean isGraduado) {
+        this.isGraduado = isGraduado;
     }
 
     public String getCarrera() {
@@ -78,9 +77,12 @@ public class InscripcionDTO {
                 "antiguedad=" + antiguedad +
                 ", anioInscripcion=" + anioInscripcion +
                 ", anioEgreso=" + anioEgreso +
-                ", graduado=" + graduado +
                 ", carrera=" + nombreCarrera +
                 ", estudiante=" + estudiante +
                 '}';
+    }
+
+    public boolean isGraduado() {
+        return this.anioEgreso > this.anioInscripcion;
     }
 }

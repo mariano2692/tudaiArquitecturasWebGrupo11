@@ -9,9 +9,11 @@ import java.util.stream.Collectors;
 
 public class CarreraDTO {
     private String nombre;
-    private List<Inscripcion> inscripciones;
+    private List<InscripcionDTO> inscripciones;
 
-    public CarreraDTO() {}
+    public CarreraDTO() {
+        this.inscripciones = new ArrayList<>();
+    }
 
     public CarreraDTO(String nombre) {
         this.nombre = nombre;
@@ -26,34 +28,32 @@ public class CarreraDTO {
         this.nombre = nombre;
     }
 
-    public List<Inscripcion> getInscripciones() {
+    public List<InscripcionDTO> getInscripciones() {
         return new ArrayList<>(inscripciones);
     }
 
-    public void addInscripcion(Inscripcion inscripcion) {
-        if (!inscripciones.contains(inscripcion)) {
-            inscripciones.add(inscripcion);
-        }
+    public void addInscripcion(InscripcionDTO i) {
+        inscripciones.add(i);
     }
 
-    public void removeInscripcion(Inscripcion inscripcion) {
-        inscripciones.remove(inscripcion);
+    public void removeInscripcion(InscripcionDTO i) {
+        inscripciones.remove(i);
     }
 
     /**
-     * Devuelve una lista de resúmenes (inscriptos / egresados) por año, ordenados cronológicamente.
+     * Devuelve un resumen anual de inscriptos y egresados, ordenado por año.
      */
     public List<ResumenAnualDTO> getResumenPorAnio() {
         return inscripciones.stream()
-                .collect(Collectors.groupingBy(i -> i.getAnioInscripcion().getYear()))
+                .collect(Collectors.groupingBy(i -> i.getAnioInscripcion())) // ya es int
                 .entrySet().stream()
-                .sorted(Map.Entry.comparingByKey()) // ordena los años
+                .sorted(Map.Entry.comparingByKey())
                 .map(entry -> {
                     int anio = entry.getKey();
-                    List<Inscripcion> delAnio = entry.getValue();
+                    List<InscripcionDTO> delAnio = entry.getValue();
 
                     long inscriptos = delAnio.size();
-                    long egresados = delAnio.stream().filter(Inscripcion::isGraduado).count();
+                    long egresados = delAnio.stream().filter(InscripcionDTO::isGraduado).count();
 
                     return new ResumenAnualDTO(anio, inscriptos, egresados);
                 })

@@ -14,4 +14,6 @@ public interface JpaEstudianteRepository extends JpaRepository<Estudiante, Integ
 
     List<Estudiante> findAllByOrderByNombresAsc();
 
+    Estudiante findByNombresAndApellido(String nombres, String apellido);
+
 }

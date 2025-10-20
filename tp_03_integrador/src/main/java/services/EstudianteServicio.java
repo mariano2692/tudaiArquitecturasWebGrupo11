@@ -61,7 +61,7 @@ public class EstudianteServicio {
         return toDTO(estudiante);
     }
 
-    private EstudianteDTO toDTO(Estudiante estudiante){
+     EstudianteDTO toDTO(Estudiante estudiante){
         return new EstudianteDTO(
                 estudiante.getNombres(),
                 estudiante.getApellido(),

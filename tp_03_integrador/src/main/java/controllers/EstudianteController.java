@@ -29,7 +29,7 @@ public class EstudianteController {
         return estudianteServicio.save(estudianteDTO);
     }
 
-    @GetMapping("/orderbyname")
+    @GetMapping("/ordenadospornombre")
     public List<EstudianteDTO> obtenerEstudiantesOrdenadosPorNombre() {
         return estudianteServicio.obtenerEstudiantesOrdenadosPorNombre();
     }
@@ -40,9 +40,9 @@ public class EstudianteController {
     }
 
 
-    @GetMapping("/{id}")
-    public EstudianteDTO obtenerPorId(@PathVariable int id) {
-        return estudianteServicio.selectById(id);
+    @GetMapping("/{dni}")
+    public EstudianteDTO obtenerPorId(@PathVariable int dni) {
+        return estudianteServicio.selectById(dni);
     }
 
 }
