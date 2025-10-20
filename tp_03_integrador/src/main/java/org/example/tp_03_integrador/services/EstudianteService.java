@@ -1,8 +1,13 @@
 package org.example.tp_03_integrador.services;
 
 
+import org.example.tp_03_integrador.dtos.CarreraSimpleDTO;
 import org.example.tp_03_integrador.dtos.EstudianteDTO;
+import org.example.tp_03_integrador.dtos.EstudianteRequestDTO;
+import org.example.tp_03_integrador.entities.Carrera;
 import org.example.tp_03_integrador.entities.Estudiante;
+import org.example.tp_03_integrador.entities.EstudianteCarrera;
+import org.example.tp_03_integrador.repositories.CarreraRepository;
 import org.example.tp_03_integrador.repositories.EstudianteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +19,22 @@ import java.util.List;
 public class EstudianteService {
 
 @Autowired
-EstudianteRepository estudianteRepository;
+private EstudianteRepository estudianteRepository;
+
+@Autowired
+private CarreraRepository carreraRepository;
+
+
+    @Transactional
+    public ArrayList<CarreraSimpleDTO> getCarrerasInscriptas(Estudiante estudiante) {
+        ArrayList<CarreraSimpleDTO> carrerasDTO = new ArrayList<>();
+        ArrayList<EstudianteCarrera>  carreras = estudiante.getCarrerasInscriptas();
+        for(EstudianteCarrera carrera : carreras) {
+            Carrera carreraOpt = carreraRepository.findById(carrera.getId());
+            carrerasDTO.add(new CarreraSimpleDTO(carreraOpt.getNombre()));
+        }
+        return carrerasDTO;
+    }
 
     @Transactional(readOnly = true)
     public List<EstudianteDTO> obtenerEstudiantesOrdenadosPorApellidoASC() throws Exception {
@@ -121,6 +141,4 @@ EstudianteRepository estudianteRepository;
         System.out.println("el estudiante fue guardado: " + saved.getNombre());
         return estudianteDTO;
     }
-
-
 }

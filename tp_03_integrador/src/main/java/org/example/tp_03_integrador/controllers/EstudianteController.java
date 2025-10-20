@@ -1,6 +1,7 @@
 package org.example.tp_03_integrador.controllers;
 
 import org.example.tp_03_integrador.dtos.EstudianteDTO;
+import org.example.tp_03_integrador.dtos.EstudianteRequestDTO;
 import org.example.tp_03_integrador.services.EstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

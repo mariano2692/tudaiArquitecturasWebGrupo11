@@ -1,6 +1,7 @@
 package org.example.tp_03_integrador.entities;
 
 import jakarta.persistence.*;
+import org.example.tp_03_integrador.dtos.EstudianteRequestDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,17 @@ public class Estudiante {
         this.genero = genero;
         this.ciudadResidencia = ciudadResidencia;
         this.lu = lu;
+        this.inscripciones = new ArrayList<EstudianteCarrera>();
+    }
+
+    public Estudiante (EstudianteRequestDTO request){
+        this.dni = request.getDni();
+        this.nombre = request.getNombre();
+        this.apellido = request.getApellido();
+        this.edad = request.getEdad();
+        this.genero = request.getGenero();
+        this.ciudadResidencia = request.getCiudad();
+        this.lu = request.getLu();
         this.inscripciones = new ArrayList<EstudianteCarrera>();
     }
 
@@ -121,5 +133,11 @@ public class Estudiante {
 
     public void setLu(Long lu) {
         this.lu = lu;
+    }
+
+    public ArrayList<EstudianteCarrera> getCarrerasInscriptas() {
+        ArrayList<EstudianteCarrera> carreras = new ArrayList<>();
+        carreras.addAll(inscripciones);
+        return carreras;
     }
 }

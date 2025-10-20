@@ -2,6 +2,7 @@ package org.example.tp_03_integrador.entities;
 
 import jakarta.persistence.*;
 @Entity
+@Table(name = "estudiante_carrera")
 public class EstudianteCarrera {
     @Id
     private int id;
@@ -28,6 +29,14 @@ public class EstudianteCarrera {
     private boolean graduado;
 
     public EstudianteCarrera() {}
+
+    public EstudianteCarrera(int anioInscripcion, int anioEgreso, int antiguedad, Estudiante estudiante, Carrera carrera) {
+        this.anioInscripcion = anioInscripcion;
+        this.anioEgreso = anioEgreso;
+        this.antiguedad = antiguedad;
+        this.estudiante = estudiante;
+        this.carrera = carrera;
+    }
 
     public EstudianteCarrera(int id, Estudiante estudiante, Carrera carrera, int anioInscripcion,
                              int anioEgreso, int antiguedad, boolean graduado) {

@@ -80,8 +80,7 @@ public class CargaDeDatos {
                     }
 
                     // Manejo del Optional para la carrera
-                    Carrera carrera = rc.findById(Integer.parseInt(csvRecord.get("id_carrera")))
-                            .orElse(null);
+                    Carrera carrera = rc.findById(Integer.parseInt(csvRecord.get("id_carrera")));
 
                     // Si la carrera no existe, saltamos este registro
                     if (carrera == null) {
