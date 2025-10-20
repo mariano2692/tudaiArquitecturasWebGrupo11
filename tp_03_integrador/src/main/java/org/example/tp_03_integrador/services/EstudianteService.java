@@ -69,7 +69,27 @@ EstudianteRepository estudianteRepository;
     }
 
 
+   /* public List<EstudianteDTO> getAllEstudiantesByCarreraAndCiudad(String carrera, String ciudad) {
+        try {
+            List<Estudiante> estudiantes = estudianteRepository.getAllEstudiantesByCarreraAndCiudad(carrera,ciudad);
 
+            if (estudiantes.isEmpty()) {
+                throw new RuntimeException("No se encontraron estudiantes en esta carrera: " + carrera + "o en esta ciudad"+ ciudad );
+            }
+
+            List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
+
+            for (Estudiante estudiante : estudiantes) {
+                EstudianteDTO dto = convertirADTO(estudiante);
+                estudiantesDTO.add(dto);
+            }
+
+            return estudiantesDTO;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al buscar estudiantes en esta carrera: " + carrera + "y/o en esta ciudad"+ ciudad, e);
+        }
+    }*/
 /*
 * metodo para convetir a dto lo q proviene de la base de datos
 * @return estudianteDto
@@ -87,4 +107,18 @@ EstudianteRepository estudianteRepository;
         return dto;
     }
 
+    public EstudianteDTO saveEstudiante(EstudianteDTO estudianteDTO) {
+        Estudiante estudiante = new Estudiante();
+        estudiante.setDni(estudianteDTO.getDni());
+        estudiante.setNombre(estudianteDTO.getNombre());
+        estudiante.setApellido(estudianteDTO.getApellido());
+        estudiante.setEdad(estudianteDTO.getEdad());
+        estudiante.setGenero(estudianteDTO.getGenero());
+        estudiante.setCiudadResidencia(estudianteDTO.getCiudadResidencia());
+        estudiante.setLu(estudianteDTO.getLu());
+
+        Estudiante saved = estudianteRepository.save(estudiante);
+        System.out.println("el estudiante fue guardado: " + saved.getNombre());
+        return estudianteDTO;
+    }
 }

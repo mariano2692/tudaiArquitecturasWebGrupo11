@@ -5,10 +5,7 @@ import org.example.tp_03_integrador.services.EstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,7 +16,7 @@ public class EstudianteController {
 private EstudianteService estudianteService;
 
     // 2c) Recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple -> Por APELLIDO
-    @GetMapping("")
+    @GetMapping("/getAllEstudiantesOrderByApellido")
     public ResponseEntity<?> obtenerTodos() {
         try {
             List<EstudianteDTO> estudiantes = estudianteService.obtenerEstudiantesOrdenadosPorApellidoASC();
@@ -47,4 +44,18 @@ private EstudianteService estudianteService;
         List<EstudianteDTO> estudiantes = estudianteService.getAllEstudiantesByGenero(genero);
         return ResponseEntity.ok(estudiantes);
     }
+
+
+   /* @GetMapping("/getAllEstudiantesByCarreraAndCiudad/{carrera}/{ciudad}")
+    public List<EstudianteDTO> obtenerPorGenero(@PathVariable Integer carrera,
+                                                @PathVariable String ciudad) {
+        return estudianteService.getAllEstudiantesByCarreraAndCiudad(carrera,ciudad);
+    }*/
+
+    //a) dar de alta un estudiante
+    @PostMapping("/addEstudiante")
+    public EstudianteDTO saveEstudiante(@RequestBody EstudianteDTO estudianteDTO){
+        return estudianteService.saveEstudiante(estudianteDTO);
+    }
+
 }
