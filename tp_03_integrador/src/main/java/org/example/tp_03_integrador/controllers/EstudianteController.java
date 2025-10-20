@@ -3,6 +3,7 @@ package org.example.tp_03_integrador.controllers;
 import org.example.tp_03_integrador.dtos.EstudianteDTO;
 import org.example.tp_03_integrador.services.EstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,18 @@ import java.util.List;
 public class EstudianteController {
 @Autowired
 private EstudianteService estudianteService;
+
+    // 2c) Recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple -> Por APELLIDO
+    @GetMapping("")
+    public ResponseEntity<?> obtenerTodos() {
+        try {
+            List<EstudianteDTO> estudiantes = estudianteService.obtenerEstudiantesOrdenadosPorApellidoASC();
+            return ResponseEntity.status(HttpStatus.OK).body(estudiantes);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"Error al obtener estudiantes.\"}");
+        }
+    }
 
 
    // d) recuperar un estudiante, en base a su número de libreta universitaria.

@@ -1,10 +1,12 @@
 package org.example.tp_03_integrador.services;
 
+
 import org.example.tp_03_integrador.dtos.EstudianteDTO;
 import org.example.tp_03_integrador.entities.Estudiante;
 import org.example.tp_03_integrador.repositories.EstudianteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,20 @@ public class EstudianteService {
 
 @Autowired
 EstudianteRepository estudianteRepository;
+
+    @Transactional(readOnly = true)
+    public List<EstudianteDTO> obtenerEstudiantesOrdenadosPorApellidoASC() throws Exception {
+        try {
+            List<Estudiante> estudiantes = estudianteRepository.obtenerEstudiantesOrdenadosPorApellidoASC();
+            List<EstudianteDTO> estudianteDTOS = new ArrayList<>();
+            for (Estudiante e : estudiantes) {
+                estudianteDTOS.add(this.convertirADTO(e));
+            }
+            return estudianteDTOS;
+        } catch (Exception e) {
+            throw new Exception("Error al obtener estudiantes!" + e.getMessage());
+        }
+    }
 
 
     public EstudianteDTO getEstudianteByLu(int lu) {
