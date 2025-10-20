@@ -32,12 +32,12 @@
 			"response": []
 		},
 		{
-			"name": "getAllEstudiantesByGenre",
+			"name": "GetAllEstudiantesByGenre",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/estudiante/getAllEstudiantesByGenero/Polygender",
+					"raw": "http://localhost:8080/api/estudiante/getAllEstudiantesByGenero/hola",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -47,9 +47,86 @@
 						"api",
 						"estudiante",
 						"getAllEstudiantesByGenero",
-						"Polygender"
+						"hola"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCarrerasOrderInscriptos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/carreras/ordenadas-inscriptos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carreras",
+						"ordenadas-inscriptos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllEstudiantesOrderByApellido",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/estudiante/getAllEstudiantesOrderByApellido",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"estudiante",
+						"getAllEstudiantesOrderByApellido"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostAddEstudiante",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"dni\": 35775259,\r\n  \"nombre\": \"Fernando\",\r\n  \"apellido\": \"Barragán\",\r\n  \"edad\": 33,\r\n  \"genero\": \"Masculino\",\r\n  \"ciudadResidencia\": \"Tandil\",\r\n  \"lu\": 247563\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/estudiante/addEstudiante",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"estudiante",
+						"addEstudiante"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:8080/api/estudiantes \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"dni\": 12345678,\r\n  \"nombre\": \"Juan\",\r\n  \"apellido\": \"Pérez\",\r\n  \"edad\": 22,\r\n  \"genero\": \"Masculino\",\r\n  \"ciudadResidencia\": \"Rosario\",\r\n  \"lu\": 102030\r\n}'\r\n"
 			},
 			"response": []
 		}
