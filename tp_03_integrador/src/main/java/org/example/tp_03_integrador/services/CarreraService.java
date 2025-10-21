@@ -1,6 +1,7 @@
 package org.example.tp_03_integrador.services;
 
 import org.example.tp_03_integrador.dtos.CarreraConCantInscriptosDTO;
+import org.example.tp_03_integrador.dtos.ReporteCarreraDTO;
 import org.example.tp_03_integrador.repositories.CarreraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,5 +17,10 @@ public class CarreraService {
     @Transactional(readOnly = true)
     public List<CarreraConCantInscriptosDTO> getCarrerasOrdenadasPorInscriptos(){
         return carreraRepository.getCarrerasOrdenadasPorInscriptos();
+    }
+
+    @Transactional(readOnly = true)
+    public List<ReporteCarreraDTO> generarReporteCarreras(){
+        return carreraRepository.getReporteCarreras();
     }
 }
