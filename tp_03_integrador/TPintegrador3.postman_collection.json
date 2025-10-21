@@ -118,6 +118,42 @@
 			"response": []
 		},
 		{
+			"name": "PostMatricularEstudiante",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"inscripcion\": 2021,\r\n    \"graduacion\": 2025,\r\n    \"antiguedad\": 4,\r\n    \"dniAlumno\": 16768994,\r\n    \"idCarrera\": 8\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/inscripcion/matricular",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"inscripcion",
+						"matricular"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:8080/api/estudiantes \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"dni\": 12345678,\r\n  \"nombre\": \"Juan\",\r\n  \"apellido\": \"Pérez\",\r\n  \"edad\": 22,\r\n  \"genero\": \"Masculino\",\r\n  \"ciudadResidencia\": \"Rosario\",\r\n  \"lu\": 102030\r\n}'\r\n"
+			},
+			"response": []
+		},
+		{
 			"name": "PostAddEstudiante",
 			"request": {
 				"method": "POST",
@@ -129,7 +165,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"dni\": 35775259,\r\n  \"nombre\": \"Fernando\",\r\n  \"apellido\": \"Barragán\",\r\n  \"edad\": 33,\r\n  \"genero\": \"Masculino\",\r\n  \"ciudadResidencia\": \"Tandil\",\r\n  \"lu\": 247563\r\n}",
+					"raw": "{\r\n  \"dni\": 37373737,\r\n  \"nombre\": \"Manuel\",\r\n  \"apellido\": \"Cerdeira\",\r\n  \"edad\": 30,\r\n  \"genero\": \"Masculino\",\r\n  \"ciudadResidencia\": \"Tandil\",\r\n  \"lu\": 123456\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -149,7 +185,7 @@
 						"addEstudiante"
 					]
 				},
-				"description": "Generated from cURL: curl -X POST http://localhost:8080/api/estudiantes \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"dni\": 12345678,\r\n  \"nombre\": \"Juan\",\r\n  \"apellido\": \"Pérez\",\r\n  \"edad\": 22,\r\n  \"genero\": \"Masculino\",\r\n  \"ciudadResidencia\": \"Rosario\",\r\n  \"lu\": 102030\r\n}'\r\n"
+				"description": "Generated from cURL: curl -X POST http://localhost:8080/api/estudiante/addEstudiante \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"dni\": 98765432,\r\n  \"nombre\": \"Prueba\",\r\n  \"apellido\": \"De Inserción\",\r\n  \"edad\": 22,\r\n  \"genero\": \"Masculino\",\r\n  \"ciudadResidencia\": \"Tandil\",\r\n  \"lu\": 100200\r\n}'"
 			},
 			"response": []
 		}
