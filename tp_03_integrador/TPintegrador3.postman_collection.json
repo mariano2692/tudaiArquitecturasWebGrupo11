@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "GetEstudianteByLu",
+			"name": "D-GetEstudianteByLu",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -32,7 +32,7 @@
 			"response": []
 		},
 		{
-			"name": "GetAllEstudiantesByGenre",
+			"name": "E-GetAllEstudiantesByGenre",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -54,7 +54,7 @@
 			"response": []
 		},
 		{
-			"name": "GetEstudiantesByCarreraAndCiudad",
+			"name": "G-GetEstudiantesByCarreraAndCiudad",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -77,7 +77,7 @@
 			"response": []
 		},
 		{
-			"name": "GetCarrerasOrderInscriptos",
+			"name": "F-GetCarrerasOrderInscriptos",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -97,7 +97,7 @@
 			"response": []
 		},
 		{
-			"name": "GetAllEstudiantesOrderByApellido",
+			"name": "C-GetAllEstudiantesOrderByApellido",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -118,7 +118,7 @@
 			"response": []
 		},
 		{
-			"name": "PostMatricularEstudiante",
+			"name": "B-PostMatricularEstudiante",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -154,7 +154,7 @@
 			"response": []
 		},
 		{
-			"name": "PostAddEstudiante",
+			"name": "A-PostAddEstudiante",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -186,6 +186,26 @@
 					]
 				},
 				"description": "Generated from cURL: curl -X POST http://localhost:8080/api/estudiante/addEstudiante \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"dni\": 98765432,\r\n  \"nombre\": \"Prueba\",\r\n  \"apellido\": \"De Inserción\",\r\n  \"edad\": 22,\r\n  \"genero\": \"Masculino\",\r\n  \"ciudadResidencia\": \"Tandil\",\r\n  \"lu\": 100200\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "H-GetReporteCarrera",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/carreras/reporte",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carreras",
+						"reporte"
+					]
+				}
 			},
 			"response": []
 		}
