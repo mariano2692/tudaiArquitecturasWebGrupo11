@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Table(name = "estudiante_carrera")
 public class EstudianteCarrera {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     // Relación muchos a uno con Estudiante
@@ -38,9 +39,9 @@ public class EstudianteCarrera {
         this.carrera = carrera;
     }
 
-    public EstudianteCarrera(int id, Estudiante estudiante, Carrera carrera, int anioInscripcion,
-                             int anioEgreso, int antiguedad, boolean graduado) {
-        this.id = id;
+    public EstudianteCarrera(Estudiante estudiante, Carrera carrera,
+                             Integer anioInscripcion, Integer anioEgreso,
+                             Integer antiguedad, Boolean graduado) {
         this.estudiante = estudiante;
         this.carrera = carrera;
         this.anioInscripcion = anioInscripcion;

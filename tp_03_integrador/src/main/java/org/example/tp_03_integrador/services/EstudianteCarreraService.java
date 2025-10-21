@@ -50,6 +50,8 @@ public class EstudianteCarreraService {
             List<EstudianteCarrera> existingEstudianteCarrera = EstudianteCarreraRepository.findByEstudianteAndCarrera(estudianteOpt.get(), carreraOpt.get());
             if (existingEstudianteCarrera.isEmpty()) {
                 EstudianteCarreraRepository.save(estudianteCarrera);
+                System.out.println("Se guardo estudiante nuevo");
+
             } else {
                 System.out.println("La relación ya existe para el estudiante con DNI: " + dni + " y la carrera: " + carreraOpt.get().getNombre());
                 return null;
@@ -61,9 +63,9 @@ public class EstudianteCarreraService {
             return null;
         }
 
-        CarreraSimpleDTO carreranueva= new CarreraSimpleDTO(carreraOpt.get().getNombre());
-        ArrayList<CarreraSimpleDTO> carrerasInscriptas = EstudianteService.getCarrerasInscriptas(estudianteOpt.get());
-        carrerasInscriptas.add(carreranueva);
+       // CarreraSimpleDTO carreranueva= new CarreraSimpleDTO(carreraOpt.get().getNombre());
+       // ArrayList<CarreraSimpleDTO> carrerasInscriptas = EstudianteService.getCarrerasInscriptas(estudianteOpt.get());
+       // carrerasInscriptas.add(carreranueva);
 
         System.out.println("Se guardo estudiante nuevo");
         return new EstudianteDTO(estudianteOpt.get().getDni(),

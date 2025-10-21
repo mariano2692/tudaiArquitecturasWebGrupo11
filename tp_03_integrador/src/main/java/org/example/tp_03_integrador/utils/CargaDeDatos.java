@@ -90,7 +90,6 @@ public class CargaDeDatos {
 
                     // Creación de la entidad EstudianteCarrera
                     EstudianteCarrera estudianteCarrera = new EstudianteCarrera(
-                            Integer.parseInt(csvRecord.get("id")),
                             estudiante,
                             carrera,
                             Integer.parseInt(csvRecord.get("inscripcion")),
