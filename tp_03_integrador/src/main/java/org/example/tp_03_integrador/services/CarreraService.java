@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("CarreraService")
+@Service
 public class CarreraService {
     @Autowired
     private CarreraRepository carreraRepository;
