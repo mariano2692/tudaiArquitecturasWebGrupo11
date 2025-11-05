@@ -9,8 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.example</groupId>
-    <artifactId>tp_03_integrador</artifactId>
+    <artifactId>tp_entrega_final_parte_1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>tp_03_integrador</name>
     <description>tp_03_integrador</description>
     <url/>
@@ -20,6 +21,9 @@
     <developers>
         <developer/>
     </developers>
+    <modules>
+        <module>tp_entrega_final_p1</module>
+    </modules>
     <scm>
         <connection/>
         <developerConnection/>

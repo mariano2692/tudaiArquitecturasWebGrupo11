@@ -1,0 +1,22 @@
+server:
+  port: ${PORT:${SERVER_PORT:0}}
+spring:
+  application:
+    name: microMonopatin
+  data:
+    mongodb:
+      #host: localhost
+      #port: 27017
+      #database: monopatin-db
+      #username: root
+      #password: password
+      #authentication-database: admin
+      uri: mongodb://root:password@localhost:27017/monopatin-db?authSource=admin
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

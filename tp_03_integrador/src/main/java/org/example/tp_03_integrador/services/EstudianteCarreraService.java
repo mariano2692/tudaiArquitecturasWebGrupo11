@@ -67,7 +67,6 @@ public class EstudianteCarreraService {
        // ArrayList<CarreraSimpleDTO> carrerasInscriptas = EstudianteService.getCarrerasInscriptas(estudianteOpt.get());
        // carrerasInscriptas.add(carreranueva);
 
-        System.out.println("Se guardo estudiante nuevo");
         return new EstudianteDTO(estudianteOpt.get().getDni(),
                 estudianteOpt.get().getNombre(),
                 estudianteOpt.get().getApellido(),
