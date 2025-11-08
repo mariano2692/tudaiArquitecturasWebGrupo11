@@ -99,10 +99,13 @@ public class CuentaService {
         Cuenta cuenta = cuentaRepository.findByIdWithUsuarios(cuentaId)
                 .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con id: " + cuentaId));
 
-        Usuario usuario = usuarioRepository.findById(usuarioId)
+        Usuario usuario = usuarioRepository.findByIdWithCuentas(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + usuarioId));
 
+        // Sincronizar AMBOS lados de la relación bidireccional
         cuenta.getUsuarios().add(usuario);
+        usuario.getCuentas().add(cuenta);
+
         cuenta = cuentaRepository.save(cuenta);
 
         return convertToResponseDTO(cuenta);
@@ -114,10 +117,13 @@ public class CuentaService {
         Cuenta cuenta = cuentaRepository.findByIdWithUsuarios(cuentaId)
                 .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con id: " + cuentaId));
 
-        Usuario usuario = usuarioRepository.findById(usuarioId)
+        Usuario usuario = usuarioRepository.findByIdWithCuentas(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + usuarioId));
 
+        // Sincronizar AMBOS lados de la relación bidireccional
         cuenta.getUsuarios().remove(usuario);
+        usuario.getCuentas().remove(cuenta);
+
         cuenta = cuentaRepository.save(cuenta);
 
         return convertToResponseDTO(cuenta);

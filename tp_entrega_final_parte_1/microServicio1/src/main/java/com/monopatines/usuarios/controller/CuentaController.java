@@ -47,12 +47,12 @@ public class CuentaController {
     }
 
     // Punto 4.b - Anular cuenta
-    @PatchMapping("/{id}/anular")
+    @PutMapping("/{id}/anular")
     public ResponseEntity<CuentaResponseDTO> anularCuenta(@PathVariable Long id) {
         return ResponseEntity.ok(cuentaService.anularCuenta(id));
     }
 
-    @PatchMapping("/{id}/activar")
+    @PutMapping("/{id}/activar")
     public ResponseEntity<CuentaResponseDTO> activarCuenta(@PathVariable Long id) {
         return ResponseEntity.ok(cuentaService.activarCuenta(id));
     }
@@ -73,7 +73,7 @@ public class CuentaController {
     }
 
     // Cargar saldo
-    @PatchMapping("/{id}/cargar-saldo")
+    @PutMapping("/{id}/cargar-saldo")
     public ResponseEntity<CuentaResponseDTO> cargarSaldo(
             @PathVariable Long id,
             @RequestParam Double monto) {
