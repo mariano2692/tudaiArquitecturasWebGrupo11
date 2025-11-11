@@ -1,8 +1,7 @@
-package com.example.demo.dto;
+package dto;
 
-import com.example.demo.Entity.Pausa;
+import entity.Pausa;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ReporteUsoPorTiempoDto {
@@ -14,15 +13,11 @@ public class ReporteUsoPorTiempoDto {
         this.pausa = pausa;
     }
 
-    public LocalDateTime getPausa() {
-        return pausa;
-    }
-
-    public void setPausa(LocalDateTime pausa) {
-        this.pausa = pausa;
-    }
-
     public Long getIdMonopatin() {
         return idMonopatin;
+    }
+
+    public LocalDateTime getPausa() {
+        return pausa;
     }
 }

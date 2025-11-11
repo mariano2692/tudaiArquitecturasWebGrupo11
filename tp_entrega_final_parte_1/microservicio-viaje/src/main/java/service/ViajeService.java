@@ -1,15 +1,16 @@
-package com.example.demo.service;
+package service;
 
-import com.example.demo.Entity.Pausa;
-import com.example.demo.Entity.Viaje;
-import com.example.demo.dto.ReporteMonopatinesPorViajesYAnio;
-import com.example.demo.dto.ReporteTotalFacturadoEntreMesesDeAnio;
-import com.example.demo.dto.ReporteUsoPorTiempoDto;
-import com.example.demo.repository.ViajeRepository;
+import dto.ReporteMonopatinesPorViajesYAnio;
+import dto.ReporteTotalFacturadoEntreMesesDeAnio;
+import dto.ReporteUsoPorTiempoDto;
+import entity.Pausa;
+import entity.Viaje;
 import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import repository.ViajeRepository;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -58,7 +59,7 @@ public class ViajeService {
         Viaje viaje = viajeRepository.findById(idViaje).get();
         if (viaje != null) {
             Pausa p = new Pausa(fechaHoraInicio, viaje);
-            viaje.getInicioPausas().add(p);
+            viaje.getInicioPausasFinal().add(p);
             viajeRepository.save(viaje);
         }
     }
@@ -75,8 +76,8 @@ public class ViajeService {
     public LocalDateTime obtenerInicioUltimaPausa(Long monopatinId) {
         // Obtener el inicio de la última pausa
         Viaje viaje = viajeRepository.findById(monopatinId).get();
-        if (viaje != null && !viaje.getInicioPausas().isEmpty()) {
-            return viaje.getInicioPausas().get(viaje.getInicioPausas().size() - 1).getPausa();
+        if (viaje != null && !viaje.getInicioPausasFinal().isEmpty()) {
+            return viaje.getInicioPausasFinal().get(viaje.getInicioPausasFinal().size() - 1).getPausa();
         }
         return null;
     }
@@ -100,7 +101,7 @@ public class ViajeService {
         viaje.setIdMonopatin(monopatinId);
         viaje.setFechaHoraFin(null);
         viaje.setKmRecorridos(0L);
-        viaje.setInicioPausas(new ArrayList<>());
+        viaje.setInicioPausasFinal(new ArrayList<>());
         viajeRepository.save(viaje);
         return viaje;
     }

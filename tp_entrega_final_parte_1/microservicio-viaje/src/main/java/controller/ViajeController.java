@@ -1,13 +1,13 @@
-package com.example.demo.controller;
+package controller;
 
-import com.example.demo.Entity.Viaje;
-import com.example.demo.dto.ReporteMonopatinesPorViajesYAnio;
-import com.example.demo.dto.ReporteTotalFacturadoEntreMesesDeAnio;
-import com.example.demo.service.ViajeService;
+import dto.ReporteMonopatinesPorViajesYAnio;
+import dto.ReporteTotalFacturadoEntreMesesDeAnio;
+import entity.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import service.ViajeService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,7 +16,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/viajes")
 public class ViajeController {
-
     @Autowired
     ViajeService viajeService;
 
@@ -146,4 +145,5 @@ public class ViajeController {
                     .body("{\"error\":\"" + e.getMessage() + "\"}");
         }
     }
+
 }

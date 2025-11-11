@@ -7,7 +7,13 @@
         <option value="$PROJECT_DIR$/tp_01_integrador/pom.xml" />
         <option value="$PROJECT_DIR$/tp_entrega_final_parte_1/pom.xml" />
         <option value="$PROJECT_DIR$/tp_entrega_final_parte_1/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/tp_entrega_final_parte_1/microservicio-viaje/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/tp_entrega_final_parte_1/microservicio-viaje/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_22" project-jdk-name="24" project-jdk-type="JavaSDK">
