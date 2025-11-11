@@ -1,0 +1,12 @@
+services:
+  db-mongo:
+    container_name: monopatin-mongoDB
+    image: mongo:7.0.11
+    command:
+      - --auth
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: monopatin-db
+    ports:
+      - "127.0.0.1:27017:27017"
