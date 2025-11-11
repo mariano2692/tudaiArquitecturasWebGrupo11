@@ -1,13 +1,13 @@
-package controller;
+package com.viajes.controller;
 
-import dto.ReporteMonopatinesPorViajesYAnio;
-import dto.ReporteTotalFacturadoEntreMesesDeAnio;
-import entity.Viaje;
+import com.viajes.dto.ReporteMonopatinesPorViajesYAnio;
+import com.viajes.dto.ReporteTotalFacturadoEntreMesesDeAnio;
+import com.viajes.entity.Viaje;
+import com.viajes.service.ViajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.ViajeService;
 
 import java.time.LocalDateTime;
 import java.util.List;

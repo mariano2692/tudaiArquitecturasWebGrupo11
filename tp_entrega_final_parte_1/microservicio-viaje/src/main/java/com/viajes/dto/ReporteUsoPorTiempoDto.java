@@ -1,6 +1,6 @@
-package dto;
+package com.viajes.dto;
 
-import entity.Pausa;
+import com.viajes.entity.Pausa;
 
 import java.time.LocalDateTime;
 

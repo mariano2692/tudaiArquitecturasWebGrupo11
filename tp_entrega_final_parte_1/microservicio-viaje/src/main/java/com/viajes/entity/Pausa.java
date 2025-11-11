@@ -1,4 +1,4 @@
-package entity;
+package com.viajes.entity;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Id;

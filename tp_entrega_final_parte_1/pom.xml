@@ -18,6 +18,7 @@
         <module>microServicio1</module>
         <module>microServicio2</module>
         <module>microServicio3</module>
+        <module>microservicio-viaje</module>
         <module>gateway</module>
         <module>eureka-service</module>
         <module>config-service</module>

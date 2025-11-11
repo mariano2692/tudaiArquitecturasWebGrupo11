@@ -1,4 +1,4 @@
-package dto;
+package com.viajes.dto;
 
 public class ReporteTotalFacturadoEntreMesesDeAnio {
     private Double totalFacturado;

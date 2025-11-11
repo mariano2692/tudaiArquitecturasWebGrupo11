@@ -1,4 +1,4 @@
-package dto;
+package com.viajes.dto;
 
 public class ReporteMonopatinesPorViajesYAnio {
     private Long idMonopatin;
