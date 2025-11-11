@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: microMonopatin
+
+  server:
+    port: 8081
+
+  data:
+    mongodb:
+      uri: mongodb://root:password@localhost:27017/monopatin-db?authSource=admin
