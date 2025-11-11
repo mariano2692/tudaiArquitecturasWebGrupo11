@@ -6,6 +6,16 @@ public class ReporteTotalFacturadoEntreMesesDeAnio {
     private Long mesInicio;
     private Long mesFin;
 
+    public ReporteTotalFacturadoEntreMesesDeAnio(Double totalFacturado, Long anio, Long mesInicio, Long mesFin) {
+        this.totalFacturado = totalFacturado;
+        this.anio = anio;
+        this.mesInicio = mesInicio;
+        this.mesFin = mesFin;
+    }
+
+    public ReporteTotalFacturadoEntreMesesDeAnio() {
+    }
+
     public Double getTotalFacturado() {
         return totalFacturado;
     }
