@@ -144,4 +144,53 @@ public class ViajeService {
     public ReporteTotalFacturadoEntreMesesDeAnio getReporteTotalFacturadoEntreMesesDeAnio(Long mesInicio, Long mesFin, Long anio) {
         return viajeRepository.getReporteTotalFacturadoEntreMesesDeAnio(mesInicio, mesFin, anio);
     }
+
+    /**
+     * Punto h: Obtener el uso de monopatines por cuenta en un período
+     * Permite incluir cuentas relacionadas (usuarios relacionados a la cuenta principal)
+     */
+    @Transactional(readOnly = true)
+    public Map<String, Object> getUsoPorCuentaYPeriodo(Long idCuenta, LocalDateTime fechaInicio,
+                                                       LocalDateTime fechaFin, List<Long> idsCuentasRelacionadas) {
+        List<Viaje> viajes;
+
+        if (idsCuentasRelacionadas != null && !idsCuentasRelacionadas.isEmpty()) {
+            // Agregar la cuenta principal a la lista
+            List<Long> todasLasCuentas = new ArrayList<>(idsCuentasRelacionadas);
+            if (!todasLasCuentas.contains(idCuenta)) {
+                todasLasCuentas.add(idCuenta);
+            }
+            viajes = viajeRepository.findViajesPorCuentasYPeriodo(todasLasCuentas, fechaInicio, fechaFin);
+        } else {
+            // Solo la cuenta principal
+            viajes = viajeRepository.findViajesPorCuentaYPeriodo(idCuenta, fechaInicio, fechaFin);
+        }
+
+        // Calcular estadísticas
+        Long cantidadViajes = (long) viajes.size();
+        Long tiempoTotalEnMinutos = 0L;
+        Long kmTotales = 0L;
+
+        for (Viaje viaje : viajes) {
+            if (viaje.getFechaHoraInicio() != null && viaje.getFechaHoraFin() != null) {
+                Duration duracion = Duration.between(viaje.getFechaHoraInicio(), viaje.getFechaHoraFin());
+                tiempoTotalEnMinutos += duracion.toMinutes();
+            }
+            if (viaje.getKmRecorridos() != null) {
+                kmTotales += viaje.getKmRecorridos();
+            }
+        }
+
+        // Construir respuesta
+        Map<String, Object> resultado = new HashMap<>();
+        resultado.put("idCuenta", idCuenta);
+        resultado.put("fechaInicio", fechaInicio);
+        resultado.put("fechaFin", fechaFin);
+        resultado.put("cantidadViajes", cantidadViajes);
+        resultado.put("tiempoTotalEnMinutos", tiempoTotalEnMinutos);
+        resultado.put("kmTotales", kmTotales);
+        resultado.put("incluyeCuentasRelacionadas", idsCuentasRelacionadas != null && !idsCuentasRelacionadas.isEmpty());
+
+        return resultado;
+    }
 }

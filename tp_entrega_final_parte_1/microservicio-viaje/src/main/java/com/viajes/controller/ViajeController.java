@@ -146,4 +146,32 @@ public class ViajeController {
         }
     }
 
+
+    /**
+     * Punto h: Como usuario quiero saber cuánto he usado los monopatines en un período
+     * Opcionalmente incluye el uso de otros usuarios relacionados a la cuenta
+     */
+    @GetMapping("/uso")
+    public ResponseEntity<?> getUsoPorCuenta(@RequestParam Long idCuenta,
+                                             @RequestParam LocalDateTime fechaInicio,
+                                             @RequestParam LocalDateTime fechaFin,
+                                             @RequestParam(required = false) List<Long> idsCuentasRelacionadas) {
+        try {
+            Map<String, Object> uso = viajeService.getUsoPorCuentaYPeriodo(idCuenta, fechaInicio, fechaFin, idsCuentasRelacionadas);
+
+            // Verificar si hay viajes
+            Long cantidadViajes = (Long) uso.get("cantidadViajes");
+            if (cantidadViajes == 0) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"mensaje\":\"No se encontraron viajes para la cuenta " + idCuenta +
+                              " en el período especificado\"}");
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(uso);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+
 }
