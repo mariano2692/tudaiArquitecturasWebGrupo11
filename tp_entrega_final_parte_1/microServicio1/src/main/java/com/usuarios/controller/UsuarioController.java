@@ -45,4 +45,9 @@ public class UsuarioController {
         usuarioService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/mas-activos")
+    public ResponseEntity<List<UsuarioResponseDTO>> getUsuariosMasActivos() {
+        return ResponseEntity.ok(usuarioService.findUsuariosMasActivos());
+    }
 }

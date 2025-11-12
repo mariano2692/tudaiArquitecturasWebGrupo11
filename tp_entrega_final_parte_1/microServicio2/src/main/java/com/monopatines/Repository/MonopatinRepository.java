@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface MonopatinRepository extends MongoRepository <Monopatin, Integer> {
 
     Optional<Monopatin> findById(int monopatinId);
+    List<Monopatin> findByEstado(String estado);
 }

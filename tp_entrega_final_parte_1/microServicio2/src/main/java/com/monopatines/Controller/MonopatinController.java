@@ -1,7 +1,9 @@
 package com.monopatines.Controller;
 
 import com.monopatines.DTO.MonopatinDTO;
+import com.monopatines.DTO.ReporteUsoMonopatinDTO;
 import com.monopatines.Service.MonopatinService;
+import com.monopatines.entities.Monopatin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -110,8 +112,26 @@ public class MonopatinController {
     }
 
     // --- REPORTAJE POR TIEMPO DE USO CON PAUSA ---
+    /*
     @GetMapping("/porTiempoDeUsoConPausa")
     public List<MonopatinDTO> porTiempoDeUsoConPausa(){
         return monopatinServicio.getMonopatinesPorTiempoDeUsoConPausa();
+    }
+
+
+     */
+    @GetMapping("/reporte/uso")
+    public ResponseEntity<List<ReporteUsoMonopatinDTO>> getReporteUsoPorKm(
+            @RequestParam(defaultValue = "false") boolean incluirPausa) {
+        return ResponseEntity.ok(monopatinServicio.getReporteUsoPorKm(incluirPausa));
+    }
+
+    @GetMapping("/cercanos")
+    public List<Monopatin> obtenerMonopatinesCercanos(
+            @RequestParam double lat,
+            @RequestParam double lon,
+            @RequestParam(defaultValue = "1.0") double radioKm) {
+
+        return monopatinServicio.obtenerMonopatinesCercanos(lat, lon, radioKm);
     }
 }

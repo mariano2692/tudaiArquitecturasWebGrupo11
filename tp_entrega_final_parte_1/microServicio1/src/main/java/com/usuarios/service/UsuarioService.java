@@ -79,6 +79,15 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
+    public List<UsuarioResponseDTO> findUsuariosMasActivos() {
+        return usuarioRepository.findUsuariosMasActivos()
+                .stream()
+                .map(this::convertToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+
     // Métodos de conversión DTO
     private UsuarioResponseDTO convertToResponseDTO(Usuario usuario) {
         UsuarioResponseDTO dto = new UsuarioResponseDTO();
