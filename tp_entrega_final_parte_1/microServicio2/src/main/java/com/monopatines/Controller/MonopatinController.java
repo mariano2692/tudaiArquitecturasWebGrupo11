@@ -1,6 +1,7 @@
 package com.monopatines.Controller;
 
 import com.monopatines.DTO.MonopatinDTO;
+import com.monopatines.DTO.ReporteUsoMonopatinDTO;
 import com.monopatines.Service.MonopatinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -113,5 +114,41 @@ public class MonopatinController {
     @GetMapping("/porTiempoDeUsoConPausa")
     public List<MonopatinDTO> porTiempoDeUsoConPausa(){
         return monopatinServicio.getMonopatinesPorTiempoDeUsoConPausa();
+    }
+
+    // --- PUNTO G: MONOPATINES CERCANOS A UNA UBICACIÓN ---
+    @GetMapping("/cercanos")
+    public ResponseEntity<?> getMonopatinesCercanos(
+            @RequestParam double lat,
+            @RequestParam double lon,
+            @RequestParam double radioKm) {
+        try {
+            List<MonopatinDTO> monopatines = monopatinServicio.getMonopatinesCercanos(lat, lon, radioKm);
+            if (monopatines.isEmpty()) {
+                return ResponseEntity.ok()
+                        .body("{\"mensaje\":\"No se encontraron monopatines en un radio de " + radioKm + " km\"}");
+            }
+            return ResponseEntity.ok(monopatines);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+
+    // --- PUNTO A: REPORTE DE USO POR KILOMETRAJE PARA MANTENIMIENTO ---
+    @GetMapping("/reporte-uso")
+    public ResponseEntity<?> getReporteUsoPorKilometraje(
+            @RequestParam(required = false, defaultValue = "false") boolean incluirPausas) {
+        try {
+            List<ReporteUsoMonopatinDTO> reporte = monopatinServicio.getReporteUsoPorKilometraje(incluirPausas);
+            if (reporte.isEmpty()) {
+                return ResponseEntity.ok()
+                        .body("{\"mensaje\":\"No hay monopatines registrados\"}");
+            }
+            return ResponseEntity.ok(reporte);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
     }
 }

@@ -174,4 +174,28 @@ public class ViajeController {
         }
     }
 
+
+    /**
+     * Punto e: Ranking de usuarios que más utilizan monopatines
+     * Filtrado por período y opcionalmente por tipo de cuenta
+     */
+    @GetMapping("/usuarios-mas-activos")
+    public ResponseEntity<?> getUsuariosMasActivos(@RequestParam LocalDateTime fechaInicio,
+                                                   @RequestParam LocalDateTime fechaFin,
+                                                   @RequestParam(required = false) List<Long> idsCuentas) {
+        try {
+            List<com.viajes.dto.UsuarioUsoDTO> ranking = viajeService.getUsuariosMasActivos(fechaInicio, fechaFin, idsCuentas);
+
+            if (ranking.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"mensaje\":\"No se encontraron viajes en el período especificado\"}");
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(ranking);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+
 }

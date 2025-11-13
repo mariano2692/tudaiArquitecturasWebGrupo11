@@ -5,6 +5,7 @@ package com.viajes.service;
 import com.viajes.dto.ReporteMonopatinesPorViajesYAnio;
 import com.viajes.dto.ReporteTotalFacturadoEntreMesesDeAnio;
 import com.viajes.dto.ReporteUsoPorTiempoDto;
+import com.viajes.dto.UsuarioUsoDTO;
 import com.viajes.entity.Pausa;
 import com.viajes.entity.Viaje;
 import com.viajes.repository.ViajeRepository;
@@ -192,5 +193,55 @@ public class ViajeService {
         resultado.put("incluyeCuentasRelacionadas", idsCuentasRelacionadas != null && !idsCuentasRelacionadas.isEmpty());
 
         return resultado;
+    }
+
+    /**
+     * Punto e: Obtener usuarios que más utilizan monopatines
+     * Filtrado por período y opcionalmente por tipo de cuenta (vía lista de IDs)
+     */
+    @Transactional(readOnly = true)
+    public List<UsuarioUsoDTO> getUsuariosMasActivos(LocalDateTime fechaInicio, LocalDateTime fechaFin,
+                                                      List<Long> idsCuentas) {
+        List<Viaje> viajes;
+
+        if (idsCuentas != null && !idsCuentas.isEmpty()) {
+            // Filtrar por cuentas específicas (permite filtrar por tipo de cuenta)
+            viajes = viajeRepository.findViajesPorCuentasYPeriodo(idsCuentas, fechaInicio, fechaFin);
+        } else {
+            // Todas las cuentas
+            viajes = viajeRepository.findViajesPorPeriodo(fechaInicio, fechaFin);
+        }
+
+        // Agrupar viajes por cuenta y calcular estadísticas
+        Map<Long, List<Viaje>> viajesPorCuenta = viajes.stream()
+                .collect(Collectors.groupingBy(Viaje::getIdCuenta));
+
+        List<UsuarioUsoDTO> ranking = new ArrayList<>();
+
+        for (Map.Entry<Long, List<Viaje>> entry : viajesPorCuenta.entrySet()) {
+            Long idCuenta = entry.getKey();
+            List<Viaje> viajesCuenta = entry.getValue();
+
+            Long cantidadViajes = (long) viajesCuenta.size();
+            Long tiempoTotal = 0L;
+            Long kmTotales = 0L;
+
+            for (Viaje viaje : viajesCuenta) {
+                if (viaje.getFechaHoraInicio() != null && viaje.getFechaHoraFin() != null) {
+                    Duration duracion = Duration.between(viaje.getFechaHoraInicio(), viaje.getFechaHoraFin());
+                    tiempoTotal += duracion.toMinutes();
+                }
+                if (viaje.getKmRecorridos() != null) {
+                    kmTotales += viaje.getKmRecorridos();
+                }
+            }
+
+            ranking.add(new UsuarioUsoDTO(idCuenta, cantidadViajes, tiempoTotal, kmTotales));
+        }
+
+        // Ordenar por cantidad de viajes (de mayor a menor)
+        ranking.sort((u1, u2) -> u2.getCantidadViajes().compareTo(u1.getCantidadViajes()));
+
+        return ranking;
     }
 }

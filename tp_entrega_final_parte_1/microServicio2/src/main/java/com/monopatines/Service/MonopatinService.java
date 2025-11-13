@@ -1,6 +1,7 @@
 package com.monopatines.Service;
 
 import com.monopatines.DTO.MonopatinDTO;
+import com.monopatines.DTO.ReporteUsoMonopatinDTO;
 import com.monopatines.Repository.MonopatinRepository;
 import com.monopatines.entities.Monopatin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +107,58 @@ public class MonopatinService {
                 ).reversed())
                 .collect(Collectors.toList());
 
+    }
+
+    /**
+     * Punto g: Buscar monopatines cercanos a una ubicación
+     * Usa la fórmula de Haversine para calcular distancia
+     */
+    public List<MonopatinDTO> getMonopatinesCercanos(double lat, double lon, double radioKm) {
+        return monopatinRepositorio.findAll().stream()
+                .map(MonopatinDTO::new)
+                .filter(m -> calcularDistancia(lat, lon, m.getLatitud(), m.getLongitud()) <= radioKm)
+                .sorted(Comparator.comparingDouble(
+                        m -> calcularDistancia(lat, lon, m.getLatitud(), m.getLongitud())
+                ))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Calcula la distancia entre dos puntos geográficos usando la fórmula de Haversine
+     * @return distancia en kilómetros
+     */
+    private double calcularDistancia(double lat1, double lon1, double lat2, double lon2) {
+        final int RADIO_TIERRA_KM = 6371;
+
+        double latDistancia = Math.toRadians(lat2 - lat1);
+        double lonDistancia = Math.toRadians(lon2 - lon1);
+
+        double a = Math.sin(latDistancia / 2) * Math.sin(latDistancia / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistancia / 2) * Math.sin(lonDistancia / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return RADIO_TIERRA_KM * c;
+    }
+
+    /**
+     * Punto a: Reporte de uso por kilómetros para mantenimiento
+     * Configurable para incluir o no tiempos de pausa
+     */
+    public List<ReporteUsoMonopatinDTO> getReporteUsoPorKilometraje(boolean incluirPausas) {
+        return monopatinRepositorio.findAll().stream()
+                .map(m -> new ReporteUsoMonopatinDTO(
+                        m.getId(),
+                        m.getEstado(),
+                        m.getKmRecorridos(),
+                        m.getTiempoUso(),
+                        incluirPausas ? m.getTiempoPausa() : null,
+                        m.getLatitud(),
+                        m.getLongitud()
+                ))
+                .sorted(Comparator.comparing(ReporteUsoMonopatinDTO::getKmRecorridos).reversed())
+                .collect(Collectors.toList());
     }
 
 }

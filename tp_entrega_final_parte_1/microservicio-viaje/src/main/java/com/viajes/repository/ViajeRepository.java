@@ -22,19 +22,21 @@ public interface ViajeRepository extends JpaRepository<Viaje, Long> {
             "ORDER BY v.idMonopatin, p.pausa")
     List<ReporteUsoPorTiempoDto> reporteUsoPorTiempo();
 
-    @Query("SELECT new com.viajes.dto.ReporteMonopatinesPorViajesYAnio(v.idMonopatin, COUNT(v), :anio) " +
+    @Query("SELECT new com.viajes.dto.ReporteMonopatinesPorViajesYAnio(v.idMonopatin, COUNT(v), CAST(:anio AS long)) " +
             "FROM Viaje v " +
             "WHERE YEAR(v.fechaHoraFin) = :anio " +
             "GROUP BY v.idMonopatin " +
-            "HAVING COUNT(v) > :cantViajes")
-    List<ReporteMonopatinesPorViajesYAnio>getReportePorViajeYAnio(Long cantViajes, Long anio);
+            "HAVING COUNT(v) >= :cantViajes")
+    List<ReporteMonopatinesPorViajesYAnio>getReportePorViajeYAnio(@Param("cantViajes") Long cantViajes, @Param("anio") Long anio);
 
 
-    @Query("SELECT new com.viajes.dto.ReporteTotalFacturadoEntreMesesDeAnio(SUM(v.valorTotal), :anio, :mesInicio, :mesFin) " +
+    @Query("SELECT new com.viajes.dto.ReporteTotalFacturadoEntreMesesDeAnio(SUM(v.valorTotal), CAST(:anio AS long), CAST(:mesInicio AS long), CAST(:mesFin AS long)) " +
             "FROM Viaje v " +
-            "WHERE YEAR(v.fechaHoraInicio) = :year " +
+            "WHERE YEAR(v.fechaHoraInicio) = :anio " +
             "AND MONTH(v.fechaHoraInicio) BETWEEN :mesInicio AND :mesFin")
-    ReporteTotalFacturadoEntreMesesDeAnio getReporteTotalFacturadoEntreMesesDeAnio(Long mesInicio, Long mesFin, Long anio);
+    ReporteTotalFacturadoEntreMesesDeAnio getReporteTotalFacturadoEntreMesesDeAnio(@Param("mesInicio") Long mesInicio,
+                                                                                    @Param("mesFin") Long mesFin,
+                                                                                    @Param("anio") Long anio);
 
     @Query("SELECT v FROM Viaje v WHERE v.idCuenta = :idCuenta " +
             "AND v.fechaHoraInicio >= :fechaInicio " +
@@ -51,4 +53,12 @@ public interface ViajeRepository extends JpaRepository<Viaje, Long> {
     List<Viaje> findViajesPorCuentasYPeriodo(@Param("idsCuentas") List<Long> idsCuentas,
                                              @Param("fechaInicio") java.time.LocalDateTime fechaInicio,
                                              @Param("fechaFin") java.time.LocalDateTime fechaFin);
+
+    @Query("SELECT v FROM Viaje v " +
+            "WHERE v.fechaHoraInicio >= :fechaInicio " +
+            "AND v.fechaHoraFin <= :fechaFin " +
+            "AND v.fechaHoraFin IS NOT NULL " +
+            "AND v.idCuenta IS NOT NULL")
+    List<Viaje> findViajesPorPeriodo(@Param("fechaInicio") java.time.LocalDateTime fechaInicio,
+                                     @Param("fechaFin") java.time.LocalDateTime fechaFin);
 }
