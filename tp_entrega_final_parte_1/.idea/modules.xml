@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/gateway/gateWay.iml" filepath="$PROJECT_DIR$/gateway/gateWay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/microServicio2/microServicio2.iml" filepath="$PROJECT_DIR$/microServicio2/microServicio2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/microServicio1/microservicio-usuarios.iml" filepath="$PROJECT_DIR$/microServicio1/microservicio-usuarios.iml" />
+      <module fileurl="file://$PROJECT_DIR$/microservicio-viaje/microservicio-viajes.iml" filepath="$PROJECT_DIR$/microservicio-viaje/microservicio-viajes.iml" />
+    </modules>
+  </component>
+</project>

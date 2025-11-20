@@ -5,6 +5,7 @@ import com.monopatines.DTO.ReporteUsoMonopatinDTO;
 import com.monopatines.Repository.MonopatinRepository;
 import com.monopatines.entities.Monopatin;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,17 +32,6 @@ public class MonopatinService {
     }
 
     public MonopatinDTO addMonopatin(MonopatinDTO monopatinDTO) {
-        // Verificar que el idParada no es nulo ni vacío
-       /* if (monopatinDTO.getIdParada() != null && !monopatinDTO.getIdParada().isEmpty()) {
-            // Consultar si existe la parada con el idParada proporcionado
-            boolean paradaExists = paradaRepository.existsById(monopatinDTO.getIdParada());
-
-            if (!paradaExists) {
-                throw new IllegalArgumentException("La parada con el id " + monopatinDTO.getIdParada() + " no existe.");
-            }
-        }*/
-
-
         Monopatin nuevoMonopatin = new Monopatin();
         nuevoMonopatin.setId(monopatinDTO.getId());
         nuevoMonopatin.setEstado(monopatinDTO.getEstado());
@@ -60,6 +50,17 @@ public class MonopatinService {
 
     public Optional<MonopatinDTO> getMonopatinById(int id) {
         return monopatinRepositorio.findById(id).map(MonopatinDTO::new);
+    }
+
+    public ResponseEntity<MonopatinDTO> getById(int id) {
+        Optional<MonopatinDTO> monopatin = getMonopatinById(id);
+        if(monopatin.isPresent()){
+            MonopatinDTO monopatinDTO = new MonopatinDTO(monopatin.get().getId(),monopatin.get().getEstado(),monopatin.get().getLongitud(),monopatin.get().getKmRecorridos(),monopatin.get().getLatitud(),monopatin.get().getTiempoUso(),monopatin.get().getTiempoPausa(),monopatin.get().getIdParada());
+            return ResponseEntity.ok().body(monopatinDTO);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     public void deleteMonopatin(int id) {

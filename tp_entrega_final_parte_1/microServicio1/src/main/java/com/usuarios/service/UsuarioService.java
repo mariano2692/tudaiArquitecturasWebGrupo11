@@ -8,10 +8,12 @@ import com.usuarios.dto.UsuarioSimpleDTO;
 import com.usuarios.entities.Usuario;
 import com.usuarios.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -111,5 +113,14 @@ public class UsuarioService {
                 usuario.getEmail(),
                 usuario.getCelular()
         );
+    }
+
+    public ResponseEntity<UsuarioSimpleDTO> getById(Long id) {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        if (usuario.isPresent()) {
+            return ResponseEntity.ok().body((convertToSimpleDTO(usuario.get())));
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 }
