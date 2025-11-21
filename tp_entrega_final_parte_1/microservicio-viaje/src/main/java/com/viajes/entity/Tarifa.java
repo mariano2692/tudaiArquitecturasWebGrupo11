@@ -2,6 +2,7 @@ package com.viajes.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tarifas")
@@ -79,5 +80,24 @@ public class Tarifa {
 
     public void setActiva(Boolean activa) {
         this.activa = activa;
+    }
+
+    public boolean isActiva() {
+        return this.activa != null && this.activa
+                && this.fechaInicioVigencia != null
+                && this.fechaInicioVigencia.isBefore(LocalDate.now());
+    }
+
+    public boolean estaVigente() {
+        return this.fechaInicioVigencia != null
+                && !this.fechaInicioVigencia.isAfter(LocalDate.now());
+    }
+
+    public void activar() {
+        this.activa = true;
+    }
+
+    public void desactivar() {
+        this.activa = false;
     }
 }

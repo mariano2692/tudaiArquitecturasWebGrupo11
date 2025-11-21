@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface MonopatinRepository extends MongoRepository <Monopatin, Integer> {
 
     Optional<Monopatin> findById(int monopatinId);
+
+    long countByEstado(String disponible);
 }

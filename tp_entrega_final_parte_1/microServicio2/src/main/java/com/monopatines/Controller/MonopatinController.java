@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public class MonopatinController {
     public List<MonopatinDTO> getAllMonopatines(){
         return monopatinServicio.getAllMonopatines();
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<MonopatinDTO> getMonopatinById(@PathVariable int id){
@@ -97,6 +99,11 @@ public class MonopatinController {
         return ResponseEntity.notFound().build();
     }
 
+
+    @GetMapping("/conteoPorEstado")
+    public Map<String, Long> obtenerConteoPorEstado() {
+        return monopatinServicio.obtenerConteoPorEstado();
+    }
 
     // --- REPORTAJE POR KILOMETRO ---
     @GetMapping("/porKilometraje")

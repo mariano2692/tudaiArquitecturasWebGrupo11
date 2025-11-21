@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("Monopatines")
@@ -162,4 +159,14 @@ public class MonopatinService {
                 .collect(Collectors.toList());
     }
 
+    public Map<String, Long> obtenerConteoPorEstado() {
+        long enOperacion = monopatinRepositorio.countByEstado("disponible");
+        long enMantenimiento = monopatinRepositorio.countByEstado("en mantenimiento");
+
+        Map<String, Long> resultado = new HashMap<>();
+        resultado.put("enOperacion", enOperacion);
+        resultado.put("enMantenimiento", enMantenimiento);
+
+        return resultado;
+    }
 }

@@ -43,6 +43,8 @@ public class TarifaController {
         }
     }
 
+
+
     /**
      * Obtener la tarifa activa actual
      */
@@ -63,6 +65,26 @@ public class TarifaController {
     }
 
     /**
+     * READ: Obtener tarifa por ID
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getTarifaById(@PathVariable Long id) {
+        try {
+            Tarifa tarifa = tarifaService.getTarifaById(id);
+            if (tarifa == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"error\":\"Tarifa no encontrada con ID: " + id + "\"}");
+            }
+            TarifaResponseDTO response = new TarifaResponseDTO(tarifa);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+
+
+    /**
      * Obtener todas las tarifas (historial)
      */
     @GetMapping("")
@@ -73,6 +95,64 @@ public class TarifaController {
                     .map(TarifaResponseDTO::new)
                     .collect(Collectors.toList());
             return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+
+    /**
+     * UPDATE: Modificar una tarifa existente
+     * Útil para corregir tarifas programadas que aún no están activas
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateTarifa(
+            @PathVariable Long id,
+            @RequestBody TarifaRequestDTO tarifaRequest) {
+        try {
+            Tarifa tarifaActualizada = new Tarifa(
+                    tarifaRequest.getPrecioBase(),
+                    tarifaRequest.getPrecioPorKm(),
+                    tarifaRequest.getPrecioPorMinutoPausa(),
+                    tarifaRequest.getFechaInicioVigencia()
+            );
+
+            Tarifa tarifa = tarifaService.updateTarifa(id, tarifaActualizada);
+
+            if (tarifa == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"error\":\"Tarifa no encontrada con ID: " + id + "\"}");
+            }
+
+            TarifaResponseDTO response = new TarifaResponseDTO(tarifa);
+            return ResponseEntity.ok(response);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+
+    /**
+     * DELETE: Eliminar una tarifa
+     * Solo se pueden eliminar tarifas que no están activas y no tienen viajes asociados
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTarifa(@PathVariable Long id) {
+        try {
+            boolean eliminada = tarifaService.deleteTarifa(id);
+
+            if (!eliminada) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"error\":\"Tarifa no encontrada con ID: " + id + "\"}");
+            }
+
+            return ResponseEntity.ok("{\"message\":\"Tarifa eliminada correctamente\"}");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"error\":\"" + e.getMessage() + "\"}");
