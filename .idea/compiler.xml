@@ -10,8 +10,8 @@
         <module name="eureka-service" />
         <module name="tp_01_integrador" />
         <module name="config-service" />
+        <module name="microservicio-viaje" />
         <module name="microServicio2" />
-        <module name="microServicio3" />
         <module name="microServicio1" />
         <module name="viaje" />
         <module name="gateWay" />
@@ -21,7 +21,7 @@
     <bytecodeTargetLevel>
       <module name="gateway" target="1.5" />
       <module name="gateway (1)" target="1.8" />
-      <module name="microservicio-viaje" target="17" />
+      <module name="microServicio3" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

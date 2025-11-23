@@ -25,7 +25,7 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="monopatin-db" uuid="b063c0e2-04e8-4197-b009-5c68efbc1580">
+    <data-source source="LOCAL" name="monopatin" uuid="b063c0e2-04e8-4197-b009-5c68efbc1580">
       <driver-ref>mongo</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
