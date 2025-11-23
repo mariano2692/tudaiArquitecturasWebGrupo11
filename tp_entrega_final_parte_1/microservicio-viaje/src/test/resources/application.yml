@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: microservicio-viajes
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_viajes?createDatabaseIfNotExist=true
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+server:
+  port: 8082
+
+# Desactivar Eureka para tests
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false

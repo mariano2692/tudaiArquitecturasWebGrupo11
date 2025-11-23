@@ -1,0 +1,16 @@
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\config\AuthorityInitializer.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\config\SecurityConfig.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\controller\JwtController.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\controller\UserController.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\entity\Authority.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\entity\User.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\GatewayApplication.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\repository\AuthorityRepository.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\repository\UserRepository.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\security\AuthorityConstant.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\security\DomainUserDetailsService.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\security\jwt\JwtFilter.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\security\jwt\TokenProvider.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\service\dto\login\LoginDTO.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\service\dto\user\UserDTO.java
+C:\Users\Cuantica12\Desktop\tudai\arqui\tudaiArquitecturasWebGrupo11\tp_entrega_final_parte_1\gateway\src\main\java\org\example\gateway\service\UserService.java
