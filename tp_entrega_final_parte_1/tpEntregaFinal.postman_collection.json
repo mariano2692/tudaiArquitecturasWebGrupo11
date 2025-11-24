@@ -1,0 +1,443 @@
+{
+	"info": {
+		"_postman_id": "22018a0d-b0e7-4842-a2d7-1740aaed159a",
+		"name": "tpEntregaFinal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26358052"
+	},
+	"item": [
+		{
+			"name": "registrar User",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"username\": \"fernando@gmail.com\",\r\n\"password\": \"password\",    \r\n\"authorities\": [\"ADMIN\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "autenticar user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"username\": \"mantenimiento@gmail.com\",\r\n\"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "obtener viajes",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW50ZW5pbWllbnRvQGdtYWlsLmNvbSIsImF1dGgiOiJNQU5URU5JTUlFTlRPIiwiZXhwIjoxNzY0MDM3NjkyLCJpYXQiOjE3NjM5NTEyOTJ9.Nab7k_CHAMMUj9rZa_qv3xKQggPS5uGeqBgcToUOQzFbfbJL9vupZhJyziPcSEzv4LEkpdjaB6bDc7gwsNUa2Q"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8090/api/viajes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"viajes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8090/api/monopatines/reporte-uso?incluirPausas=false",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kb0BnbWFpbC5jb20iLCJhdXRoIjoiQURNSU4iLCJleHAiOjE3NjQwMzY0MDksImlhdCI6MTc2Mzk1MDAwOX0.bjP_0Fjoy6hpFGlGVJEy7nCEby_uEYvP0T7W2n-bIKbMTUXLfzSI0dcvO88xqKtXOVpvyjKMMimbdZerFcWcVQ"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8090/api/monopatines/reporte-uso?incluirPausas=false",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"monopatines",
+						"reporte-uso"
+					],
+					"query": [
+						{
+							"key": "incluirPausas",
+							"value": "false"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl -X GET \"http://localhost:8090/api/monopatines/reporte-uso?incluirPausas=false\" -H \"Authorization: Bearer\r\n  TOKEN_ADMIN\""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8090/api/users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\": \"usuario_premium\", \"password\": \"123456\", \"authorities\": [\"PREMIUM\"]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"users"
+					]
+				},
+				"description": "Generated from cURL:  curl -X POST http://localhost:8090/api/users \\\r\n    -H \"Content-Type: application/json\" \\\r\n    -d \"{\\\"username\\\": \\\"usuario_premium\\\", \\\"password\\\": \\\"123456\\\", \\\"authorities\\\": [\\\"PREMIUM\\\"]}\""
+			},
+			"response": []
+		},
+		{
+			"name": "crear user premium",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\": \"usuario_premium\",\r\n \"password\": \"123456\",\r\n  \"authorities\": [\"PREMIUM\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "loguear user premium",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\": \"usuario_premium\", \"password\": \"123456\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "consultar tarifa por LLM",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c3VhcmlvX3ByZW1pdW0iLCJhdXRoIjoiUFJFTUlVTSIsImV4cCI6MTc2NDA0NDY2MywiaWF0IjoxNzYzOTU4MjYzfQ.-UUFJtnVyBHbPwqji7nXGnRRTO9XyVfhLJ3yl0milKZAfGoEp3VQoiGoRuG0iSty3nrtNxBwnge6kuiPhiwNqA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"mensaje\": \"Cual es la tarifa actual?\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/chat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"chat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "calcular precio de viaje por LLM",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c3VhcmlvX3ByZW1pdW0iLCJhdXRoIjoiUFJFTUlVTSIsImV4cCI6MTc2NDA0MjI4OSwiaWF0IjoxNzYzOTU1ODg5fQ.gv4DPnFvZt-WKVDjgx1WbxaxKQ3BRDRyzRrZ64At3CISNjuH4GAOTcW9pS3I9kznIKjDQ5tFjuUOgrwFku2v0Q"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"mensaje\": \"¿Cuánto me costaría un viaje de 5 kilómetros?\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/chat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"chat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Monopatines cercanos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c3VhcmlvX3ByZW1pdW0iLCJhdXRoIjoiUFJFTUlVTSIsImV4cCI6MTc2NDA0NDQwOSwiaWF0IjoxNzYzOTU4MDA5fQ.1c-Q-Q2Fv9OipgbGvoSyYBBvbmv_MmpWevmJRqUoWsuPSWVI-sXux4lMypFkdqbj_T8axAtM6e46uNgTwMMkzw"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"mensaje\": \"¿Hay monopatines cerca de la ubicación latitud -37.32 y longitud -59.13?\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/chat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"chat"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:8090/api/chat \\\r\n    -H \"Content-Type: application/json\" \\\r\n    -H \"Authorization: Bearer TOKEN\" \\\r\n    -d \"{\\\"mensaje\\\": \\\"¿Hay monopatines cerca de la ubicación latitud -37.32 y longitud -59.13?\\\"}\""
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar uso de una cuenta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c3VhcmlvX3ByZW1pdW0iLCJhdXRoIjoiUFJFTUlVTSIsImV4cCI6MTc2NDA0MjI4OSwiaWF0IjoxNzYzOTU1ODg5fQ.gv4DPnFvZt-WKVDjgx1WbxaxKQ3BRDRyzRrZ64At3CISNjuH4GAOTcW9pS3I9kznIKjDQ5tFjuUOgrwFku2v0Q"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"mensaje\": \"¿Cuántos viajes hice con mi cuenta?\", \"idCuenta\": 1}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/chat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"chat"
+					]
+				},
+				"description": "Generated from cURL:  curl -X POST http://localhost:8090/api/chat \\\r\n    -H \"Content-Type: application/json\" \\\r\n    -H \"Authorization: Bearer TOKEN\" \\\r\n    -d \"{\\\"mensaje\\\": \\\"¿Cuántos viajes hice con mi cuenta?\\\", \\\"idCuenta\\\": 1}\""
+			},
+			"response": []
+		},
+		{
+			"name": "consulta saldo en mi  cuenta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c3VhcmlvX3ByZW1pdW0iLCJhdXRoIjoiUFJFTUlVTSIsImV4cCI6MTc2NDA0MjI4OSwiaWF0IjoxNzYzOTU1ODg5fQ.gv4DPnFvZt-WKVDjgx1WbxaxKQ3BRDRyzRrZ64At3CISNjuH4GAOTcW9pS3I9kznIKjDQ5tFjuUOgrwFku2v0Q"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"mensaje\": \"¿Cuánto saldo tengo en mi cuenta?\", \"idCuenta\": 1}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/chat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"chat"
+					]
+				},
+				"description": "Generated from cURL:  curl -X POST http://localhost:8090/api/chat \\\r\n    -H \"Content-Type: application/json\" \\\r\n    -H \"Authorization: Bearer TOKEN\" \\\r\n    -d \"{\\\"mensaje\\\": \\\"¿Cuánto saldo tengo en mi cuenta?\\\", \\\"idCuenta\\\": 1}\""
+			},
+			"response": []
+		}
+	]
+}
