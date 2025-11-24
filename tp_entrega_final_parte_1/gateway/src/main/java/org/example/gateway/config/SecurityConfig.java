@@ -42,19 +42,57 @@ public class SecurityConfig {
         http
                 //.securityMatcher("/api/**")
                 .authorizeHttpRequests(authz -> authz
+                        // === AUTENTICACIÓN (públicos) ===
                         .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-                        .requestMatchers("/api/monopatines/mantenimiento/**").hasAuthority(AuthorityConstant._MANTENIMIENTO)
-                        .requestMatchers(HttpMethod.PATCH, "/api/monopatines").hasAuthority(AuthorityConstant._USUARIO)
+
+                        // === SWAGGER (públicos) ===
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/swagger-ui.html").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/webjars/**").permitAll()
+
+                        // === MONOPATINES ===
+                        // g. Monopatines cercanos (USUARIO)
                         .requestMatchers(HttpMethod.GET, "/api/monopatines/cercanos").hasAuthority(AuthorityConstant._USUARIO)
-                        .requestMatchers("/api/monopatines/**").hasAuthority( AuthorityConstant._ADMIN )
-                        .requestMatchers( HttpMethod.POST,"/api/usuarios").hasAuthority(AuthorityConstant._USUARIO)//el orden va de más específica a menos específica
-                        .requestMatchers( HttpMethod.GET,"/api/usuarios/cuentapagos").hasAuthority( AuthorityConstant._ADMIN ) //el orden va de más específica a menos específica
-                        .requestMatchers( "/api/usuarios/cuentapagos/**").hasAuthority( AuthorityConstant._USUARIO ) //el orden va de más específica a menos específica
-                        .requestMatchers( HttpMethod.GET,"/api/usuarios/**").hasAuthority( AuthorityConstant._ADMIN ) //el orden va de más específica a menos específica
-                        .requestMatchers(HttpMethod.POST, "/api/viajes").hasAuthority( AuthorityConstant._USUARIO )
-                        .requestMatchers(HttpMethod.PATCH, "/api/viajes/**").hasAuthority( AuthorityConstant._USUARIO)
-                        .requestMatchers("/api/viajes/**").hasAuthority( AuthorityConstant._ADMIN )
+                        // Poner/quitar mantenimiento (MANTENIMIENTO)
+                        .requestMatchers(HttpMethod.PUT, "/api/monopatines/ponerEnMantenimiento/**").hasAuthority(AuthorityConstant._MANTENIMIENTO)
+                        .requestMatchers(HttpMethod.PUT, "/api/monopatines/quitarDeMantenimiento/**").hasAuthority(AuthorityConstant._MANTENIMIENTO)
+                        // a. Reporte uso por km (ADMIN)
+                        .requestMatchers(HttpMethod.GET, "/api/monopatines/reporte-uso").hasAuthority(AuthorityConstant._ADMIN)
+                        // Resto de monopatines (ADMIN)
+                        .requestMatchers("/api/monopatines/**").hasAuthority(AuthorityConstant._ADMIN)
+
+                        // === CUENTAS ===
+                        // b. Anular/activar cuentas (ADMIN)
+                        .requestMatchers(HttpMethod.PUT, "/api/cuentas/*/anular").hasAuthority(AuthorityConstant._ADMIN)
+                        .requestMatchers(HttpMethod.PUT, "/api/cuentas/*/activar").hasAuthority(AuthorityConstant._ADMIN)
+                        // Cargar saldo (USUARIO)
+                        .requestMatchers(HttpMethod.PUT, "/api/cuentas/*/cargar-saldo").hasAuthority(AuthorityConstant._USUARIO)
+                        // Resto de cuentas (ADMIN)
+                        .requestMatchers("/api/cuentas/**").hasAuthority(AuthorityConstant._ADMIN)
+
+                        // === USUARIOS ===
+                        .requestMatchers("/api/usuarios/**").hasAuthority(AuthorityConstant._ADMIN)
+
+                        // === VIAJES ===
+                        // Iniciar viaje, registrar pausa, finalizar (USUARIO)
+                        .requestMatchers(HttpMethod.POST, "/api/viajes").hasAuthority(AuthorityConstant._USUARIO)
+                        .requestMatchers(HttpMethod.POST, "/api/viajes/iniciar").hasAuthority(AuthorityConstant._USUARIO)
+                        .requestMatchers(HttpMethod.POST, "/api/viajes/registrarPausa").hasAuthority(AuthorityConstant._USUARIO)
+                        .requestMatchers(HttpMethod.PUT, "/api/viajes/finalizar").hasAuthority(AuthorityConstant._USUARIO)
+                        .requestMatchers(HttpMethod.PUT, "/api/viajes/asociarCuenta").hasAuthority(AuthorityConstant._USUARIO)
+                        // h. Uso de monopatines por cuenta (USUARIO)
+                        .requestMatchers(HttpMethod.GET, "/api/viajes/uso").hasAuthority(AuthorityConstant._USUARIO)
+                        // c. Monopatines con X viajes en año (ADMIN)
+                        // d. Total facturado (ADMIN)
+                        // e. Usuarios más activos (ADMIN)
+                        .requestMatchers("/api/viajes/**").hasAuthority(AuthorityConstant._ADMIN)
+
+                        // === TARIFAS ===
+                        // f. Ajuste de precios (ADMIN)
+                        .requestMatchers("/api/tarifas/**").hasAuthority(AuthorityConstant._ADMIN)
+
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

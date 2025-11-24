@@ -78,6 +78,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // Endpoints públicos
         return path.equals("/api/authenticate") ||
-                (path.equals("/api/users") && request.getMethod().equals("POST"));
+                (path.equals("/api/users") && request.getMethod().equals("POST")) ||
+                // Swagger
+                path.startsWith("/swagger-ui") ||
+                path.startsWith("/v3/api-docs") ||
+                path.startsWith("/webjars");
     }
 }
