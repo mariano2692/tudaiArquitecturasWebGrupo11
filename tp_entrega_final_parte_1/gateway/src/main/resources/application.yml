@@ -68,3 +68,20 @@ springdoc:
         url: http://localhost:8082/v3/api-docs
   api-docs:
     enabled: true
+
+# Groq LLM Configuration (para servicio de chat premium)
+# Obtener API key en: https://console.groq.com/keys
+groq:
+  api:
+    key: ${GROQ_API_KEY:} # Configurar variable de entorno GROQ_API_KEY
+    url: https://api.groq.com/openai/v1/chat/completions
+  model: llama-3.3-70b-versatile
+
+# URLs de microservicios (para el servicio de chat)
+microservices:
+  usuarios:
+    url: http://localhost:8083
+  monopatines:
+    url: http://localhost:8080
+  viajes:
+    url: http://localhost:8082

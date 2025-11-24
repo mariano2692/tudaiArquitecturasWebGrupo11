@@ -93,6 +93,10 @@ public class SecurityConfig {
                         // f. Ajuste de precios (ADMIN)
                         .requestMatchers("/api/tarifas/**").hasAuthority(AuthorityConstant._ADMIN)
 
+                        // === CHAT (solo PREMIUM) ===
+                        .requestMatchers(HttpMethod.GET, "/api/chat/health").permitAll()
+                        .requestMatchers("/api/chat/**").hasAuthority(AuthorityConstant._PREMIUM)
+
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
