@@ -1,0 +1,7 @@
+com\monopatines\DTO\MonopatinDTO.class
+com\monopatines\Controller\MonopatinController.class
+com\monopatines\Service\MonopatinService.class
+com\monopatines\DTO\ReporteUsoMonopatinDTO.class
+com\monopatines\entities\Monopatin.class
+com\monopatines\MicroMonopatinApplication.class
+com\monopatines\Repository\MonopatinRepository.class

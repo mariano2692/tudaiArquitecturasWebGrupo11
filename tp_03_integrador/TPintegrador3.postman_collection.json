@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "86b05d73-0da3-4302-898e-a08a57dbf259",
+		"name": "TPintegrador3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26358052"
+	},
+	"item": [
+		{
+			"name": "D-GetEstudianteByLu",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/estudiante/getEstudianteByLu/24861",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"estudiante",
+						"getEstudianteByLu",
+						"24861"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "E-GetAllEstudiantesByGenre",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/estudiante/getAllEstudiantesByGenero/hola",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"estudiante",
+						"getAllEstudiantesByGenero",
+						"hola"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "G-GetEstudiantesByCarreraAndCiudad",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/estudiante/getEstudiantesByCarreraAndCiudad/TUDAI/Rauch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"estudiante",
+						"getEstudiantesByCarreraAndCiudad",
+						"TUDAI",
+						"Rauch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "F-GetCarrerasOrderInscriptos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/carreras/ordenadas-inscriptos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carreras",
+						"ordenadas-inscriptos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "C-GetAllEstudiantesOrderByApellido",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/estudiante/getAllEstudiantesOrderByApellido",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"estudiante",
+						"getAllEstudiantesOrderByApellido"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "B-PostMatricularEstudiante",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"inscripcion\": 2021,\r\n    \"graduacion\": 2025,\r\n    \"antiguedad\": 4,\r\n    \"dniAlumno\": 16768994,\r\n    \"idCarrera\": 8\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/inscripcion/matricular",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"inscripcion",
+						"matricular"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:8080/api/estudiantes \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"dni\": 12345678,\r\n  \"nombre\": \"Juan\",\r\n  \"apellido\": \"Pérez\",\r\n  \"edad\": 22,\r\n  \"genero\": \"Masculino\",\r\n  \"ciudadResidencia\": \"Rosario\",\r\n  \"lu\": 102030\r\n}'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "A-PostAddEstudiante",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"dni\": 37373737,\r\n  \"nombre\": \"Manuel\",\r\n  \"apellido\": \"Cerdeira\",\r\n  \"edad\": 30,\r\n  \"genero\": \"Masculino\",\r\n  \"ciudadResidencia\": \"Tandil\",\r\n  \"lu\": 123456\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/estudiante/addEstudiante",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"estudiante",
+						"addEstudiante"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:8080/api/estudiante/addEstudiante \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"dni\": 98765432,\r\n  \"nombre\": \"Prueba\",\r\n  \"apellido\": \"De Inserción\",\r\n  \"edad\": 22,\r\n  \"genero\": \"Masculino\",\r\n  \"ciudadResidencia\": \"Tandil\",\r\n  \"lu\": 100200\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "H-GetReporteCarrera",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/carreras/reporte",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carreras",
+						"reporte"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

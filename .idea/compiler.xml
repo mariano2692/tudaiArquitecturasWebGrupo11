@@ -2,21 +2,39 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="tp_03_integrador" />
-        <module name="tp_02_integrador" />
+        <module name="eureka-service" />
+        <module name="tp_01_integrador" />
+        <module name="config-service" />
+        <module name="microservicio-viaje" />
+        <module name="microServicio2" />
+        <module name="microServicio1" />
+        <module name="viaje" />
+        <module name="gateWay" />
+        <module name="microservicio-usuarios" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="tp_01_integrador" target="22" />
+      <module name="gateway" target="1.5" />
+      <module name="gateway (1)" target="1.8" />
+      <module name="microServicio3" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="tp_03_integrador" options="-parameters" />
+      <module name="config-service" options="-parameters" />
+      <module name="eureka-service" options="-parameters" />
+      <module name="gateWay" options="-parameters" />
+      <module name="microServicio1" options="-parameters" />
+      <module name="microServicio2" options="-parameters" />
+      <module name="microServicio3" options="-parameters" />
+      <module name="microservicio-usuarios" options="-parameters" />
+      <module name="microservicio-viaje" options="-parameters" />
+      <module name="viaje" options="-parameters" />
     </option>
   </component>
 </project>

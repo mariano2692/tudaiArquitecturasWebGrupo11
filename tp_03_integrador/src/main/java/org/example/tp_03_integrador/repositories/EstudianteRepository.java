@@ -1,0 +1,41 @@
+package org.example.tp_03_integrador.repositories;
+
+import org.example.tp_03_integrador.entities.Estudiante;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface EstudianteRepository extends JpaRepository<Estudiante,Integer> {
+
+    // 2c) Recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple. -> Por APELLIDO
+    @Query("SELECT e FROM Estudiante e ORDER BY e.apellido ASC")
+    List<Estudiante> obtenerEstudiantesOrdenadosPorApellidoASC();
+
+    Optional<Estudiante> findByDni(Integer dni);
+
+
+    List<Estudiante> findByLu(Integer lu);
+
+
+    List<Estudiante> getAllEstudiantesByGenero(String genero);
+
+
+
+    @Query("SELECT e FROM Estudiante e " +
+            "JOIN EstudianteCarrera ec ON e.dni = ec.estudiante.dni " +
+            "JOIN Carrera c ON ec.carrera.id = c.id " +
+            "WHERE c.nombre = :nombreCarrera " +
+            "AND e.ciudadResidencia = :ciudadResidencia")
+    List<Estudiante> getEstudiantefindByCarreraAndCiudad(
+            @Param("nombreCarrera") String nombreCarrera,
+            @Param("ciudadResidencia") String ciudadResidencia);
+
+
+
+
+}

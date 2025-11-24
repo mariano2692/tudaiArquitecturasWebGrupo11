@@ -1,0 +1,722 @@
+{
+	"info": {
+		"_postman_id": "abf41cf8-9a83-4cda-b922-0bdc4654dd6e",
+		"name": "tpMicroservicios",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26358052"
+	},
+	"item": [
+		{
+			"name": "microservicio usuarios",
+			"item": [
+				{
+					"name": "4B)",
+					"item": [
+						{
+							"name": "b) anular una cuenta",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/cuentas/3/anular",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"cuentas",
+										"3",
+										"anular"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "activar una cuenta",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/cuentas/3/activar",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"cuentas",
+										"3",
+										"activar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "cargar saldo a una cuenta",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/cuentas/3/cargar-saldo?monto=5000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"cuentas",
+										"3",
+										"cargar-saldo"
+									],
+									"query": [
+										{
+											"key": "monto",
+											"value": "5000"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Add user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Juan\",\r\n    \"apellido\": \"Perez\",\r\n    \"email\": \"juan.perez@test.com\",\r\n    \"celular\": \"2494123456\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"tipo\": \"PREMIUM\",\r\n    \"saldo\": 10000.00,\r\n    \"cuentaMercadoPago\": \"MP12345\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/cuentas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"cuentas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/cuentas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"cuentas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "vincular cuenta a usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/cuentas/1/usuarios/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"cuentas",
+								"1",
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "microservicio viajes",
+			"item": [
+				{
+					"name": "4F)",
+					"item": [
+						{
+							"name": "crear tarifa",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"precioBase\": 120.0,\r\n    \"precioPorKm\": 18.0,\r\n    \"precioPorMinutoPausa\": 4.0,\r\n    \"fechaInicioVigencia\": \"2024-12-01\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/api/tarifas/ajustar",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"api",
+										"tarifas",
+										"ajustar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ver tarifas ",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8082/api/tarifas",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"api",
+										"tarifas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ver tarifa actual",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8082/api/tarifas/actual",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"api",
+										"tarifas",
+										"actual"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get all viajes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/viajes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"viajes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add viaje",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"idMonopatin\": 1,\r\n    \"idCuenta\": 1,\r\n    \"fechaHoraInicio\": \"2024-11-11T10:00:00\",\r\n    \"fechaHoraFin\": \"2024-11-11T11:30:00\",\r\n    \"kmRecorridos\": 15,\r\n    \"valorTotal\": 350.50\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/viajes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"viajes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4h) get viajes by user and fechaInicio and fechafin",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/viajes/uso?idCuenta=178&fechaInicio=2024-01-01T00:00:00&fechaFin=2024-12-31T23:59:59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"viajes",
+								"uso"
+							],
+							"query": [
+								{
+									"key": "idCuenta",
+									"value": "178"
+								},
+								{
+									"key": "fechaInicio",
+									"value": "2024-01-01T00:00:00"
+								},
+								{
+									"key": "fechaFin",
+									"value": "2024-12-31T23:59:59"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4D)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/viajes/facturado?mesInicio=11&mesFin=11&anio=2024",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"viajes",
+								"facturado"
+							],
+							"query": [
+								{
+									"key": "mesInicio",
+									"value": "11"
+								},
+								{
+									"key": "mesFin",
+									"value": "11"
+								},
+								{
+									"key": "anio",
+									"value": "2024"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4h) get viajes by user and fechaInicio and fechafin",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/viajes/uso?idCuenta=178&fechaInicio=2024-01-01T00:00:00&fechaFin=2024-12-31T23:59:59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"viajes",
+								"uso"
+							],
+							"query": [
+								{
+									"key": "idCuenta",
+									"value": "178"
+								},
+								{
+									"key": "fechaInicio",
+									"value": "2024-01-01T00:00:00"
+								},
+								{
+									"key": "fechaFin",
+									"value": "2024-12-31T23:59:59"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8082/api/viajes/usuarios-mas-activos?fechaInicio=2024-01-01T00:00:00&fechaFin=2024-12-31T23:59:59",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/viajes/usuarios-mas-activos?fechaInicio=2024-01-01T00:00:00&fechaFin=2024-12-31T23:59:59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"viajes",
+								"usuarios-mas-activos"
+							],
+							"query": [
+								{
+									"key": "fechaInicio",
+									"value": "2024-01-01T00:00:00"
+								},
+								{
+									"key": "fechaFin",
+									"value": "2024-12-31T23:59:59"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "microservicio monopatin",
+			"item": [
+				{
+					"name": "add monopatin",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"id\": 51, \r\n\"estado\": \"Disponible\", \r\n\"kmRecorridos\": 11.0, \r\n\"longitud\": 12, \r\n\"latitud\": 11,\r\n \"tiempoUso\": 41,\r\n  \"tiempoPausa\": 11,\r\n   \"idParada\": \"3\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/monopatines",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"monopatines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get monopatines",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/monopatines",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"monopatines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enciso 4c)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/viajes/monopatines/anio/2024/cantViajes/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"viajes",
+								"monopatines",
+								"anio",
+								"2024",
+								"cantViajes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4G)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/monopatines/cercanos?lat=-34.6037&lon=-58.3816&radioKm=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"monopatines",
+								"cercanos"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "-34.6037"
+								},
+								{
+									"key": "lon",
+									"value": "-58.3816"
+								},
+								{
+									"key": "radioKm",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4A)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/monopatines/reporte-uso?incluirPausas=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"monopatines",
+								"reporte-uso"
+							],
+							"query": [
+								{
+									"key": "incluirPausas",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get reporte de uso monopatin",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/monopatines/reporte-uso",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"monopatines",
+								"reporte-uso"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

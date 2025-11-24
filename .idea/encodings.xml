@@ -3,9 +3,22 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/tp_01_integrador/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tp_01_integrador/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/tp_02_integrador/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/tp_02_integrador/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/tp_03_integrador/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/tp_03_integrador/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/config-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/config-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/eureka-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/eureka-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/microServicio1/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/microServicio1/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/microServicio2/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/microServicio2/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/microServicio3/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/microServicio3/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/microservicio-viaje/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/microservicio-viaje/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/microservicio-viaje/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tp_entrega_final_parte_1/src/main/resources" charset="UTF-8" />
   </component>
 </project>
