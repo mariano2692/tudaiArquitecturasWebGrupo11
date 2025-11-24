@@ -23,13 +23,13 @@ public class ChatService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    @Value("${groq.api.key}")
+    @Value("${groq.api.key:}")
     private String groqApiKey;
 
-    @Value("${groq.api.url}")
+    @Value("${groq.api.url:https://api.groq.com/openai/v1/chat/completions}")
     private String groqApiUrl;
 
-    @Value("${groq.model}")
+    @Value("${groq.model:llama-3.3-70b-versatile}")
     private String groqModel;
 
     private static final String SYSTEM_PROMPT = """

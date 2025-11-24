@@ -73,7 +73,7 @@ springdoc:
 # Obtener API key en: https://console.groq.com/keys
 groq:
   api:
-    key: ${GROQ_API_KEY:} # Configurar variable de entorno GROQ_API_KEY
+    key: ${GROQ_API_KEY:}
     url: https://api.groq.com/openai/v1/chat/completions
   model: llama-3.3-70b-versatile
 
