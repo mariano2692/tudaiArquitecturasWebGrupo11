@@ -182,9 +182,9 @@ public class ViajeController {
     @GetMapping("/usuarios-mas-activos")
     public ResponseEntity<?> getUsuariosMasActivos(@RequestParam LocalDateTime fechaInicio,
                                                    @RequestParam LocalDateTime fechaFin,
-                                                   @RequestParam(required = false) List<Long> idsCuentas) {
+                                                   @RequestParam(required = false) String tipoCuenta) {
         try {
-            List<com.viajes.dto.UsuarioUsoDTO> ranking = viajeService.getUsuariosMasActivos(fechaInicio, fechaFin, idsCuentas);
+            List<com.viajes.dto.UsuarioUsoDTO> ranking = viajeService.getUsuariosMasActivos(fechaInicio, fechaFin, tipoCuenta);
 
             if (ranking.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)

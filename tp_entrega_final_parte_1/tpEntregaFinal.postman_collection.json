@@ -285,164 +285,541 @@
 			]
 		},
 		{
-			"name": "registrar User",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n\"username\": \"fernando@gmail.com\",\r\n\"password\": \"password\",    \r\n\"authorities\": [\"ADMIN\"]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8090/api/users",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8090",
-					"path": [
-						"api",
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "autenticar user",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n\"username\": \"mantenimiento@gmail.com\",\r\n\"password\": \"password\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8090/api/authenticate",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8090",
-					"path": [
-						"api",
-						"authenticate"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "obtener viajes",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW50ZW5pbWllbnRvQGdtYWlsLmNvbSIsImF1dGgiOiJNQU5URU5JTUlFTlRPIiwiZXhwIjoxNzY0MDM3NjkyLCJpYXQiOjE3NjM5NTEyOTJ9.Nab7k_CHAMMUj9rZa_qv3xKQggPS5uGeqBgcToUOQzFbfbJL9vupZhJyziPcSEzv4LEkpdjaB6bDc7gwsNUa2Q"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8090/api/viajes",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8090",
-					"path": [
-						"api",
-						"viajes"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:8090/api/monopatines/reporte-uso?incluirPausas=false",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kb0BnbWFpbC5jb20iLCJhdXRoIjoiQURNSU4iLCJleHAiOjE3NjQwMzY0MDksImlhdCI6MTc2Mzk1MDAwOX0.bjP_0Fjoy6hpFGlGVJEy7nCEby_uEYvP0T7W2n-bIKbMTUXLfzSI0dcvO88xqKtXOVpvyjKMMimbdZerFcWcVQ"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8090/api/monopatines/reporte-uso?incluirPausas=false",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8090",
-					"path": [
-						"api",
-						"monopatines",
-						"reporte-uso"
-					],
-					"query": [
+			"name": "endpoints 4)",
+			"item": [
+				{
+					"name": "A. reporte de uso de monopatines",
+					"item": [
 						{
-							"key": "incluirPausas",
-							"value": "false"
+							"name": "a. Reporte de uso de monopatines por kilómetros sin pausa",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer <TU_TOKEN_JWT>"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8090/api/monopatines/reporte-uso?incluirPausas=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"monopatines",
+										"reporte-uso"
+									],
+									"query": [
+										{
+											"key": "incluirPausas",
+											"value": "false"
+										}
+									]
+								},
+								"description": "Generated from cURL:   curl -X GET \"http://localhost:8090/api/monopatines/reporte-uso?incluirPausas=false\" \\\r\n    -H \"Authorization: Bearer <TU_TOKEN_JWT>\""
+							},
+							"response": []
+						},
+						{
+							"name": "a. Reporte de uso de monopatines por kilometros con pausa",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer TU_TOKEN_JWT_AQUI"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8090/api/monopatines/reporte-uso?incluirPausas=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"monopatines",
+										"reporte-uso"
+									],
+									"query": [
+										{
+											"key": "incluirPausas",
+											"value": "true"
+										}
+									]
+								},
+								"description": "Generated from cURL: curl -X GET \"http://localhost:8090/api/monopatines/reporte-uso?incluirPausas=true\" \\\r\n    -H \"Authorization: Bearer TU_TOKEN_JWT_AQUI\""
+							},
+							"response": []
 						}
 					]
 				},
-				"description": "Generated from cURL: curl -X GET \"http://localhost:8090/api/monopatines/reporte-uso?incluirPausas=false\" -H \"Authorization: Bearer\r\n  TOKEN_ADMIN\""
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:8090/api/users",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"username\": \"usuario_premium\", \"password\": \"123456\", \"authorities\": [\"PREMIUM\"]}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "B. administrar cuentas",
+					"item": [
+						{
+							"name": "anular cuenta",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kbyIsImF1dGgiOiJBRE1JTiIsImV4cCI6MTc2NDEyMTAyOCwiaWF0IjoxNzY0MDM0NjI4fQ.kyNn9JVvk3sTE2H_HR5jSB8oxy7p_GM4EpGSDOg_sZ688PLwMSTVWKIRT_ZGYx5rPnwCAEc4AGDLHjIiL8Y7VA"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8090/api/cuentas/3/anular",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"cuentas",
+										"3",
+										"anular"
+									]
+								},
+								"description": "Generated from cURL: curl -X PUT http://localhost:8090/api/cuentas/1/anular \\\r\n    -H \"Authorization: Bearer TU_TOKEN_JWT_AQUI\""
+							},
+							"response": []
+						},
+						{
+							"name": "reactivar cuentas",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kbyIsImF1dGgiOiJBRE1JTiIsImV4cCI6MTc2NDEyMTAyOCwiaWF0IjoxNzY0MDM0NjI4fQ.kyNn9JVvk3sTE2H_HR5jSB8oxy7p_GM4EpGSDOg_sZ688PLwMSTVWKIRT_ZGYx5rPnwCAEc4AGDLHjIiL8Y7VA"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8090/api/cuentas/3/activar",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"cuentas",
+										"3",
+										"activar"
+									]
+								}
+							},
+							"response": []
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8090/api/users",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8090",
-					"path": [
-						"api",
-						"users"
 					]
 				},
-				"description": "Generated from cURL:  curl -X POST http://localhost:8090/api/users \\\r\n    -H \"Content-Type: application/json\" \\\r\n    -d \"{\\\"username\\\": \\\"usuario_premium\\\", \\\"password\\\": \\\"123456\\\", \\\"authorities\\\": [\\\"PREMIUM\\\"]}\""
-			},
-			"response": []
+				{
+					"name": "C. Monopatines con cierta cantidad de viajes",
+					"item": [
+						{
+							"name": "Obtener monopatines con X viajes",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kbyIsImF1dGgiOiJBRE1JTiIsImV4cCI6MTc2NDEyMTAyOCwiaWF0IjoxNzY0MDM0NjI4fQ.kyNn9JVvk3sTE2H_HR5jSB8oxy7p_GM4EpGSDOg_sZ688PLwMSTVWKIRT_ZGYx5rPnwCAEc4AGDLHjIiL8Y7VA"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8090/api/viajes/monopatines/anio/2024/cantViajes/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"viajes",
+										"monopatines",
+										"anio",
+										"2024",
+										"cantViajes",
+										"1"
+									]
+								},
+								"description": "Generated from cURL: curl -X GET http://localhost:8090/api/viajes/monopatines/anio/2024/cantViajes/10 \\\r\n    -H \"Authorization: Bearer TU_TOKEN_JWT_AQUI\""
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "D. Facturacion por periodo",
+					"item": [
+						{
+							"name": "obtener facturacion de viajes segun periodo",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kbyIsImF1dGgiOiJBRE1JTiIsImV4cCI6MTc2NDEyMTAyOCwiaWF0IjoxNzY0MDM0NjI4fQ.kyNn9JVvk3sTE2H_HR5jSB8oxy7p_GM4EpGSDOg_sZ688PLwMSTVWKIRT_ZGYx5rPnwCAEc4AGDLHjIiL8Y7VA"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8090/api/viajes/facturado?mesInicio=1&mesFin=12&anio=2024",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"viajes",
+										"facturado"
+									],
+									"query": [
+										{
+											"key": "mesInicio",
+											"value": "1"
+										},
+										{
+											"key": "mesFin",
+											"value": "12"
+										},
+										{
+											"key": "anio",
+											"value": "2024"
+										}
+									]
+								},
+								"description": "Generated from cURL: curl -X GET \"http://localhost:8090/api/viajes/facturado?mesInicio=1&mesFin=12&anio=2024\" \\\r\n    -H \"Authorization: Bearer TU_TOKEN_JWT_AQUI\""
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "E. Actividad de usuarios",
+					"item": [
+						{
+							"name": "usuarios mas activos por periodo y tipo cuenta",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kbyIsImF1dGgiOiJBRE1JTiIsImV4cCI6MTc2NDEyMTAyOCwiaWF0IjoxNzY0MDM0NjI4fQ.kyNn9JVvk3sTE2H_HR5jSB8oxy7p_GM4EpGSDOg_sZ688PLwMSTVWKIRT_ZGYx5rPnwCAEc4AGDLHjIiL8Y7VA"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8090/api/viajes/usuarios-mas-activos?fechaInicio=2024-01-01T00:00:00&fechaFin=2024-12-31T23:59:59&tipoCuenta=BASICA",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"viajes",
+										"usuarios-mas-activos"
+									],
+									"query": [
+										{
+											"key": "fechaInicio",
+											"value": "2024-01-01T00:00:00"
+										},
+										{
+											"key": "fechaFin",
+											"value": "2024-12-31T23:59:59"
+										},
+										{
+											"key": "tipoCuenta",
+											"value": "BASICA"
+										}
+									]
+								},
+								"description": "Generated from cURL:  curl -X GET\n  \"http://localhost:8090/api/viajes/usuarios-mas-activos?fechaInicio=2024-01-01T00:00:00&fechaFin=2024-12-31T23:59:59\" \\\n    -H \"Authorization: Bearer TU_TOKEN_ADMIN\""
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "F. Tarifas y preciios",
+					"item": [
+						{
+							"name": "ajustar precio",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kbyIsImF1dGgiOiJBRE1JTiIsImV4cCI6MTc2NDEyMTAyOCwiaWF0IjoxNzY0MDM0NjI4fQ.kyNn9JVvk3sTE2H_HR5jSB8oxy7p_GM4EpGSDOg_sZ688PLwMSTVWKIRT_ZGYx5rPnwCAEc4AGDLHjIiL8Y7VA"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n      \"precioBase\": 50.0,\r\n      \"precioPorKm\": 15.0,\r\n      \"precioPorMinutoPausa\": 5.0,\r\n      \"fechaInicioVigencia\": \"2025-01-01T00:00:00\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/api/tarifas/ajustar",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"tarifas",
+										"ajustar"
+									]
+								},
+								"description": "Generated from cURL: curl -X POST http://localhost:8090/api/tarifas/ajustar \\\r\n    -H \"Authorization: Bearer TU_TOKEN_JWT_AQUI\" \\\r\n    -H \"Content-Type: application/json\" \\\r\n    -d '{\r\n      \"precioBase\": 50.0,\r\n      \"precioPorKm\": 15.0,\r\n      \"precioPorMinutoPausa\": 5.0,\r\n      \"fechaInicioVigencia\": \"2025-01-01T00:00:00\"\r\n    }'"
+							},
+							"response": []
+						},
+						{
+							"name": "ver tarifas",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXJuYW5kbyIsImF1dGgiOiJBRE1JTiIsImV4cCI6MTc2NDEyMTAyOCwiaWF0IjoxNzY0MDM0NjI4fQ.kyNn9JVvk3sTE2H_HR5jSB8oxy7p_GM4EpGSDOg_sZ688PLwMSTVWKIRT_ZGYx5rPnwCAEc4AGDLHjIiL8Y7VA"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8090/api/tarifas/actual",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"tarifas",
+										"actual"
+									]
+								},
+								"description": "Generated from cURL: curl -X GET http://localhost:8090/api/tarifas/actual \\\r\n    -H \"Authorization: Bearer TU_TOKEN_JWT_AQUI\""
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "G . Monopatines cercanos",
+					"item": [
+						{
+							"name": "Buscar Monopatines cercanos",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYW5vQGdtYWlsLmNvbSIsImF1dGgiOiJVU1VBUklPIiwiZXhwIjoxNzY0MTI0MjQ1LCJpYXQiOjE3NjQwMzc4NDV9.SBumMvWTghLDxeig9X9tfCvKsS9qOwpZKAawreLdg8qrP8gnMKHiaMo3W2zEWeAQ0vEYs7IYBzawFls8f03xNg"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8090/api/monopatines/cercanos?lat=-37.3217&lon=-59.1347&radioKm=5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"monopatines",
+										"cercanos"
+									],
+									"query": [
+										{
+											"key": "lat",
+											"value": "-37.3217"
+										},
+										{
+											"key": "lon",
+											"value": "-59.1347"
+										},
+										{
+											"key": "radioKm",
+											"value": "5"
+										}
+									]
+								},
+								"description": "Generated from cURL:  curl -X GET \"http://localhost:8090/api/monopatines/cercanos?lat=-37.3217&lon=-59.1347&radioKm=5\" \\\r\n    -H \"Authorization: Bearer TU_TOKEN_USUARIO_AQUI\""
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "H. Uso de monopatines por periodo",
+					"item": [
+						{
+							"name": "obtener reporte de monopatin segun periodo",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYW5vQGdtYWlsLmNvbSIsImF1dGgiOiJVU1VBUklPIiwiZXhwIjoxNzY0MTI0MjQ1LCJpYXQiOjE3NjQwMzc4NDV9.SBumMvWTghLDxeig9X9tfCvKsS9qOwpZKAawreLdg8qrP8gnMKHiaMo3W2zEWeAQ0vEYs7IYBzawFls8f03xNg"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8090/api/viajes/uso?idCuenta=3&fechaInicio=2024-01-01T00:00:00&fechaFin=2024-12-31T23:59:59",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"viajes",
+										"uso"
+									],
+									"query": [
+										{
+											"key": "idCuenta",
+											"value": "3"
+										},
+										{
+											"key": "fechaInicio",
+											"value": "2024-01-01T00:00:00"
+										},
+										{
+											"key": "fechaFin",
+											"value": "2024-12-31T23:59:59"
+										}
+									]
+								},
+								"description": "Generated from cURL:  curl -X GET\r\n  \"http://localhost:8090/api/viajes/uso?idCuenta=1&fechaInicio=2024-01-01T00:00:00&fechaFin=2024-12-31T23:59:59\" \\\r\n    -H \"Authorization: Bearer TU_TOKEN_USUARIO_AQUI\""
+							},
+							"response": []
+						},
+						{
+							"name": "uso de monopatin con cuenta relacionada",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYW5vQGdtYWlsLmNvbSIsImF1dGgiOiJVU1VBUklPIiwiZXhwIjoxNzY0MTI0MjQ1LCJpYXQiOjE3NjQwMzc4NDV9.SBumMvWTghLDxeig9X9tfCvKsS9qOwpZKAawreLdg8qrP8gnMKHiaMo3W2zEWeAQ0vEYs7IYBzawFls8f03xNg"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8090/api/viajes/uso?idCuenta=3&fechaInicio=2024-01-01T00:00:00&fechaFin=2024-12-31T23:59:59&idsCuentasRelacionadas=4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"viajes",
+										"uso"
+									],
+									"query": [
+										{
+											"key": "idCuenta",
+											"value": "3"
+										},
+										{
+											"key": "fechaInicio",
+											"value": "2024-01-01T00:00:00"
+										},
+										{
+											"key": "fechaFin",
+											"value": "2024-12-31T23:59:59"
+										},
+										{
+											"key": "idsCuentasRelacionadas",
+											"value": "4"
+										}
+									]
+								},
+								"description": "Generated from cURL:  curl -X GET \"http://localhost:8090/api/viajes/uso?idCuenta=3&fechaInicio=2024-01-01T00:00:00&fechaFin=2024-12-31T23:59:59&\r\n  idsCuentasRelacionadas=4\" \\\r\n    -H \"Authorization: Bearer $TOKEN_USUARIO\""
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "registrar User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\": \"fernando@gmail.com\",\r\n\"password\": \"password\",    \r\n\"authorities\": [\"ADMIN\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "autenticar user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\": \"mantenimiento@gmail.com\",\r\n\"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/api/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
