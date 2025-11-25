@@ -1,6 +1,6 @@
 ﻿# tudaiArquitecturasWebGrupo11
 
-## branch del tp entrega final 
+## branch del tp entrega final (rama main)
 
 para poder correr los microservicios de usuarios, viajes y monopatin es necesario primero correr el eurekaService
 
@@ -53,3 +53,4 @@ GROC:
   de GROQ_API_KEY desde el entorno.
 
   Nota: La variable de entorno debe estar configurada en la misma terminal/sesión donde se ejecuta el Gateway.
+
