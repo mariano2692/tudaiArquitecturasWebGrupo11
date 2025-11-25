@@ -27,3 +27,12 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+
+# Gateway secret para validar que las peticiones vienen del Gateway
+gateway:
+  secret: ${GATEWAY_SECRET:mi-secreto-super-seguro-compartido-con-gateway-2024}
+
+# URL del microservicio de usuarios para obtener información de cuentas
+microservicio:
+  usuarios:
+    url: ${MICROSERVICIO_USUARIOS_URL:http://localhost:8083}

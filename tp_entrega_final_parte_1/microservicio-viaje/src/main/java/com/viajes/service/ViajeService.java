@@ -2,6 +2,8 @@ package com.viajes.service;
 
 
 
+import com.viajes.client.CuentaClient;
+import com.viajes.dto.CuentaDTO;
 import com.viajes.dto.ReporteMonopatinesPorViajesYAnio;
 import com.viajes.dto.ReporteTotalFacturadoEntreMesesDeAnio;
 import com.viajes.dto.ReporteUsoPorTiempoDto;
@@ -27,6 +29,9 @@ import java.util.stream.Collectors;
 public class ViajeService {
     @Autowired
     private ViajeRepository viajeRepository;
+
+    @Autowired
+    private CuentaClient cuentaClient;
     // Create
     @Transactional
     public Viaje save(Viaje viaje) {
@@ -197,20 +202,13 @@ public class ViajeService {
 
     /**
      * Punto e: Obtener usuarios que más utilizan monopatines
-     * Filtrado por período y opcionalmente por tipo de cuenta (vía lista de IDs)
+     * Filtrado por período y opcionalmente por tipo de cuenta
      */
     @Transactional(readOnly = true)
     public List<UsuarioUsoDTO> getUsuariosMasActivos(LocalDateTime fechaInicio, LocalDateTime fechaFin,
-                                                      List<Long> idsCuentas) {
-        List<Viaje> viajes;
-
-        if (idsCuentas != null && !idsCuentas.isEmpty()) {
-            // Filtrar por cuentas específicas (permite filtrar por tipo de cuenta)
-            viajes = viajeRepository.findViajesPorCuentasYPeriodo(idsCuentas, fechaInicio, fechaFin);
-        } else {
-            // Todas las cuentas
-            viajes = viajeRepository.findViajesPorPeriodo(fechaInicio, fechaFin);
-        }
+                                                      String tipoCuenta) {
+        // Obtener todos los viajes del período
+        List<Viaje> viajes = viajeRepository.findViajesPorPeriodo(fechaInicio, fechaFin);
 
         // Agrupar viajes por cuenta y calcular estadísticas
         Map<Long, List<Viaje>> viajesPorCuenta = viajes.stream()
@@ -236,7 +234,22 @@ public class ViajeService {
                 }
             }
 
-            ranking.add(new UsuarioUsoDTO(idCuenta, cantidadViajes, tiempoTotal, kmTotales));
+            // Obtener el tipo de cuenta del microservicio de usuarios
+            String tipoCuentaObtenido = "DESCONOCIDO";
+            try {
+                CuentaDTO cuenta = cuentaClient.getCuentaById(idCuenta);
+                if (cuenta != null && cuenta.getTipo() != null) {
+                    tipoCuentaObtenido = cuenta.getTipo();
+                }
+            } catch (Exception e) {
+                // Si falla la llamada, dejar como DESCONOCIDO
+            }
+
+            // Si se especificó un filtro por tipo de cuenta, aplicarlo
+            if (tipoCuenta == null || tipoCuenta.isEmpty() ||
+                tipoCuentaObtenido.equalsIgnoreCase(tipoCuenta)) {
+                ranking.add(new UsuarioUsoDTO(idCuenta, tipoCuentaObtenido, cantidadViajes, tiempoTotal, kmTotales));
+            }
         }
 
         // Ordenar por cantidad de viajes (de mayor a menor)
